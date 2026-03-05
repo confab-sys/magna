@@ -1,0 +1,21 @@
+name = "magna-coders-api"
+main = "src/index.ts"
+compatibility_date = "2024-03-03"
+
+[vars]
+# Environment variables
+JWT_SECRET = "your-production-secret-key-change-this"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "magna_db"
+database_id = "dbc21996-9e43-4918-8ac6-6676593a33ff"
+migrations_dir = "../../packages/db/migrations"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "ee5f306722534bdc99b697728fc6365d"
+
+[[r2_buckets]]
+binding = "MEDIA"
+bucket_name = "magna-media"

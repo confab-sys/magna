@@ -1,0 +1,16 @@
+{
+  "name": "magna-api",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@magna/shared": "workspace:*",
+    "bcryptjs": "^2.4.3",
+    "hono": "^4.0.0",
+    "jose": "^5.2.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240222.0",
+    "@types/bcryptjs": "^2.4.6",
+    "wrangler": "^4.70.0"
+  }
+}

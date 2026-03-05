@@ -1,0 +1,7 @@
+# Root wrangler.toml for the Cloudflare Workers Monorepo
+
+# This file can be used for shared configuration or environment settings
+# that apply across multiple workers if needed, though most configuration
+# is located in the individual apps/ directories.
+
+# For more information, see: https://developers.cloudflare.com/workers/wrangler/configuration/

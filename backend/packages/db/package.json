@@ -1,0 +1,17 @@
+{
+  "name": "@magna/db",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "dependencies": {
+    "@prisma/client": "^5.10.2",
+    "@prisma/adapter-d1": "^5.10.2",
+    "cross-env": "^7.0.3"
+  },
+  "devDependencies": {
+    "prisma": "^5.10.2"
+  },
+  "scripts": {
+    "generate": "cross-env DATABASE_URL=\"file:./dev.db\" prisma generate"
+  }
+}

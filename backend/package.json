@@ -1,0 +1,21 @@
+{
+  "name": "magna-coders-workers",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "api:dev": "wrangler dev --package apps/api",
+    "realtime:dev": "wrangler dev --package apps/realtime",
+    "db:generate": "pnpm --filter @magna/db generate",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "wrangler": "^3.0.0"
+  },
+  "dependencies": {
+    "prisma": "^7.4.2"
+  }
+}

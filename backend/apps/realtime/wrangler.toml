@@ -1,0 +1,19 @@
+name = "magna-coders-realtime"
+main = "src/index.ts"
+compatibility_date = "2024-03-03"
+
+[vars]
+# Realtime config
+
+[[durable_objects.bindings]]
+name = "CHAT_ROOM"
+class_name = "ChatRoom"
+
+[[durable_objects.bindings]]
+name = "ESCROW"
+class_name = "ContractEscrow"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "magna_db"
+database_id = "your-d1-id"

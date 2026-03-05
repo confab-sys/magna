@@ -1,0 +1,642 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// User & Identity
+model users {
+  id                          String    @id @default(uuid())
+  username                    String    @unique
+  email                       String    @unique
+  password_hash               String?
+  created_at                  DateTime  @default(now())
+  updated_at                  DateTime  @updatedAt
+  profile_complete_percentage Int       @default(0)
+  avatar_url                  String?
+  location                    String?
+  bio                         String?
+  website_url                 String?
+  github_url                  String?
+  linkedin_url                String?
+  twitter_url                 String?
+  whatsapp_url                String?
+  tagline                     String?
+  is_email_verified           Boolean   @default(false)
+  email_verified_at           DateTime?
+
+  // Relations
+  accounts                    Account[]
+  sessions                    Session[]
+  posts                       posts[]
+  comments                    comments[]
+  likes                       likes[]
+  jobs                        jobs[]
+  applications                applications[]
+  projects                    projects[]
+  messages                    messages[]
+  coin_wallets                coin_wallets?
+  coin_transactions           coin_transactions[]
+  contracts_as_client         contracts[] @relation("client")
+  contracts_as_developer      contracts[] @relation("developer")
+  user_skills                 user_skills[]
+  user_ai_preferences         user_ai_preferences?
+  notifications               notifications[]
+  
+  // New Relations from SQL
+  email_verification_tokens   email_verification_tokens[]
+  password_reset_tokens       password_reset_tokens[]
+  followers                   user_follows[] @relation("following")
+  following                   user_follows[] @relation("follower")
+  blocked_users               user_blocks[]  @relation("blocker")
+  blocked_by                  user_blocks[]  @relation("blocked")
+  friendships_initiated       friendships[]  @relation("requester")
+  friendships_received        friendships[]  @relation("addressee")
+  courses_taught              courses[]
+  lesson_progress             lesson_progress[]
+  quiz_attempts               quiz_attempts[]
+  news_saves                  news_saves[]
+  news_reads                  news_reads[]
+  conversations_created       conversations[] @relation("creator")
+  ai_conversations            ai_conversations[]
+}
+
+model email_verification_tokens {
+  id         String   @id @default(uuid())
+  user_id    String
+  token      String   @unique
+  expires_at DateTime
+  created_at DateTime @default(now())
+  user       users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model password_reset_tokens {
+  id         String   @id @default(uuid())
+  user_id    String
+  token      String   @unique
+  expires_at DateTime
+  created_at DateTime @default(now())
+  user       users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// Social Graph
+model user_follows {
+  id           String   @id @default(uuid())
+  follower_id  String
+  following_id String
+  created_at   DateTime @default(now())
+  follower     users    @relation("follower", fields: [follower_id], references: [id], onDelete: Cascade)
+  following    users    @relation("following", fields: [following_id], references: [id], onDelete: Cascade)
+  @@unique([follower_id, following_id])
+}
+
+model user_blocks {
+  id         String   @id @default(uuid())
+  blocker_id String
+  blocked_id String
+  created_at DateTime @default(now())
+  blocker    users    @relation("blocker", fields: [blocker_id], references: [id], onDelete: Cascade)
+  blocked    users    @relation("blocked", fields: [blocked_id], references: [id], onDelete: Cascade)
+  @@unique([blocker_id, blocked_id])
+}
+
+model friendships {
+  id           String   @id @default(uuid())
+  requester_id String
+  addressee_id String
+  status       String   @default("PENDING") // PENDING | ACCEPTED | DECLINED | BLOCKED
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  requester    users    @relation("requester", fields: [requester_id], references: [id], onDelete: Cascade)
+  addressee    users    @relation("addressee", fields: [addressee_id], references: [id], onDelete: Cascade)
+  @@unique([requester_id, addressee_id])
+}
+
+model Account {
+  id                  String   @id @default(uuid())
+  user_id             String
+  provider            String
+  provider_account_id String
+  access_token        String?
+  refresh_token       String?
+  expires_at          DateTime?
+  token_type          String?
+  scope               String?
+  id_token            String?
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  user                users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  @@unique([provider, provider_account_id])
+}
+
+model Session {
+  id            String   @id @default(uuid())
+  user_id       String
+  session_token String   @unique
+  expires_at    DateTime
+  created_at    DateTime @default(now())
+  user          users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// Magna School
+model courses {
+  id              String    @id @default(uuid())
+  title           String
+  description     String?
+  cover_image_url String?
+  instructor_id   String?
+  price_amount    Decimal   @default(0.00)
+  currency        String    @default("KES")
+  is_published    Boolean   @default(false)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  instructor      users?    @relation(fields: [instructor_id], references: [id])
+  lessons         lessons[]
+  quizzes         quizzes[]
+}
+
+model lessons {
+  id               String            @id @default(uuid())
+  course_id        String
+  title            String
+  description      String?
+  video_url        String?
+  order_index      Int               @default(0)
+  duration_seconds Int               @default(0)
+  created_at       DateTime          @default(now())
+  updated_at       DateTime          @updatedAt
+  course           courses           @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  progress         lesson_progress[]
+}
+
+model lesson_progress {
+  id                    String   @id @default(uuid())
+  user_id               String
+  lesson_id             String
+  is_completed          Boolean  @default(false)
+  watched_seconds       Int      @default(0)
+  last_position_seconds Int      @default(0)
+  updated_at            DateTime @default(now())
+  user                  users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  lesson                lessons  @relation(fields: [lesson_id], references: [id], onDelete: Cascade)
+  @@unique([user_id, lesson_id])
+}
+
+model quizzes {
+  id            String          @id @default(uuid())
+  course_id     String
+  title         String
+  passing_score Int             @default(70)
+  created_at    DateTime        @default(now())
+  course        courses         @relation(fields: [course_id], references: [id], onDelete: Cascade)
+  questions     quiz_questions[]
+  attempts      quiz_attempts[]
+}
+
+model quiz_questions {
+  id                   String  @id @default(uuid())
+  quiz_id              String
+  question_text        String
+  options_json         String  // JSON string
+  correct_option_index Int
+  order_index          Int     @default(0)
+  quiz                 quizzes @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+}
+
+model quiz_attempts {
+  id           String   @id @default(uuid())
+  quiz_id      String
+  user_id      String
+  score        Int
+  answers_json String   // JSON string
+  passed       Boolean  @default(false)
+  created_at   DateTime @default(now())
+  quiz         quizzes  @relation(fields: [quiz_id], references: [id], onDelete: Cascade)
+  user         users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+// Podcasts
+model podcasts {
+  id              String             @id @default(uuid())
+  title           String
+  description     String?
+  cover_image_url String?
+  created_at      DateTime           @default(now())
+  updated_at      DateTime           @updatedAt
+  episodes        podcast_episodes[]
+}
+
+model podcast_episodes {
+  id               String   @id @default(uuid())
+  podcast_id       String
+  title            String
+  description      String?
+  audio_url        String
+  duration_seconds Int      @default(0)
+  published_at     DateTime?
+  created_at       DateTime @default(now())
+  podcast          podcasts @relation(fields: [podcast_id], references: [id], onDelete: Cascade)
+}
+
+// Content
+model posts {
+  id          String      @id @default(uuid())
+  title       String
+  content     String?
+  post_type   String      @default("regular")
+  author_id   String
+  category_id String?
+  created_at  DateTime    @default(now())
+  updated_at  DateTime    @updatedAt
+  author      users       @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  category    categories? @relation(fields: [category_id], references: [id])
+  comments    comments[]
+  likes       likes[]
+  post_media  post_media[]
+  post_tags   post_tags[]
+}
+
+model comments {
+  id          String     @id @default(uuid())
+  content     String
+  author_id   String
+  post_id     String
+  parent_id   String?
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  author      users      @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  post        posts      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  parent      comments?  @relation("replies", fields: [parent_id], references: [id], onDelete: Cascade)
+  replies     comments[] @relation("replies")
+  likes       likes[]
+}
+
+model likes {
+  id         String    @id @default(uuid())
+  user_id    String
+  post_id    String?
+  comment_id String?
+  user       users     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  post       posts?    @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  comment    comments? @relation(fields: [comment_id], references: [id], onDelete: Cascade)
+}
+
+model media {
+  id            String       @id @default(uuid())
+  url           String
+  type          String
+  created_at    DateTime     @default(now())
+  post_media    post_media[]
+  news_sources  news_sources[]
+  news_articles news_articles[]
+}
+
+model post_media {
+  id       String @id @default(uuid())
+  post_id  String
+  media_id String
+  post     posts  @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  media    media  @relation(fields: [media_id], references: [id], onDelete: Cascade)
+}
+
+model categories {
+  id            String          @id @default(uuid())
+  name          String          @unique
+  description   String?
+  posts         posts[]
+  jobs          jobs[]
+  projects      projects[]
+}
+
+model tags {
+  id                String      @id @default(uuid())
+  name              String      @unique
+  post_tags         post_tags[]
+  news_article_tags news_article_tags[]
+}
+
+model post_tags {
+  id      String @id @default(uuid())
+  post_id String
+  tag_id  String
+  post    posts  @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  tag     tags   @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+}
+
+// News
+model news_sources {
+  id            String          @id @default(uuid())
+  name          String
+  slug          String?         @unique
+  website_url   String?
+  rss_url       String?
+  api_provider  String?
+  logo_media_id String?
+  is_active     Boolean         @default(true)
+  created_at    DateTime        @default(now())
+  updated_at    DateTime        @updatedAt
+  logo          media?          @relation(fields: [logo_media_id], references: [id])
+  articles      news_articles[]
+  ingestion_runs news_ingestion_runs[]
+}
+
+model news_articles {
+  id             String   @id @default(uuid())
+  source_id      String
+  external_id    String?
+  url            String   @unique
+  title          String
+  summary        String?
+  content        String?
+  author         String?
+  cover_media_id String?
+  language       String   @default("en")
+  country        String?
+  published_at   DateTime?
+  fetched_at     DateTime @default(now())
+  is_breaking    Boolean  @default(false)
+  is_deleted     Boolean  @default(false)
+  
+  source         news_sources @relation(fields: [source_id], references: [id], onDelete: Cascade)
+  cover          media?       @relation(fields: [cover_media_id], references: [id])
+  categories     news_article_categories[]
+  tags           news_article_tags[]
+  saves          news_saves[]
+  reads          news_reads[]
+}
+
+model news_categories {
+  id       String @id @default(uuid())
+  name     String @unique
+  slug     String @unique
+  articles news_article_categories[]
+}
+
+model news_article_categories {
+  id          String @id @default(uuid())
+  article_id  String
+  category_id String
+  article     news_articles @relation(fields: [article_id], references: [id], onDelete: Cascade)
+  category    news_categories @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  @@unique([article_id, category_id])
+}
+
+model news_article_tags {
+  id         String @id @default(uuid())
+  article_id String
+  tag_id     String
+  article    news_articles @relation(fields: [article_id], references: [id], onDelete: Cascade)
+  tag        tags @relation(fields: [tag_id], references: [id], onDelete: Cascade)
+  @@unique([article_id, tag_id])
+}
+
+model news_saves {
+  id         String @id @default(uuid())
+  user_id    String
+  article_id String
+  created_at DateTime @default(now())
+  user       users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  article    news_articles @relation(fields: [article_id], references: [id], onDelete: Cascade)
+  @@unique([user_id, article_id])
+}
+
+model news_reads {
+  id         String @id @default(uuid())
+  user_id    String
+  article_id String
+  opened_at  DateTime @default(now())
+  user       users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  article    news_articles @relation(fields: [article_id], references: [id], onDelete: Cascade)
+}
+
+model news_ingestion_runs {
+  id             String @id @default(uuid())
+  source_id      String?
+  status         String // SUCCESS | FAILED
+  fetched_count  Int @default(0)
+  inserted_count Int @default(0)
+  error_message  String?
+  started_at     DateTime @default(now())
+  finished_at    DateTime?
+  source         news_sources? @relation(fields: [source_id], references: [id], onDelete: SetNull)
+}
+
+// Career
+model companies {
+  id            String   @id @default(uuid())
+  name          String
+  slug          String?  @unique
+  logo_url      String?
+  website_url   String?
+  description   String?
+  verified      Boolean  @default(false)
+  location      String?
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  jobs          jobs[]
+}
+
+model jobs {
+  id           String         @id @default(uuid())
+  title        String
+  description  String?
+  company_id   String?
+  location     String?
+  salary       String?
+  job_type     String?
+  deadline     DateTime?
+  author_id    String
+  category_id  String?
+  created_at   DateTime       @default(now())
+  updated_at   DateTime       @updatedAt
+  company      companies?     @relation(fields: [company_id], references: [id])
+  author       users          @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  category     categories?    @relation(fields: [category_id], references: [id])
+  applications applications[]
+}
+
+model applications {
+  id             String   @id @default(uuid())
+  jobs_id        String
+  user_id        String
+  resume_url     String?
+  cover_letter   String?
+  status         String   @default("submitted")
+  submitted_at   DateTime @default(now())
+  job            jobs     @relation(fields: [jobs_id], references: [id], onDelete: Cascade)
+  user           users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model projects {
+  id                       String      @id @default(uuid())
+  slug                     String?     @unique
+  title                    String
+  description              String?
+  short_description        String?
+  owner_id                 String
+  category_id              String?
+  status                   String      @default("draft")
+  visibility               String      @default("public")
+  tech_stack               String?
+  looking_for_contributors Boolean     @default(false)
+  max_contributors         Int?
+  start_date               DateTime?
+  end_date                 DateTime?
+  repository_url           String?
+  live_demo_url            String?
+  created_at               DateTime    @default(now())
+  updated_at               DateTime    @updatedAt
+  owner                    users       @relation(fields: [owner_id], references: [id], onDelete: Cascade)
+  category                 categories? @relation(fields: [category_id], references: [id])
+}
+
+// Realtime
+model conversations {
+  id                   String                 @id @default(uuid())
+  name                 String?
+  is_group             Boolean                @default(false)
+  created_at           DateTime               @default(now())
+  updated_at           DateTime               @updatedAt
+  created_by           String?
+  description          String?
+  avatar_url           String?
+  
+  creator              users?                 @relation("creator", fields: [created_by], references: [id])
+  conversation_members conversation_members[]
+  messages             messages[]
+}
+
+model conversation_members {
+  id              String        @id @default(uuid())
+  conversation_id String
+  user_id         String
+  joined_at       DateTime      @default(now())
+  role            String        @default("MEMBER") // MEMBER | ADMIN | OWNER
+  conversation    conversations @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+}
+
+model messages {
+  id              String        @id @default(uuid())
+  content         String
+  sender_id       String
+  conversation_id String
+  created_at      DateTime      @default(now())
+  conversation    conversations @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+  sender          users         @relation(fields: [sender_id], references: [id], onDelete: Cascade)
+}
+
+// AI Chat
+model ai_conversations {
+  id         String   @id @default(uuid())
+  user_id    String
+  title      String?
+  created_at DateTime @default(now())
+  user       users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  messages   ai_messages[]
+}
+
+model ai_messages {
+  id              String   @id @default(uuid())
+  conversation_id String
+  role            String   // user | assistant | system
+  content         String
+  created_at      DateTime @default(now())
+  conversation    ai_conversations @relation(fields: [conversation_id], references: [id], onDelete: Cascade)
+}
+
+// FinTech
+model coin_wallets {
+  id           String   @id @default(uuid())
+  user_id      String   @unique
+  balance      Decimal  @default(0.00)
+  max_capacity Decimal  @default(10000.00)
+  status       String   @default("ACTIVE")
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt
+  user         users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model coin_transactions {
+  id              String   @id @default(uuid())
+  user_id         String
+  type            String
+  amount          Decimal
+  direction       String
+  status          String   @default("PENDING")
+  reference_id    String?
+  idempotency_key String?  @unique
+  description     String?
+  created_at      DateTime @default(now())
+  user            users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model contracts {
+  id           String       @id @default(uuid())
+  client_id    String
+  developer_id String?
+  title        String
+  description  String?
+  currency     String       @default("KES")
+  total_amount Decimal
+  status       String       @default("DRAFT")
+  created_at   DateTime     @default(now())
+  updated_at   DateTime     @updatedAt
+  client       users        @relation("client", fields: [client_id], references: [id], onDelete: Cascade)
+  developer    users?       @relation("developer", fields: [developer_id], references: [id])
+  milestones   milestones[]
+}
+
+model milestones {
+  id          String    @id @default(uuid())
+  contract_id String
+  title       String
+  description String?
+  amount      Decimal
+  due_at      DateTime?
+  order_index Int       @default(0)
+  status      String    @default("NOT_STARTED")
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  contract    contracts @relation(fields: [contract_id], references: [id], onDelete: Cascade)
+}
+
+// Other
+model skills {
+  id          String        @id @default(uuid())
+  name        String        @unique
+  description String?
+  user_skills user_skills[]
+}
+
+model user_skills {
+  id       String @id @default(uuid())
+  user_id  String
+  skill_id String
+  user     users  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  skill    skills @relation(fields: [skill_id], references: [id], onDelete: Cascade)
+}
+
+model user_ai_preferences {
+  id                 String   @id @default(uuid())
+  user_id            String   @unique
+  ai_personality     String   @default("professional")
+  response_length    String   @default("medium")
+  enable_suggestions Boolean  @default(true)
+  created_at         DateTime @default(now())
+  updated_at         DateTime @updatedAt
+  user               users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model notifications {
+  id         String   @id @default(uuid())
+  user_id    String
+  title      String
+  message    String
+  is_read    Boolean  @default(false)
+  created_at DateTime @default(now())
+  user       users    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
