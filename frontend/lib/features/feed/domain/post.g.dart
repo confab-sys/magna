@@ -17,9 +17,7 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
       imageUrl: json['image_url'] as String?,
       likeCount: (json['like_count'] as num?)?.toInt() ?? 0,
       commentCount: (json['comment_count'] as num?)?.toInt() ?? 0,
-      isLiked: (json['is_liked'] as dynamic) is int 
-          ? (json['is_liked'] as int) == 1 
-          : (json['is_liked'] as bool? ?? false),
+      isLiked: json['is_liked'] as bool? ?? false,
       createdAt: DateTime.parse(json['created_at'] as String),
     );
 

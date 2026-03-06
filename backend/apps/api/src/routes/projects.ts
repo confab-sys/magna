@@ -229,19 +229,15 @@ projectRoutes.post('/', authMiddleware, async (c) => {
 
   // Handle multipart file upload for 'image'
   const imageFile = body['image'];
-  let debugInfo: any = {};
   
   if (imageFile) {
-    debugInfo.imageFieldType = typeof imageFile;
     if (typeof imageFile !== 'string') {
       try {
         const fileId = crypto.randomUUID();
         const fileName = (imageFile as any).name || 'project-image.jpg';
-        debugInfo.fileName = fileName;
         const key = `projects/${fileId}-${fileName}`;
         
         const buffer = await (imageFile as any).arrayBuffer();
-        debugInfo.bufferLength = buffer.byteLength;
         
         // Upload to R2
         await c.env.MEDIA.put(key, buffer);
@@ -249,15 +245,12 @@ projectRoutes.post('/', authMiddleware, async (c) => {
         // Construct public URL
         const origin = new URL(c.req.url).origin;
         image_url = `${origin}/api/files/${key}`;
-        debugInfo.uploadedUrl = image_url;
       } catch (e: any) {
         console.error('Failed to upload project image:', e);
-        debugInfo.uploadError = e.message;
       }
     } else {
       // If it's already a string, use it
       image_url = imageFile;
-      debugInfo.imageWasString = true;
     }
   }
 
@@ -314,11 +307,10 @@ projectRoutes.post('/', authMiddleware, async (c) => {
     return c.json({ 
       message: 'Project created', 
       id, 
-      imageUrl: image_url,
-      debug: debugInfo 
+      imageUrl: image_url
     }, 201);
   } catch (e: any) {
-    return c.json({ error: e.message, debug: debugInfo }, 500);
+    return c.json({ error: e.message }, 500);
   }
 });
 

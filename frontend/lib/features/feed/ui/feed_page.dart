@@ -245,9 +245,7 @@ class _FeedPageState extends State<FeedPage> with SingleTickerProviderStateMixin
         children: [
           if (_isMenuOpen) ...[
             _buildMenuItem('Create Job', PhosphorIcons.briefcase(), () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Create Job coming soon!')),
-              );
+              context.push('/create-job');
             }),
             const SizedBox(height: 16),
             _buildMenuItem('Create Project', PhosphorIcons.folderPlus(), () {
@@ -255,9 +253,7 @@ class _FeedPageState extends State<FeedPage> with SingleTickerProviderStateMixin
             }),
             const SizedBox(height: 16),
             _buildMenuItem('Create Post', PhosphorIcons.notePencil(), () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Create Post coming soon!')),
-              );
+              context.push('/create-post');
             }),
             const SizedBox(height: 16),
           ],

@@ -76,7 +76,45 @@ postRoutes.get('/:id', async (c) => {
 
 postRoutes.post('/', authMiddleware, async (c) => {
   const userId = c.get('userId');
-  const { title, content, post_type, category_id, image_url } = await c.req.json();
+  
+  let body: any;
+  const contentType = c.req.header('content-type');
+  
+  if (contentType?.includes('application/json')) {
+    body = await c.req.json();
+  } else {
+    body = await c.req.parseBody();
+  }
+  
+  const title = body['title'];
+  const content = body['content'];
+  const post_type = body['post_type'];
+  const category_id = body['category_id'];
+  let image_url = body['image_url'];
+
+  // Handle multipart file upload for 'image'
+  const imageFile = body['image'];
+  if (imageFile) {
+    if (typeof imageFile !== 'string') {
+      try {
+        const fileId = crypto.randomUUID();
+        const fileName = (imageFile as any).name || 'post-image.jpg';
+        const key = `posts/${fileId}-${fileName}`;
+        const buffer = await (imageFile as any).arrayBuffer();
+        
+        // Upload to R2
+        await c.env.MEDIA.put(key, buffer);
+        
+        // Construct public URL
+        const origin = new URL(c.req.url).origin;
+        image_url = `${origin}/api/files/${key}`;
+      } catch (e: any) {
+        console.error('Failed to upload post image:', e);
+      }
+    } else {
+      image_url = imageFile;
+    }
+  }
 
   if (!title) {
     return c.json({ error: 'Title is required' }, 400);
@@ -84,10 +122,15 @@ postRoutes.post('/', authMiddleware, async (c) => {
 
   try {
     const id = crypto.randomUUID();
+    // Ensure D1 compatibility by using null instead of undefined
+    const safeContent = content || null;
+    const safePostType = post_type || 'regular';
+    const safeCategoryId = category_id || null;
+
     await c.env.DB.prepare(`
       INSERT INTO posts (id, title, content, post_type, author_id, category_id)
       VALUES (?, ?, ?, ?, ?, ?)
-    `).bind(id, title, content, post_type || 'regular', userId, category_id || null).run();
+    `).bind(id, title, safeContent, safePostType, userId, safeCategoryId).run();
 
     if (image_url) {
       const mediaId = crypto.randomUUID();
@@ -100,9 +143,6 @@ postRoutes.post('/', authMiddleware, async (c) => {
         INSERT INTO post_media (id, post_id, media_id) VALUES (?, ?, ?)
       `).bind(postMediaId, id, mediaId).run();
     }
-
-    // Invalidate feed cache
-    await c.env.CACHE.delete('global_feed');
 
     return c.json({ message: 'Post created', id }, 201);
   } catch (e: any) {

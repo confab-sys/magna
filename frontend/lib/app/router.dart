@@ -21,6 +21,8 @@ import 'package:magna_coders/features/post_details/ui/pages/post_details_page.da
 import 'package:magna_coders/features/project_details/ui/pages/project_details_page.dart';
 import 'package:magna_coders/features/job_details/ui/pages/job_details_page.dart';
 import 'package:magna_coders/features/projects/ui/pages/create_project_page.dart';
+import 'package:magna_coders/features/jobs/ui/pages/create_job_page.dart';
+import 'package:magna_coders/features/feed/ui/pages/create_post_page.dart';
 
 class AppShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -119,6 +121,14 @@ class AppRouter {
       GoRoute(
         path: '/create-project',
         builder: (context, state) => const CreateProjectPage(),
+      ),
+      GoRoute(
+        path: '/create-job',
+        builder: (context, state) => const CreateJobPage(),
+      ),
+      GoRoute(
+        path: '/create-post',
+        builder: (context, state) => const CreatePostPage(),
       ),
       GoRoute(
         path: '/job/:jobId',

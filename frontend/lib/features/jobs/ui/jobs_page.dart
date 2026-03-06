@@ -47,10 +47,7 @@ class _JobsPageState extends State<JobsPage> {
           IconButton(
             icon: PhosphorIcon(PhosphorIcons.plus()),
             onPressed: () {
-              // Navigate to create job
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Create Job coming soon!')),
-              );
+              context.push('/create-job');
             },
           ),
         ],

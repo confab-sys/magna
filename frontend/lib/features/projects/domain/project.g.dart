@@ -23,11 +23,16 @@ Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
       liveDemoUrl: json['live_demo_url'] as String?,
       imageUrl: json['image_url'] as String?,
       status: json['status'] as String,
+      visibility: json['visibility'] as String? ?? 'public',
+      startDate: json['start_date'] == null
+          ? null
+          : DateTime.parse(json['start_date'] as String),
+      endDate: json['end_date'] == null
+          ? null
+          : DateTime.parse(json['end_date'] as String),
       likesCount: (json['likes_count'] as num?)?.toInt() ?? 0,
       commentsCount: (json['comments_count'] as num?)?.toInt() ?? 0,
-      isLiked: (json['is_liked'] as dynamic) is int 
-          ? (json['is_liked'] as int) == 1 
-          : (json['is_liked'] as bool? ?? false),
+      isLiked: json['is_liked'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
@@ -44,6 +49,9 @@ Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
       'live_demo_url': instance.liveDemoUrl,
       'image_url': instance.imageUrl,
       'status': instance.status,
+      'visibility': instance.visibility,
+      'start_date': instance.startDate?.toIso8601String(),
+      'end_date': instance.endDate?.toIso8601String(),
       'likes_count': instance.likesCount,
       'comments_count': instance.commentsCount,
       'is_liked': instance.isLiked,

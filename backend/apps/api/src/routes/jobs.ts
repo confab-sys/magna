@@ -79,8 +79,49 @@ jobRoutes.post('/companies', authMiddleware, async (c) => {
 // POST /api/jobs - Create job
 jobRoutes.post('/', authMiddleware, async (c) => {
   const userId = c.get('userId');
-  const body = await c.req.json();
-  const { title, description, company_id, location, salary, job_type, deadline, category_id, job_image_url } = body;
+  
+  let body: any;
+  const contentType = c.req.header('content-type');
+  
+  if (contentType?.includes('application/json')) {
+    body = await c.req.json();
+  } else {
+    body = await c.req.parseBody();
+  }
+  
+  const title = body['title'];
+  const description = body['description'];
+  const company_id = body['company_id'];
+  const location = body['location'];
+  const salary = body['salary'];
+  const job_type = body['job_type'];
+  const deadline = body['deadline'];
+  const category_id = body['category_id'];
+  let job_image_url = body['job_image_url'];
+
+  // Handle multipart file upload for 'image'
+  const imageFile = body['image'];
+  if (imageFile) {
+    if (typeof imageFile !== 'string') {
+      try {
+        const fileId = crypto.randomUUID();
+        const fileName = (imageFile as any).name || 'job-image.jpg';
+        const key = `jobs/${fileId}-${fileName}`;
+        const buffer = await (imageFile as any).arrayBuffer();
+        
+        // Upload to R2
+        await c.env.MEDIA.put(key, buffer);
+        
+        // Construct public URL
+        const origin = new URL(c.req.url).origin;
+        job_image_url = `${origin}/api/files/${key}`;
+      } catch (e: any) {
+        console.error('Failed to upload job image:', e);
+      }
+    } else {
+      job_image_url = imageFile;
+    }
+  }
 
   if (!title) {
     return c.json({ error: 'Title is required' }, 400);
@@ -88,8 +129,14 @@ jobRoutes.post('/', authMiddleware, async (c) => {
 
   try {
     const id = crypto.randomUUID();
-    // Use NULL for optional category_id if not provided
+    // Ensure all values are either string or null, NOT undefined for D1
     const safeCategoryId = category_id || null;
+    const safeCompanyId = company_id || null;
+    const safeLocation = location || null;
+    const safeSalary = salary || null;
+    const safeJobType = job_type || null;
+    const safeDeadline = deadline || null;
+    const safeJobImageUrl = job_image_url || null;
 
     await c.env.DB.prepare(`
       INSERT INTO jobs (
@@ -97,8 +144,8 @@ jobRoutes.post('/', authMiddleware, async (c) => {
         deadline, author_id, category_id, job_image_url, created_at, updated_at
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     `).bind(
-      id, title, description, company_id, location, salary, job_type, 
-      deadline, userId, safeCategoryId, job_image_url
+      id, title, description, safeCompanyId, safeLocation, safeSalary, safeJobType, 
+      safeDeadline, userId, safeCategoryId, safeJobImageUrl
     ).run();
 
     return c.json({ message: 'Job created', id }, 201);

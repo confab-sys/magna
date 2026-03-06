@@ -15,6 +15,30 @@ class User {
   final String? tagline;
   final String? role;
 
+  @JsonKey(name: 'website_url')
+  final String? websiteUrl;
+
+  @JsonKey(name: 'github_url')
+  final String? githubUrl;
+
+  @JsonKey(name: 'linkedin_url')
+  final String? linkedinUrl;
+
+  @JsonKey(name: 'twitter_url')
+  final String? twitterUrl;
+
+  @JsonKey(name: 'whatsapp_url')
+  final String? whatsappUrl;
+
+  @JsonKey(name: 'categories')
+  final List<String> categories;
+
+  @JsonKey(name: 'lookingFor')
+  final List<String> lookingFor;
+
+  @JsonKey(name: 'skills')
+  final List<String> skills;
+
   User({
     required this.id,
     required this.username,
@@ -23,6 +47,14 @@ class User {
     this.bio,
     this.tagline,
     this.role,
+    this.websiteUrl,
+    this.githubUrl,
+    this.linkedinUrl,
+    this.twitterUrl,
+    this.whatsappUrl,
+    this.categories = const [],
+    this.lookingFor = const [],
+    this.skills = const [],
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

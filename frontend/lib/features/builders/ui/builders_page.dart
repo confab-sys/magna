@@ -4,6 +4,7 @@ import 'package:magna_coders/app/theme/colors.dart';
 import 'package:magna_coders/app/theme/typography.dart';
 import 'package:magna_coders/features/builders/data/builders_repository.dart';
 import 'package:magna_coders/features/builders/domain/user.dart';
+import 'package:magna_coders/features/builders/ui/widgets/builder_card.dart';
 import 'package:magna_coders/shared/widgets/app_loader.dart';
 import 'package:magna_coders/shared/widgets/empty_state.dart';
 
@@ -36,6 +37,39 @@ class _BuildersPageState extends State<BuildersPage> {
     }
   }
 
+  BuilderCardData _mapUserToCardData(User user) {
+    final List<BuilderSocialLink> socialLinks = [];
+    if (user.githubUrl != null) {
+      socialLinks.add(BuilderSocialLink(type: 'github', label: 'GitHub', url: user.githubUrl!));
+    }
+    if (user.linkedinUrl != null) {
+      socialLinks.add(BuilderSocialLink(type: 'linkedin', label: 'LinkedIn', url: user.linkedinUrl!));
+    }
+    if (user.twitterUrl != null) {
+      socialLinks.add(BuilderSocialLink(type: 'twitter', label: 'Twitter', url: user.twitterUrl!));
+    }
+    if (user.whatsappUrl != null) {
+      socialLinks.add(BuilderSocialLink(type: 'whatsapp', label: 'WhatsApp', url: user.whatsappUrl!));
+    }
+    if (user.websiteUrl != null) {
+      socialLinks.add(BuilderSocialLink(type: 'website', label: 'Website', url: user.websiteUrl!));
+    }
+
+    return BuilderCardData(
+      id: user.id,
+      name: user.username,
+      avatarUrl: user.avatarUrl,
+      headline: user.tagline ?? user.role ?? 'Magna Builder',
+      location: user.location,
+      bio: user.bio,
+      socialLinks: socialLinks,
+      isAvailable: true, // Default to true for now
+      categories: user.categories,
+      skills: user.skills,
+      lookingFor: user.lookingFor,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,83 +97,15 @@ class _BuildersPageState extends State<BuildersPage> {
                         const SizedBox(height: 12),
                     itemBuilder: (context, index) {
                       final user = _users[index];
-                      return _BuilderCard(user: user);
+                      return BuilderCard(
+                        builder: _mapUserToCardData(user),
+                        onConnectTap: () {},
+                        onMessageTap: () {},
+                        onSocialTap: (link) {},
+                      );
                     },
                   ),
                 ),
-    );
-  }
-}
-
-class _BuilderCard extends StatelessWidget {
-  final User user;
-
-  const _BuilderCard({required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(12),
-        leading: CircleAvatar(
-          radius: 24,
-          backgroundColor: AppColors.primary.withOpacity(0.1),
-          backgroundImage:
-              user.avatarUrl != null ? NetworkImage(user.avatarUrl!) : null,
-          child: user.avatarUrl == null
-              ? Text(
-                  user.username[0].toUpperCase(),
-                  style: AppTypography.h3.copyWith(color: AppColors.primary),
-                )
-              : null,
-        ),
-        title: Text(
-          user.username,
-          style: AppTypography.bodyMedium.copyWith(fontWeight: FontWeight.bold),
-        ),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (user.tagline != null && user.tagline!.isNotEmpty)
-              Text(
-                user.tagline!,
-                style: AppTypography.bodySmall,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            if (user.role != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                  decoration: BoxDecoration(
-                    color: AppColors.secondary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Text(
-                    user.role!,
-                    style: AppTypography.bodySmall.copyWith(
-                      color: AppColors.secondary,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-          ],
-        ),
-        trailing: Icon(PhosphorIcons.caretRight(),
-            color: AppColors.textSecondary, size: 16),
-        onTap: () {
-          // Navigate to profile details
-        },
-      ),
     );
   }
 }

@@ -23,9 +23,7 @@ Job _$JobFromJson(Map<String, dynamic> json) => Job(
       createdAt: DateTime.parse(json['created_at'] as String),
       likesCount: (json['likes_count'] as num?)?.toInt() ?? 0,
       commentsCount: (json['comments_count'] as num?)?.toInt() ?? 0,
-      isLiked: (json['is_liked'] as dynamic) is int 
-          ? (json['is_liked'] as int) == 1 
-          : (json['is_liked'] as bool? ?? false),
+      isLiked: json['is_liked'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$JobToJson(Job instance) => <String, dynamic>{
