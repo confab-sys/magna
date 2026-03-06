@@ -5,6 +5,7 @@ export const userSchema = z.object({
   username: z.string().min(3),
   email: z.string().email(),
   avatar_url: z.string().url().nullable().optional(),
+  cover_photo_url: z.string().url().nullable().optional(),
   bio: z.string().max(500).nullable().optional(),
   tagline: z.string().max(100).nullable().optional(),
   location: z.string().nullable().optional(),

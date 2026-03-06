@@ -70,7 +70,8 @@ authRoutes.post('/login', async (c) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        avatar_url: user.avatar_url
+        avatar_url: user.avatar_url,
+        cover_photo_url: user.cover_photo_url
       }
     });
 

@@ -6,7 +6,9 @@ import 'package:magna_coders/features/auth/ui/login_page.dart';
 import 'package:magna_coders/features/auth/ui/register_page.dart';
 import 'package:magna_coders/features/auth/ui/oauth_callback_page.dart';
 import 'package:magna_coders/features/feed/ui/feed_page.dart';
-import 'package:magna_coders/features/builders/ui/builders_page.dart';
+import 'package:magna_coders/features/builders/ui/screens/builders_page.dart';
+import 'package:magna_coders/features/builders/ui/screens/builder_profile_screen.dart';
+import 'package:magna_coders/features/builders/domain/user.dart';
 import 'package:magna_coders/features/messages/ui/chats_page.dart';
 import 'package:magna_coders/features/messages/ui/chat_messages_page.dart';
 import 'package:magna_coders/features/notifications/ui/notifications_page.dart';
@@ -105,6 +107,17 @@ class AppRouter {
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/builder/:builderId',
+        builder: (context, state) {
+          final builderId = state.pathParameters['builderId']!;
+          final user = state.extra as User?;
+          return BuilderProfileScreen(
+            builderId: builderId,
+            initialUser: user,
+          );
+        },
+      ),
       GoRoute(
         path: '/post/:postId',
         builder: (context, state) {

@@ -10,6 +10,9 @@ class User {
   @JsonKey(name: 'avatar_url')
   final String? avatarUrl;
   
+  @JsonKey(name: 'cover_photo_url')
+  final String? coverPhotoUrl;
+
   final String? location;
   final String? bio;
   final String? tagline;
@@ -43,6 +46,7 @@ class User {
     required this.id,
     required this.username,
     this.avatarUrl,
+    this.coverPhotoUrl,
     this.location,
     this.bio,
     this.tagline,

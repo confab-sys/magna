@@ -4,6 +4,7 @@ const path = require('path');
 
 const API_URL = "https://magna-coders-api.magna-coders.workers.dev";
 const ALVIN_IMAGE_PATH = path.join(__dirname, 'alvin.png');
+const ALVIN_COVER_IMAGE_PATH = path.join(__dirname, 'alvin-cover.jpg');
 
 const alvinUser = {
     username: "Alvin",
@@ -79,8 +80,9 @@ async function uploadAlvin() {
         "Authorization": `Bearer ${token}` 
     };
 
-    // 2. Upload Profile Image
+    // 2. Upload Profile Image(s)
     let avatarUrl = "";
+    let coverPhotoUrl = "";
     try {
         console.log("\n2. Uploading Profile Image...");
         
@@ -91,7 +93,7 @@ async function uploadAlvin() {
         const fileContent = fs.readFileSync(ALVIN_IMAGE_PATH);
         const filename = "alvin.png";
 
-        // Get Upload URL
+        // Get Upload URL for avatar
         const uploadUrlRes = await fetch(`${API_URL}/api/files/upload-url?filename=${filename}`, {
             headers: authHeaders
         });
@@ -101,9 +103,7 @@ async function uploadAlvin() {
         
         console.log(`ℹ️ Got upload URL for key: ${uploadData.key}`);
 
-        // Upload to R2 via the signed URL (or direct PUT if the API proxies it)
-        // The API returns `uploadUrl` which is the endpoint to PUT to.
-        
+        // Upload avatar to R2 via the signed URL (or direct PUT if the API proxies it)
         const putRes = await fetch(uploadData.uploadUrl, {
             method: "PUT",
             headers: {
@@ -122,6 +122,43 @@ async function uploadAlvin() {
         avatarUrl = uploadData.publicUrl;
         console.log(`ℹ️ Public URL: ${avatarUrl}`);
 
+        // Upload cover photo if available
+        console.log("\n2b. Uploading Cover Photo...");
+
+        if (!fs.existsSync(ALVIN_COVER_IMAGE_PATH)) {
+            console.warn(`Cover image file not found at ${ALVIN_COVER_IMAGE_PATH}, skipping cover photo upload.`);
+        } else {
+            const coverFileContent = fs.readFileSync(ALVIN_COVER_IMAGE_PATH);
+            const coverFilename = "alvin-cover.jpg";
+
+            const coverUploadUrlRes = await fetch(`${API_URL}/api/files/upload-url?filename=${coverFilename}`, {
+                headers: authHeaders
+            });
+            const coverUploadData = await coverUploadUrlRes.json();
+
+            if (!coverUploadUrlRes.ok) throw new Error(coverUploadData.error || "Failed to get cover upload URL");
+
+            console.log(`ℹ️ Got cover upload URL for key: ${coverUploadData.key}`);
+
+            const coverPutRes = await fetch(coverUploadData.uploadUrl, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "image/jpeg",
+                    ...authHeaders
+                },
+                body: coverFileContent
+            });
+
+            if (!coverPutRes.ok) {
+                const text = await coverPutRes.text();
+                throw new Error(`Cover file upload failed: ${text}`);
+            }
+
+            console.log("✅ Cover image uploaded successfully.");
+            coverPhotoUrl = coverUploadData.publicUrl;
+            console.log(`ℹ️ Cover Public URL: ${coverPhotoUrl}`);
+        }
+
     } catch (e) {
         console.error("❌ Image Upload Failed:", e.message);
         return;
@@ -133,6 +170,7 @@ async function uploadAlvin() {
         
         const updateBody = {
             avatar_url: avatarUrl,
+            cover_photo_url: coverPhotoUrl || null,
             location: alvinUser.location,
             bio: alvinUser.tagline, 
             tagline: alvinUser.tagline,

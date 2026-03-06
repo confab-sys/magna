@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:magna_coders/app/theme/colors.dart';
 import 'package:magna_coders/app/theme/typography.dart';
@@ -99,6 +100,10 @@ class _BuildersPageState extends State<BuildersPage> {
                       final user = _users[index];
                       return BuilderCard(
                         builder: _mapUserToCardData(user),
+                        onCardTap: () => context.push(
+                          '/builder/${user.id}',
+                          extra: user,
+                        ),
                         onConnectTap: () {},
                         onMessageTap: () {},
                         onSocialTap: (link) {},
