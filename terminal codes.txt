@@ -1,1 +1,4 @@
 flutter run -d web-server --web-port 8081
+node post-x.js
+Get-ChildItem -Path C:\MAGNA -Filter "x" -Recurse
+cd c:\MAGNA\backend\apps\api; npx wrangler deploy

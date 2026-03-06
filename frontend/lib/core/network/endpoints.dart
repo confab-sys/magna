@@ -4,6 +4,8 @@ class Endpoints {
   static const postsFeed = '/api/posts/feed';
   static const posts = '/api/posts';
   static const comments = '/api/comments';
+  static String commentsByPost(String postId) => '/api/comments/post/$postId';
+  static String likeComment(String id) => '/api/comments/$id/like';
   static const users = '/api/users';
   static const usersProfile = '/api/users/profile';
   static const projects = '/api/projects';
@@ -20,6 +22,8 @@ class Endpoints {
 
   static String postById(String id) => '/api/posts/$id';
   static String likePost(String id) => '/api/posts/$id/like';
+  static String likeJob(String id) => '/api/jobs/$id/like';
+  static String likeProject(String id) => '/api/projects/$id/like';
   static String userById(String id) => '/api/users/$id';
   static String projectById(String id) => '/api/projects/$id';
   static String jobById(String id) => '/api/jobs/$id';

@@ -17,6 +17,11 @@ import 'package:magna_coders/features/contracts/ui/contracts_page.dart';
 import 'package:magna_coders/features/magna_school/ui/courses_page.dart';
 import 'package:magna_coders/features/magna_podcast/ui/podcasts_page.dart';
 
+import 'package:magna_coders/features/post_details/ui/pages/post_details_page.dart';
+import 'package:magna_coders/features/project_details/ui/pages/project_details_page.dart';
+import 'package:magna_coders/features/job_details/ui/pages/job_details_page.dart';
+import 'package:magna_coders/features/projects/ui/pages/create_project_page.dart';
+
 class AppShell extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
   const AppShell({super.key, required this.navigationShell});
@@ -98,6 +103,30 @@ class AppRouter {
       return null;
     },
     routes: [
+      GoRoute(
+        path: '/post/:postId',
+        builder: (context, state) {
+          final postId = state.pathParameters['postId']!;
+          return PostDetailsPage(postId: postId);
+        },
+      ),
+      GoRoute(
+        path: '/project/:projectId',
+        builder: (context, state) => ProjectDetailsPage(
+          projectId: state.pathParameters['projectId']!,
+        ),
+      ),
+      GoRoute(
+        path: '/create-project',
+        builder: (context, state) => const CreateProjectPage(),
+      ),
+      GoRoute(
+        path: '/job/:jobId',
+        builder: (context, state) {
+          final jobId = state.pathParameters['jobId']!;
+          return JobDetailsPage(jobId: jobId);
+        },
+      ),
       GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
       GoRoute(
           path: '/register', builder: (context, state) => const RegisterPage()),

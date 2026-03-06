@@ -17,4 +17,5 @@ class AppTypography {
   static TextStyle get h3 => textTheme.headlineSmall!;
   static TextStyle get bodyMedium => textTheme.bodyMedium!;
   static TextStyle get bodySmall => textTheme.bodySmall!;
+  static TextStyle get caption => textTheme.bodySmall!.copyWith(fontSize: 11, color: AppColors.textSecondary);
 }

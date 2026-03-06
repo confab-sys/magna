@@ -5,6 +5,7 @@ import 'package:magna_coders/app/theme/colors.dart';
 import 'package:magna_coders/app/theme/typography.dart';
 import 'package:magna_coders/features/projects/data/projects_repository.dart';
 import 'package:magna_coders/features/projects/domain/project.dart';
+import 'package:magna_coders/features/projects/ui/widgets/project_card.dart';
 import 'package:magna_coders/shared/widgets/app_loader.dart';
 import 'package:magna_coders/shared/widgets/empty_state.dart';
 
@@ -75,97 +76,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                         const SizedBox(height: 12),
                     itemBuilder: (context, index) {
                       final project = _projects[index];
-                      return _ProjectCard(project: project);
+                      return ProjectCard(project: project);
                     },
                   ),
                 ),
-    );
-  }
-}
-
-class _ProjectCard extends StatelessWidget {
-  final Project project;
-
-  const _ProjectCard({required this.project});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.border),
-      ),
-      child: InkWell(
-        onTap: () {
-          // Navigate to project details
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      project.title,
-                      style: AppTypography.h3.copyWith(fontSize: 18),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  if (project.lookingForContributors)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.success.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        'Hiring',
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColors.success,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-              if (project.shortDescription != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  project.shortDescription!,
-                  style: AppTypography.bodyMedium.copyWith(
-                    color: AppColors.textSecondary,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Icon(PhosphorIcons.code(),
-                      size: 16, color: AppColors.textSecondary),
-                  const SizedBox(width: 4),
-                  Expanded(
-                    child: Text(
-                      project.techStack ?? 'Unknown stack',
-                      style: AppTypography.bodySmall,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

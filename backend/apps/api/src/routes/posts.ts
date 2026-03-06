@@ -8,7 +8,8 @@ export const postRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>
 postRoutes.get('/', async (c) => {
   try {
     const posts = await c.env.DB.prepare(`
-      SELECT p.*, u.username as author_name, u.avatar_url as author_avatar
+      SELECT p.*, u.username as author_name, u.avatar_url as author_avatar,
+      (SELECT m.url FROM media m JOIN post_media pm ON pm.media_id = m.id WHERE pm.post_id = p.id LIMIT 1) as image_url
       FROM posts p
       JOIN users u ON p.author_id = u.id
       ORDER BY p.created_at DESC
@@ -20,26 +21,30 @@ postRoutes.get('/', async (c) => {
   }
 });
 
-postRoutes.get('/feed', async (c) => {
-  // Try to get from cache first
-  const cachedFeed = await c.env.CACHE.get('global_feed');
-  if (cachedFeed) {
-    return c.json({ posts: JSON.parse(cachedFeed), source: 'cache' });
-  }
+postRoutes.get('/feed', authMiddleware, async (c) => {
+  const userId = c.get('userId');
 
   try {
     const posts = await c.env.DB.prepare(`
-      SELECT p.*, u.username as author_name, u.avatar_url as author_avatar
+      SELECT 
+        p.*, 
+        u.username as author_name, 
+        u.avatar_url as author_avatar,
+        (SELECT m.url FROM media m JOIN post_media pm ON pm.media_id = m.id WHERE pm.post_id = p.id LIMIT 1) as image_url,
+        EXISTS (SELECT 1 FROM likes WHERE post_id = p.id AND user_id = ?) as is_liked
       FROM posts p
       JOIN users u ON p.author_id = u.id
       ORDER BY p.created_at DESC
       LIMIT 50
-    `).all();
+    `).bind(userId).all();
 
-    // Cache the result for 60 seconds
-    await c.env.CACHE.put('global_feed', JSON.stringify(posts.results), { expirationTtl: 60 });
+    // Map is_liked to boolean
+    const results = posts.results.map((p: any) => ({
+      ...p,
+      is_liked: p.is_liked === 1
+    }));
 
-    return c.json({ posts: posts.results, source: 'db' });
+    return c.json({ posts: results, source: 'db' });
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
   }
@@ -52,7 +57,8 @@ postRoutes.get('/:id', async (c) => {
     const post = await c.env.DB.prepare(`
       SELECT p.*, u.username as author_name, u.avatar_url as author_avatar,
       (SELECT COUNT(*) FROM likes WHERE post_id = p.id) as like_count,
-      (SELECT COUNT(*) FROM comments WHERE post_id = p.id) as comment_count
+      (SELECT COUNT(*) FROM comments WHERE post_id = p.id) as comment_count,
+      (SELECT m.url FROM media m JOIN post_media pm ON pm.media_id = m.id WHERE pm.post_id = p.id LIMIT 1) as image_url
       FROM posts p
       JOIN users u ON p.author_id = u.id
       WHERE p.id = ?
@@ -70,7 +76,7 @@ postRoutes.get('/:id', async (c) => {
 
 postRoutes.post('/', authMiddleware, async (c) => {
   const userId = c.get('userId');
-  const { title, content, post_type, category_id } = await c.req.json();
+  const { title, content, post_type, category_id, image_url } = await c.req.json();
 
   if (!title) {
     return c.json({ error: 'Title is required' }, 400);
@@ -82,6 +88,18 @@ postRoutes.post('/', authMiddleware, async (c) => {
       INSERT INTO posts (id, title, content, post_type, author_id, category_id)
       VALUES (?, ?, ?, ?, ?, ?)
     `).bind(id, title, content, post_type || 'regular', userId, category_id || null).run();
+
+    if (image_url) {
+      const mediaId = crypto.randomUUID();
+      await c.env.DB.prepare(`
+        INSERT INTO media (id, url, type) VALUES (?, ?, ?)
+      `).bind(mediaId, image_url, 'image').run();
+
+      const postMediaId = crypto.randomUUID();
+      await c.env.DB.prepare(`
+        INSERT INTO post_media (id, post_id, media_id) VALUES (?, ?, ?)
+      `).bind(postMediaId, id, mediaId).run();
+    }
 
     // Invalidate feed cache
     await c.env.CACHE.delete('global_feed');
@@ -107,6 +125,12 @@ postRoutes.post('/:id/like', authMiddleware, async (c) => {
       await c.env.DB.prepare(
         'DELETE FROM likes WHERE user_id = ? AND post_id = ?'
       ).bind(userId, postId).run();
+      
+      // Decrement like count
+      await c.env.DB.prepare(
+        'UPDATE posts SET like_count = like_count - 1 WHERE id = ?'
+      ).bind(postId).run();
+      
       return c.json({ message: 'Post unliked' });
     } else {
       // Like
@@ -114,6 +138,12 @@ postRoutes.post('/:id/like', authMiddleware, async (c) => {
       await c.env.DB.prepare(
         'INSERT INTO likes (id, user_id, post_id) VALUES (?, ?, ?)'
       ).bind(id, userId, postId).run();
+      
+      // Increment like count
+      await c.env.DB.prepare(
+        'UPDATE posts SET like_count = like_count + 1 WHERE id = ?'
+      ).bind(postId).run();
+      
       return c.json({ message: 'Post liked' });
     }
   } catch (e: any) {
@@ -152,6 +182,11 @@ postRoutes.post('/:id/comments', authMiddleware, async (c) => {
       INSERT INTO comments (id, content, author_id, post_id, parent_id)
       VALUES (?, ?, ?, ?, ?)
     `).bind(id, content, userId, postId, parent_id || null).run();
+
+    // Increment comment count
+    await c.env.DB.prepare(
+      'UPDATE posts SET comment_count = comment_count + 1 WHERE id = ?'
+    ).bind(postId).run();
 
     return c.json({ message: 'Comment added', id }, 201);
   } catch (e: any) {
