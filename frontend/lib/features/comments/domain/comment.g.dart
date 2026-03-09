@@ -8,13 +8,15 @@ part of 'comment.dart';
 
 Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       id: json['id'] as String,
-      postId: json['post_id'] as String,
+      postId: json['post_id'] as String?,
+      jobId: json['job_id'] as String?,
+      projectId: json['project_id'] as String?,
       authorId: json['author_id'] as String,
       authorName: json['author_name'] as String,
       authorAvatar: json['author_avatar'] as String?,
       content: json['content'] as String,
       likesCount: (json['likes_count'] as num?)?.toInt() ?? 0,
-      isLiked: json['is_liked'] as bool? ?? false,
+      isLiked: _isLikedFromJson(json['is_liked']),
       createdAt: DateTime.parse(json['created_at'] as String),
       parentId: json['parent_id'] as String?,
     );
@@ -22,6 +24,8 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
 Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       'id': instance.id,
       'post_id': instance.postId,
+      'job_id': instance.jobId,
+      'project_id': instance.projectId,
       'author_id': instance.authorId,
       'author_name': instance.authorName,
       'author_avatar': instance.authorAvatar,

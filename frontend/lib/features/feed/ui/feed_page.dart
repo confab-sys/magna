@@ -108,6 +108,24 @@ class _FeedPageState extends State<FeedPage> with SingleTickerProviderStateMixin
     }
   }
 
+  void _openCommentsSheet(
+    BuildContext context, {
+    required String entityId,
+    bool isJob = false,
+    bool isProject = false,
+  }) {
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => CommentsSheet(
+        postId: entityId,
+        isJob: isJob,
+        isProject: isProject,
+      ),
+    );
+  }
+
   Future<void> _loadFeed() async {
     setState(() => _loading = true);
     
@@ -313,9 +331,12 @@ class _FeedPageState extends State<FeedPage> with SingleTickerProviderStateMixin
                                     child: ProjectCard(
                                       project: item,
                                       onLike: _handleItemLiked,
-                                      onComment: () {
-                                        context.push('/project/${item.id}');
-                                      },
+                                      onComment: () => _openCommentsSheet(
+                                        context,
+                                        entityId: item.id,
+                                        isJob: false,
+                                        isProject: true,
+                                      ),
                                     ),
                                   );
                                 } else if (item is Job) {
@@ -327,9 +348,12 @@ class _FeedPageState extends State<FeedPage> with SingleTickerProviderStateMixin
                                       onApply: () {},
                                       onViewJob: () => context.push('/job/${item.id}'),
                                       onLike: _handleItemLiked,
-                                      onComment: () {
-                                         context.push('/job/${item.id}');
-                                       },
+                                      onComment: () => _openCommentsSheet(
+                                        context,
+                                        entityId: item.id,
+                                        isJob: true,
+                                        isProject: false,
+                                      ),
                                       onShare: () {},
                                     ),
                                   );
@@ -338,9 +362,12 @@ class _FeedPageState extends State<FeedPage> with SingleTickerProviderStateMixin
                                     key: ValueKey('post_${item.id}'),
                                     post: item,
                                     onLike: _handleItemLiked,
-                                    onComment: () {
-                                      context.push('/post/${item.id}');
-                                    },
+                                    onComment: () => _openCommentsSheet(
+                                      context,
+                                      entityId: item.id,
+                                      isJob: false,
+                                      isProject: false,
+                                    ),
                                     onShare: () {
                                       // Share post
                                     },

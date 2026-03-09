@@ -7,7 +7,13 @@ class Comment {
   final String id;
   
   @JsonKey(name: 'post_id')
-  final String postId;
+  final String? postId;
+
+  @JsonKey(name: 'job_id')
+  final String? jobId;
+
+  @JsonKey(name: 'project_id')
+  final String? projectId;
   
   @JsonKey(name: 'author_id')
   final String authorId;
@@ -23,7 +29,7 @@ class Comment {
   @JsonKey(name: 'likes_count')
   final int likesCount;
   
-  @JsonKey(name: 'is_liked')
+  @JsonKey(name: 'is_liked', fromJson: _isLikedFromJson)
   final bool isLiked;
   
   @JsonKey(name: 'created_at')
@@ -34,7 +40,9 @@ class Comment {
 
   Comment({
     required this.id,
-    required this.postId,
+    this.postId,
+    this.jobId,
+    this.projectId,
     required this.authorId,
     required this.authorName,
     this.authorAvatar,
@@ -49,3 +57,6 @@ class Comment {
   
   Map<String, dynamic> toJson() => _$CommentToJson(this);
 }
+
+bool _isLikedFromJson(dynamic value) =>
+    value == true || value == 1;

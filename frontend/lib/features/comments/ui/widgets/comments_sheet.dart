@@ -155,9 +155,9 @@ class _CommentsSheetState extends State<CommentsSheet> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Comments',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                    Text(
+                      'Comments (${_loading ? "…" : _comments.length})',
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                     IconButton(
                       icon: Icon(PhosphorIcons.x()),
@@ -168,15 +168,15 @@ class _CommentsSheetState extends State<CommentsSheet> {
               ),
               const Divider(height: 1),
               
-              // List
+              // Scrollable list (top comments first; scroll to see more)
               Expanded(
                 child: _loading
-                    ? const AppLoader()
+                    ? const Center(child: AppLoader())
                     : sortedComments.isEmpty
                         ? const Center(child: Text('No comments yet'))
                         : ListView.builder(
                             controller: scrollController,
-                            padding: const EdgeInsets.all(AppSpacing.md),
+                            padding: const EdgeInsets.fromLTRB(AppSpacing.md, AppSpacing.md, AppSpacing.md, 80),
                             itemCount: sortedComments.length,
                             itemBuilder: (context, index) {
                               final comment = sortedComments[index];

@@ -48,23 +48,19 @@ fileRoutes.put('/upload/*', async (c) => {
   
   const key = match[1]; // The part after /upload/
   
-  // Try to get body from various sources
-  let body = c.req.body; 
-  if (!body) {
-    // Fallback: try raw request body
-    body = c.req.raw.body;
-  }
+  // Use the underlying Fetch Request body stream
+  const body = c.req.raw.body;
 
   if (!body) {
-      // Last resort: check content-length
-      const length = c.req.header('content-length');
-      return c.json({ 
-          error: 'No file content provided', 
-          details: { 
-              contentLength: length,
-              contentType: c.req.header('content-type')
-          }
-      }, 400);
+    // Last resort: check content-length
+    const length = c.req.header('content-length');
+    return c.json({ 
+      error: 'No file content provided', 
+      details: { 
+        contentLength: length,
+        contentType: c.req.header('content-type')
+      }
+    }, 400);
   }
 
   try {

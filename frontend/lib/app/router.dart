@@ -108,17 +108,6 @@ class AppRouter {
     },
     routes: [
       GoRoute(
-        path: '/builder/:builderId',
-        builder: (context, state) {
-          final builderId = state.pathParameters['builderId']!;
-          final user = state.extra as User?;
-          return BuilderProfileScreen(
-            builderId: builderId,
-            initialUser: user,
-          );
-        },
-      ),
-      GoRoute(
         path: '/post/:postId',
         builder: (context, state) {
           final postId = state.pathParameters['postId']!;
@@ -180,8 +169,22 @@ class AppRouter {
           ]),
           StatefulShellBranch(routes: [
             GoRoute(
-                path: '/builders',
-                builder: (context, state) => const BuildersPage()),
+              path: '/builders',
+              builder: (context, state) => const BuildersPage(),
+              routes: [
+                GoRoute(
+                  path: ':builderId',
+                  builder: (context, state) {
+                    final builderId = state.pathParameters['builderId']!;
+                    final user = state.extra as User?;
+                    return BuilderProfileScreen(
+                      builderId: builderId,
+                      initialUser: user,
+                    );
+                  },
+                ),
+              ],
+            ),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

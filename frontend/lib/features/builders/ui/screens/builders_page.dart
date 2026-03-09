@@ -101,7 +101,7 @@ class _BuildersPageState extends State<BuildersPage> {
                       return BuilderCard(
                         builder: _mapUserToCardData(user),
                         onCardTap: () => context.push(
-                          '/builder/${user.id}',
+                          '/builders/${user.id}',
                           extra: user,
                         ),
                         onConnectTap: () {},
