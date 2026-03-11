@@ -9,8 +9,10 @@ import 'package:magna_coders/features/feed/ui/feed_page.dart';
 import 'package:magna_coders/features/builders/ui/screens/builders_page.dart';
 import 'package:magna_coders/features/builders/ui/screens/builder_profile_screen.dart';
 import 'package:magna_coders/features/builders/domain/user.dart';
-import 'package:magna_coders/features/messages/ui/chats_page.dart';
-import 'package:magna_coders/features/messages/ui/chat_messages_page.dart';
+import 'package:magna_coders/features/messages/ui/pages/messages_inbox_page.dart';
+import 'package:magna_coders/features/messages/ui/pages/conversation_page.dart';
+import 'package:magna_coders/features/messages/ui/pages/create_conversation_page.dart';
+import 'package:magna_coders/features/messages/ui/pages/discover_groups_page.dart';
 import 'package:magna_coders/features/notifications/ui/notifications_page.dart';
 import 'package:magna_coders/features/magna_ai/ui/ai_page.dart';
 import 'package:magna_coders/features/projects/ui/projects_page.dart';
@@ -43,8 +45,9 @@ class AppShell extends StatelessWidget {
     ),
     NavigationDestination(
       icon: PhosphorIcon(PhosphorIcons.chatsCircle()),
-      selectedIcon: PhosphorIcon(PhosphorIcons.chatsCircle(PhosphorIconsStyle.fill)),
-      label: 'Chats',
+      selectedIcon:
+          PhosphorIcon(PhosphorIcons.chatsCircle(PhosphorIconsStyle.fill)),
+      label: 'Messages',
     ),
     NavigationDestination(
       icon: PhosphorIcon(PhosphorIcons.bell()),
@@ -148,7 +151,7 @@ class AppRouter {
       // If we use /chats/:id, we should update the push calls.
       GoRoute(
         path: '/chat/:id',
-        builder: (context, state) => ChatMessagesPage(
+        builder: (context, state) => ConversationPage(
           conversationId: state.pathParameters['id']!,
         ),
       ),
@@ -186,20 +189,33 @@ class AppRouter {
               ],
             ),
           ]),
-          StatefulShellBranch(routes: [
-            GoRoute(
-                path: '/chats',
-                builder: (context, state) => const ChatsPage(),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: '/messages',
+                builder: (context, state) => const MessagesInboxPage(),
                 routes: [
                   GoRoute(
-                    path: ':id', // This matches /chats/:id but navigation logic uses /chat/:id
-                    // Let's fix navigation to use /chats/:id
-                    builder: (context, state) => ChatMessagesPage(
-                      conversationId: state.pathParameters['id']!,
+                    path: 'new',
+                    builder: (context, state) =>
+                        const CreateConversationPage(),
+                  ),
+                  GoRoute(
+                    path: 'conversation/:conversationId',
+                    builder: (context, state) => ConversationPage(
+                      conversationId:
+                          state.pathParameters['conversationId']!,
                     ),
                   ),
-                ]),
-          ]),
+                  GoRoute(
+                    path: 'discover-groups',
+                    builder: (context, state) =>
+                        const DiscoverGroupsPage(),
+                  ),
+                ],
+              ),
+            ],
+          ),
           StatefulShellBranch(routes: [
             GoRoute(
                 path: '/notifications',

@@ -38,28 +38,23 @@ class _CommentItemState extends State<CommentItem> {
     _likesCount = widget.comment.likesCount;
   }
 
-  @override
-  void didUpdateWidget(CommentItem oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.comment.id == widget.comment.id) {
-      _isLiked = widget.comment.isLiked;
-      _likesCount = widget.comment.likesCount;
-    }
-  }
-
   Future<void> _toggleLike() async {
     setState(() {
-      _isLiked = !_isLiked;
-      _likesCount += _isLiked ? 1 : -1;
+      if (_isLiked) {
+        // Unlike
+        _isLiked = false;
+        if (_likesCount > 0) {
+          _likesCount -= 1;
+        }
+      } else {
+        // Like
+        _isLiked = true;
+        _likesCount += 1;
+      }
     });
 
-    final success = await _repository.toggleLike(widget.comment.id);
-    if (!success && mounted) {
-      setState(() {
-        _isLiked = !_isLiked;
-        _likesCount = (_likesCount + (_isLiked ? 1 : -1)).clamp(0, 1 << 30);
-      });
-    }
+    // Best-effort sync with backend; keep optimistic UI even if it fails.
+    await _repository.toggleLike(widget.comment.id);
   }
 
   @override

@@ -16,7 +16,8 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => Comment(
       authorAvatar: json['author_avatar'] as String?,
       content: json['content'] as String,
       likesCount: (json['likes_count'] as num?)?.toInt() ?? 0,
-      isLiked: _isLikedFromJson(json['is_liked']),
+      isLiked:
+          json['is_liked'] == null ? false : _isLikedFromJson(json['is_liked']),
       createdAt: DateTime.parse(json['created_at'] as String),
       parentId: json['parent_id'] as String?,
     );

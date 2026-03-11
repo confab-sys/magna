@@ -10,8 +10,26 @@ class Endpoints {
   static const usersProfile = '/api/users/profile';
   static const projects = '/api/projects';
   static const jobs = '/api/jobs';
+
+  // Messages / conversations (v2, conversation-centric)
+  static const conversations = '/api/chat/conversations';
+  static String conversationById(String conversationId) =>
+      '/api/chat/conversations/$conversationId';
+  static String conversationMessages(String conversationId) =>
+      '/api/chat/conversations/$conversationId/messages';
+  static String createConversationMessage(String conversationId) =>
+      '/api/chat/conversations/$conversationId/messages';
+  static String markConversationRead(String conversationId) =>
+      '/api/chat/conversations/$conversationId/read';
+  static String updateConversationPreferences(String conversationId) =>
+      '/api/chat/conversations/$conversationId/preferences';
+  static String messageById(String messageId) =>
+      '/api/chat/messages/$messageId';
+
+  // Legacy chat endpoints kept for backward compatibility where still used.
   static const chatConversations = '/api/chat/conversations';
   static const chatMessages = '/api/chat/messages';
+
   static const notifications = '/api/notifications';
   static const aiChat = '/api/ai/chat';
   static const aiQuery = '/api/ai/query';
@@ -28,8 +46,7 @@ class Endpoints {
   static String projectById(String id) => '/api/projects/$id';
   static String jobById(String id) => '/api/jobs/$id';
   static String courseById(String id) => '/api/courses/$id';
-  static String messagesByConversation(String conversationId) =>
-      '/api/chat/messages/$conversationId'; // Note: Check backend if it's path param or query
+
   static String markNotificationRead(String id) =>
       '/api/notifications/$id/read';
 }
