@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:magna_coders/app/theme/colors.dart';
 import 'package:magna_coders/app/theme/typography.dart';
-import 'package:magna_coders/features/notifications/data/notifications_repository.dart';
-import 'package:magna_coders/features/notifications/domain/notification.dart';
+import 'package:magna_coders/features/notifications/ui/controllers/notifications_controller.dart';
+import 'package:magna_coders/features/notifications/ui/widgets/empty_notifications_state.dart';
+import 'package:magna_coders/features/notifications/ui/widgets/notification_list_item.dart';
 import 'package:magna_coders/shared/widgets/app_loader.dart';
-import 'package:magna_coders/shared/widgets/empty_state.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
@@ -15,145 +14,113 @@ class NotificationsPage extends StatefulWidget {
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
-  final _repository = NotificationsRepository();
-  bool _loading = true;
-  List<NotificationItem> _notifications = [];
+  late final NotificationsController _controller;
 
   @override
   void initState() {
     super.initState();
-    _loadNotifications();
+    _controller = NotificationsController()..addListener(_onStateChanged);
+    _controller.initialize();
   }
 
-  Future<void> _loadNotifications() async {
-    setState(() => _loading = true);
-    final notifications = await _repository.getNotifications();
+  @override
+  void dispose() {
+    _controller.removeListener(_onStateChanged);
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _onStateChanged() {
     if (mounted) {
-      setState(() {
-        _notifications = notifications;
-        _loading = false;
-      });
+      setState(() {});
     }
   }
 
-  Future<void> _markAsRead(NotificationItem notification) async {
-    if (notification.isRead) return;
-    
-    // Optimistic update
-    setState(() {
-      final index = _notifications.indexWhere((n) => n.id == notification.id);
-      if (index != -1) {
-        // Create new item with isRead = true
-        // But since NotificationItem fields are final and no copyWith, 
-        // we might need to rely on reload or just ignore for now if copyWith not implemented
-        // Let's just call API and refresh.
-      }
-    });
-
-    final success = await _repository.markAsRead(notification.id);
-    if (success) {
-      _loadNotifications();
-    }
+  Future<void> _onRefresh() {
+    return _controller.refreshNotifications();
   }
 
   @override
   Widget build(BuildContext context) {
+    final state = _controller.state;
+    final hasNotifications = state.notifications.isNotEmpty;
+
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Notifications'),
-        centerTitle: false,
-      ),
-      body: _loading
-          ? const AppLoader()
-          : _notifications.isEmpty
-              ? EmptyState(
-                  title: 'No notifications',
-                  message: 'You have no new notifications.',
-                  action: ElevatedButton(
-                    onPressed: _loadNotifications,
-                    child: const Text('Retry'),
-                  ),
-                )
-              : RefreshIndicator(
-                  onRefresh: _loadNotifications,
-                  child: ListView.separated(
-                    itemCount: _notifications.length,
-                    separatorBuilder: (context, index) => const Divider(height: 1),
-                    itemBuilder: (context, index) {
-                      final notification = _notifications[index];
-                      return _NotificationTile(
-                        notification: notification,
-                        onTap: () => _markAsRead(notification),
-                      );
-                    },
-                  ),
-                ),
-    );
-  }
-}
-
-class _NotificationTile extends StatelessWidget {
-  final NotificationItem notification;
-  final VoidCallback onTap;
-
-  const _NotificationTile({required this.notification, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: notification.isRead ? AppColors.background : AppColors.surface,
-      child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        leading: CircleAvatar(
-          backgroundColor: AppColors.secondary.withOpacity(0.1),
-          child: Icon(PhosphorIcons.bell(), color: AppColors.secondary),
-        ),
-        title: Text(
-          notification.title,
-          style: AppTypography.bodyMedium.copyWith(
-            fontWeight: notification.isRead ? FontWeight.normal : FontWeight.bold,
-          ),
-        ),
-        subtitle: Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 4),
-            Text(
-              notification.message,
-              style: AppTypography.bodySmall,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              _formatDate(notification.createdAt),
-              style: AppTypography.bodySmall.copyWith(
-                fontSize: 10,
-                color: AppColors.textSecondary.withOpacity(0.7),
+            const Text('Notifications'),
+            if (state.unreadCount > 0)
+              Text(
+                '${state.unreadCount} unread',
+                style: AppTypography.caption,
               ),
-            ),
           ],
         ),
-        trailing: !notification.isRead
-            ? Container(
-                width: 10,
-                height: 10,
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
+        centerTitle: false,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => _controller.refreshNotifications(),
+          ),
+        ],
+      ),
+      body: Builder(
+        builder: (context) {
+          switch (state.status) {
+            case NotificationsStatus.loading:
+              return const AppLoader();
+            case NotificationsStatus.error:
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        state.errorMessage ?? 'Failed to load notifications',
+                        style: AppTypography.bodyMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton(
+                        onPressed: _controller.refreshNotifications,
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            : null,
-        onTap: onTap,
+              );
+            case NotificationsStatus.empty:
+              return EmptyNotificationsState(onRefresh: _controller.refreshNotifications);
+            case NotificationsStatus.refreshing:
+            case NotificationsStatus.loaded:
+            case NotificationsStatus.idle:
+              if (!hasNotifications) {
+                return EmptyNotificationsState(onRefresh: _controller.refreshNotifications);
+              }
+
+              return RefreshIndicator(
+                onRefresh: _onRefresh,
+                child: ListView.separated(
+                  padding: const EdgeInsets.only(top: 4, bottom: 12),
+                  itemCount: state.notifications.length,
+                  separatorBuilder: (_, __) => const Divider(height: 1),
+                  itemBuilder: (context, index) {
+                    final notification = state.notifications[index];
+                    return NotificationListItem(
+                      notification: notification,
+                      onTap: () => _controller.markAsRead(notification),
+                    );
+                  },
+                ),
+              );
+          }
+        },
       ),
     );
   }
-
-  String _formatDate(DateTime date) {
-    final diff = DateTime.now().difference(date);
-    if (diff.inDays > 0) return '${diff.inDays}d ago';
-    if (diff.inHours > 0) return '${diff.inHours}h ago';
-    if (diff.inMinutes > 0) return '${diff.inMinutes}m ago';
-    return 'Just now';
-  }
 }
+

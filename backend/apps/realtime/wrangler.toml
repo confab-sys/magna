@@ -15,9 +15,17 @@ class_name = "ChatRoom"
 name = "ESCROW"
 class_name = "ContractEscrow"
 
+[[durable_objects.bindings]]
+name = "NOTIFICATION_HUB"
+class_name = "NotificationHub"
+
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["ChatRoom", "ContractEscrow"]
+
+[[migrations]]
+tag = "v2"
+new_sqlite_classes = ["NotificationHub"]
 
 [[d1_databases]]
 binding = "DB"
