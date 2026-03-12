@@ -3,6 +3,8 @@ export type Bindings = {
   CACHE: KVNamespace;
   MEDIA: R2Bucket;
   JWT_SECRET: string;
+  REALTIME: Fetcher;
+  REALTIME_INTERNAL_KEY: string;
   MAGNA_AI_BASE: string;
   R2_PUBLIC_URL: string;
 };

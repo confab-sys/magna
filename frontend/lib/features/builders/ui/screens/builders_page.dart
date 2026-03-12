@@ -105,7 +105,15 @@ class _BuildersPageState extends State<BuildersPage> {
                           extra: user,
                         ),
                         onConnectTap: () {},
-                        onMessageTap: () {},
+                        onMessageTap: () {
+                          context.push(
+                            '/messages/direct/${user.id}',
+                            extra: {
+                              'builderName': user.username,
+                              'builderAvatarUrl': user.avatarUrl,
+                            },
+                          );
+                        },
                         onSocialTap: (link) {},
                       );
                     },

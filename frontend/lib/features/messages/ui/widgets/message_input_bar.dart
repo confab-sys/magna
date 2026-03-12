@@ -3,7 +3,7 @@ import 'package:magna_coders/app/theme/colors.dart';
 import 'package:magna_coders/shared/widgets/app_text_field.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
-class MessageInputBar extends StatelessWidget {
+class MessageInputBar extends StatefulWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
   final VoidCallback? onAttach;
@@ -15,7 +15,34 @@ class MessageInputBar extends StatelessWidget {
     this.onAttach,
   });
 
-  bool get _canSend => controller.text.trim().isNotEmpty;
+  @override
+  State<MessageInputBar> createState() => _MessageInputBarState();
+}
+
+class _MessageInputBarState extends State<MessageInputBar> {
+  bool _canSend = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _canSend = widget.controller.text.trim().isNotEmpty;
+    widget.controller.addListener(_handleTextChanged);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_handleTextChanged);
+    super.dispose();
+  }
+
+  void _handleTextChanged() {
+    final next = widget.controller.text.trim().isNotEmpty;
+    if (next != _canSend) {
+      setState(() {
+        _canSend = next;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +59,7 @@ class MessageInputBar extends StatelessWidget {
         child: Row(
           children: [
             IconButton(
-              onPressed: onAttach,
+              onPressed: widget.onAttach,
               icon: PhosphorIcon(
                 PhosphorIcons.paperclip(),
                 size: 22,
@@ -41,7 +68,7 @@ class MessageInputBar extends StatelessWidget {
             const SizedBox(width: 8),
             Expanded(
               child: AppTextField(
-                controller: controller,
+                controller: widget.controller,
                 label: 'Message',
                 maxLines: 4,
                 minLines: 1,
@@ -49,7 +76,7 @@ class MessageInputBar extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             IconButton(
-              onPressed: _canSend ? onSend : null,
+              onPressed: _canSend ? widget.onSend : null,
               icon: PhosphorIcon(
                 PhosphorIcons.paperPlaneRight(),
                 size: 22,
@@ -62,4 +89,5 @@ class MessageInputBar extends StatelessWidget {
     );
   }
 }
+
 

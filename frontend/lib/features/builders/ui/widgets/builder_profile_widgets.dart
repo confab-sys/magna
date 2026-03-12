@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:magna_coders/app/theme/colors.dart';
 import 'package:magna_coders/app/theme/typography.dart';
@@ -322,7 +323,16 @@ class ProfileHeroCard extends StatelessWidget {
                     const SizedBox(width: 12),
                     Expanded(
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          // Open a direct message screen with this builder.
+                          context.push(
+                            '/messages/direct/${profile.id}',
+                            extra: {
+                              'builderName': profile.name,
+                              'builderAvatarUrl': profile.avatarUrl,
+                            },
+                          );
+                        },
                         style: OutlinedButton.styleFrom(
                           fixedSize: const Size.fromHeight(44),
                           shape: RoundedRectangleBorder(
@@ -744,7 +754,16 @@ class BuilderConnectionsTab extends StatelessWidget {
           ),
           subtitle: Text(connection.role),
           trailing: OutlinedButton(
-            onPressed: () {},
+            onPressed: () {
+              // Start a direct message with this connection.
+              context.push(
+                '/messages/direct/${connection.id}',
+                extra: {
+                  'builderName': connection.name,
+                  'builderAvatarUrl': connection.avatarUrl,
+                },
+              );
+            },
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               shape: RoundedRectangleBorder(

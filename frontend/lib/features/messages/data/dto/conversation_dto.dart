@@ -82,9 +82,9 @@ class ConversationDto {
       conversationType: (json['conversation_type'] ??
               json['conversationType'] ??
               'direct') as String,
-      name: json['name'] as String?,
+      name: (json['display_name'] ?? json['name']) as String?,
       description: json['description'] as String?,
-      avatarUrl: json['avatar_url'] as String?,
+      avatarUrl: (json['display_avatar_url'] ?? json['avatar_url']) as String?,
       isGroup: _intToBool(json['is_group']),
       createdBy: (json['created_by'] ?? '') as String,
       createdAt: _dateTimeOrNull(json['created_at']),
@@ -100,7 +100,7 @@ class ConversationDto {
       lastSenderId: json['last_sender_id'] as String?,
       unreadCount: (json['unread_count'] as num?)?.toInt() ?? 0,
       isPinned: _intToBool(json['is_pinned']),
-      isArchived: _intToBool(json['is_archived']),
+      isArchived: _intToBool(json['member_is_archived'] ?? json['is_archived']),
       isLocked: _intToBool(json['is_locked']),
       notificationPreference: json['notification_preference'] as String?,
       members: (json['members'] as List?)

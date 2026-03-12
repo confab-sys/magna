@@ -4,6 +4,146 @@ import { authMiddleware } from '../middleware';
 
 export const chatRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
+// POST /api/chat/direct/:userId - Get or create a direct conversation with a user
+chatRoutes.post('/direct/:userId', authMiddleware, async (c) => {
+  const me = c.get('userId');
+  const other = c.req.param('userId');
+
+  if (!other || other === me) {
+    return c.json(
+      { success: false, error: { message: 'Invalid target user' } },
+      400,
+    );
+  }
+
+  try {
+    // Find an existing direct conversation that contains both members
+    const existing = await c.env.DB.prepare(
+      `
+      SELECT c.*
+      FROM conversations c
+      JOIN conversation_members cm1
+        ON cm1.conversation_id = c.id AND cm1.user_id = ?
+      JOIN conversation_members cm2
+        ON cm2.conversation_id = c.id AND cm2.user_id = ?
+      WHERE c.conversation_type = 'direct'
+      ORDER BY c.updated_at DESC
+      LIMIT 1
+    `,
+    )
+      .bind(me, other)
+      .first();
+
+    let conversationId: string;
+
+    if (existing) {
+      conversationId = (existing as any).id;
+    } else {
+      // Create new direct conversation
+      conversationId = crypto.randomUUID();
+
+      await c.env.DB.prepare(
+        `
+        INSERT INTO conversations (
+          id,
+          name,
+          is_group,
+          description,
+          avatar_url,
+          created_by,
+          conversation_type
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+        .bind(conversationId, null, 0, null, null, me, 'direct')
+        .run();
+
+      await c.env.DB.batch([
+        c.env.DB.prepare(
+          `
+          INSERT INTO conversation_members (id, conversation_id, user_id, role)
+          VALUES (?, ?, ?, ?)
+        `,
+        ).bind(crypto.randomUUID(), conversationId, me, 'OWNER'),
+        c.env.DB.prepare(
+          `
+          INSERT INTO conversation_members (id, conversation_id, user_id, role)
+          VALUES (?, ?, ?, ?)
+        `,
+        ).bind(crypto.randomUUID(), conversationId, other, 'MEMBER'),
+      ]);
+    }
+
+    // Return conversation in the same shape as GET /conversations/:id
+    const conversation = await c.env.DB.prepare(
+      `
+      SELECT
+        c.*,
+        cm.joined_at,
+        cm.role,
+        cm.last_read_message_id,
+        cm.last_read_at,
+        cm.is_pinned,
+        cm.is_archived AS member_is_archived,
+        cm.notification_preference,
+        (
+          SELECT COUNT(*)
+          FROM messages m
+          WHERE m.conversation_id = c.id
+            AND m.created_at > COALESCE(cm.last_read_at, '1970-01-01')
+        ) AS unread_count
+      FROM conversations c
+      JOIN conversation_members cm
+        ON c.id = cm.conversation_id
+      WHERE c.id = ? AND cm.user_id = ?
+    `,
+    )
+      .bind(conversationId, me)
+      .first();
+
+    if (!conversation) {
+      return c.json(
+        {
+          success: false,
+          error: { message: 'Conversation not found after create' },
+        },
+        500,
+      );
+    }
+
+    const members = await c.env.DB.prepare(
+      `
+      SELECT
+        user_id AS userId,
+        role,
+        joined_at AS joinedAt,
+        last_read_message_id AS lastReadMessageId,
+        last_read_at AS lastReadAt
+      FROM conversation_members
+      WHERE conversation_id = ?
+    `,
+    )
+      .bind(conversationId)
+      .all();
+
+    const data = {
+      ...(conversation as any),
+      members: members.results,
+    };
+
+    return c.json({ success: true, data });
+  } catch (e: any) {
+    return c.json(
+      {
+        success: false,
+        error: { message: e.message ?? 'Failed to start direct chat' },
+      },
+      500,
+    );
+  }
+});
+
 // GET /api/chat/conversations - List active conversations (v2: conversation-centric)
 chatRoutes.get('/conversations', authMiddleware, async (c) => {
   const userId = c.get('userId');
@@ -16,6 +156,29 @@ chatRoutes.get('/conversations', authMiddleware, async (c) => {
       `
       SELECT
         c.*,
+        -- For direct conversations, expose the "other" user's identity for inbox display.
+        CASE
+          WHEN c.conversation_type = 'direct' THEN (
+            SELECT u.username
+            FROM conversation_members cmx
+            JOIN users u ON u.id = cmx.user_id
+            WHERE cmx.conversation_id = c.id
+              AND cmx.user_id <> ?
+            LIMIT 1
+          )
+          ELSE c.name
+        END AS display_name,
+        CASE
+          WHEN c.conversation_type = 'direct' THEN (
+            SELECT u.avatar_url
+            FROM conversation_members cmx
+            JOIN users u ON u.id = cmx.user_id
+            WHERE cmx.conversation_id = c.id
+              AND cmx.user_id <> ?
+            LIMIT 1
+          )
+          ELSE c.avatar_url
+        END AS display_avatar_url,
         cm.joined_at,
         cm.is_pinned,
         cm.is_archived AS member_is_archived,
@@ -34,7 +197,7 @@ chatRoutes.get('/conversations', authMiddleware, async (c) => {
       ORDER BY c.last_message_at DESC NULLS LAST, c.updated_at DESC
     `,
     )
-      .bind(userId, includeArchived ? 1 : 0)
+      .bind(userId, userId, userId, includeArchived ? 1 : 0)
       .all();
 
     // Keep shape `{ conversations: [...] }` for frontend DTO mapping
@@ -232,6 +395,34 @@ chatRoutes.get('/conversations/:id/messages', authMiddleware, async (c) => {
         403,
       );
     }
+
+    // Mark messages as delivered for this user (recipient side)
+    // Only touches messages not sent by the current user.
+    await c.env.DB.prepare(
+      `
+      UPDATE messages
+      SET delivered_at = COALESCE(delivered_at, CURRENT_TIMESTAMP),
+          status = CASE WHEN status = 'sent' THEN 'delivered' ELSE status END
+      WHERE conversation_id = ?
+        AND sender_id <> ?
+        AND delivered_at IS NULL
+    `,
+    )
+      .bind(conversationId, userId)
+      .run();
+
+    // Notify realtime subscribers to refresh (delivery updates)
+    await c.env.REALTIME.fetch(
+      `https://realtime.internal/broadcast/${conversationId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Internal-Key': c.env.REALTIME_INTERNAL_KEY,
+        },
+        body: JSON.stringify({ type: 'refresh' }),
+      },
+    );
 
     const messages = await c.env.DB.prepare(
       `
@@ -457,6 +648,19 @@ chatRoutes.post('/conversations/:id/messages', authMiddleware, async (c) => {
         avatarUrl: m.sender_avatar,
       },
     };
+
+    // Notify realtime subscribers to refresh (new message)
+    await c.env.REALTIME.fetch(
+      `https://realtime.internal/broadcast/${conversationId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Internal-Key': c.env.REALTIME_INTERNAL_KEY,
+        },
+        body: JSON.stringify({ type: 'refresh' }),
+      },
+    );
 
     return c.json({ success: true, data }, 201);
   } catch (e: any) {
@@ -798,6 +1002,33 @@ chatRoutes.patch('/conversations/:id/read', authMiddleware, async (c) => {
     )
       .bind(lastReadMessageId, conversationId, userId)
       .run();
+
+    // Mark all messages from other users in this conversation as read.
+    await c.env.DB.prepare(
+      `
+      UPDATE messages
+      SET read_at = COALESCE(read_at, CURRENT_TIMESTAMP),
+          status = CASE WHEN status IN ('sent', 'delivered') THEN 'read' ELSE status END
+      WHERE conversation_id = ?
+        AND sender_id <> ?
+        AND read_at IS NULL
+    `,
+    )
+      .bind(conversationId, userId)
+      .run();
+
+    // Notify realtime subscribers to refresh (read updates)
+    await c.env.REALTIME.fetch(
+      `https://realtime.internal/broadcast/${conversationId}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Internal-Key': c.env.REALTIME_INTERNAL_KEY,
+        },
+        body: JSON.stringify({ type: 'refresh' }),
+      },
+    );
 
     return c.json({ success: true });
   } catch (e: any) {

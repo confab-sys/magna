@@ -5,6 +5,11 @@ compatibility_date = "2024-03-03"
 [vars]
 # Environment variables
 JWT_SECRET = "your-production-secret-key-change-this"
+REALTIME_INTERNAL_KEY = "change-me-in-production"
+
+[[services]]
+binding = "REALTIME"
+service = "magna-coders-realtime"
 
 [[d1_databases]]
 binding = "DB"

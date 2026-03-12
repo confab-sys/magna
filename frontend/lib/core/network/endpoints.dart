@@ -25,6 +25,8 @@ class Endpoints {
       '/api/chat/conversations/$conversationId/preferences';
   static String messageById(String messageId) =>
       '/api/chat/messages/$messageId';
+  static String directConversation(String userId) =>
+      '/api/chat/direct/$userId';
 
   // Legacy chat endpoints kept for backward compatibility where still used.
   static const chatConversations = '/api/chat/conversations';

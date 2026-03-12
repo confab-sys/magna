@@ -17,6 +17,11 @@ class AuthService {
         final token = response.data['token'];
         if (token != null) {
           await TokenStorage.saveAccessToken(token);
+          final user = response.data['user'];
+          final userId = user is Map ? user['id'] as String? : null;
+          if (userId != null && userId.isNotEmpty) {
+            await TokenStorage.writeUserId(userId);
+          }
           return true;
         }
       }

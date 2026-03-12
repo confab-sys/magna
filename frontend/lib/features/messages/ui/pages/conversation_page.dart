@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:magna_coders/core/auth/token_storage.dart';
 import 'package:magna_coders/features/messages/ui/controllers/conversation_controller.dart';
 import 'package:magna_coders/features/messages/ui/widgets/conversation_app_bar.dart';
 import 'package:magna_coders/features/messages/ui/widgets/date_separator.dart';
@@ -25,16 +26,24 @@ class _ConversationPageState extends State<ConversationPage> {
   late final ConversationController _controller;
   final TextEditingController _inputController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  String? _currentUserId;
 
   @override
   void initState() {
     super.initState();
-    // TODO: Inject real currentUserId from auth state when available.
+    _initController();
+  }
+
+  Future<void> _initController() async {
+    final userId = await TokenStorage.readUserId();
+    _currentUserId = userId ?? 'current-user';
+    if (!mounted) return;
     _controller = ConversationController(
       conversationId: widget.conversationId,
-      currentUserId: 'current-user',
+      currentUserId: _currentUserId!,
     )..addListener(_onChanged);
     _controller.loadMessages();
+    setState(() {});
   }
 
   @override
@@ -68,8 +77,52 @@ class _ConversationPageState extends State<ConversationPage> {
     await _controller.sendMessage(toSend);
   }
 
+  void _handleDeleteMessage(message) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 12),
+              Container(
+                width: 32,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade600,
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+              const SizedBox(height: 12),
+              ListTile(
+                leading: const Icon(Icons.delete_outline, color: Colors.red),
+                title: const Text('Delete message'),
+                onTap: () async {
+                  Navigator.of(context).pop();
+                  await _controller.deleteMessage(message);
+                },
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_currentUserId == null) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     final state = _controller.state;
 
     return Scaffold(
@@ -113,7 +166,14 @@ class _ConversationPageState extends State<ConversationPage> {
                           items.add(DateSeparator(date: message.createdAt));
                         }
 
-                        items.add(MessageBubble(message: message));
+                        items.add(
+                          MessageBubble(
+                            message: message,
+                            onLongPress: message.isOwnMessage
+                                ? () => _handleDeleteMessage(message)
+                                : null,
+                          ),
+                        );
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: items,

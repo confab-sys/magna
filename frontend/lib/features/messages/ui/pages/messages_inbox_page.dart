@@ -223,6 +223,10 @@ class _MessagesInboxPageState extends State<MessagesInboxPage> {
                               onTap: () {
                                 context.push(
                                   '/messages/conversation/${conversation.id}',
+                                  extra: {
+                                    'builderName': conversation.name,
+                                    'builderAvatarUrl': conversation.avatarUrl,
+                                  },
                                 );
                               },
                             );

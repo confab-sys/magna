@@ -55,5 +55,9 @@ abstract class MessagesRepository {
     String? description,
     required List<String> memberUserIds,
   });
+
+  Future<ConversationEntity> getOrCreateDirectConversation({
+    required String otherUserId,
+  });
 }
 

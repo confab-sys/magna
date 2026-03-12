@@ -12,6 +12,7 @@ import 'package:magna_coders/features/builders/domain/user.dart';
 import 'package:magna_coders/features/messages/ui/pages/messages_inbox_page.dart';
 import 'package:magna_coders/features/messages/ui/pages/conversation_page.dart';
 import 'package:magna_coders/features/messages/ui/pages/create_conversation_page.dart';
+import 'package:magna_coders/features/messages/ui/pages/direct_message_page.dart';
 import 'package:magna_coders/features/messages/ui/pages/discover_groups_page.dart';
 import 'package:magna_coders/features/notifications/ui/notifications_page.dart';
 import 'package:magna_coders/features/magna_ai/ui/ai_page.dart';
@@ -202,10 +203,39 @@ class AppRouter {
                   ),
                   GoRoute(
                     path: 'conversation/:conversationId',
-                    builder: (context, state) => ConversationPage(
-                      conversationId:
-                          state.pathParameters['conversationId']!,
-                    ),
+                    builder: (context, state) {
+                      final extra = state.extra;
+                      final builderName = extra is Map
+                          ? extra['builderName'] as String?
+                          : null;
+                      final builderAvatarUrl = extra is Map
+                          ? extra['builderAvatarUrl'] as String?
+                          : null;
+                      return DirectMessagePage(
+                        builderId: 'conversation',
+                        conversationId:
+                            state.pathParameters['conversationId']!,
+                        builderName: builderName,
+                        builderAvatarUrl: builderAvatarUrl,
+                      );
+                    },
+                  ),
+                  GoRoute(
+                    path: 'direct/:builderId',
+                    builder: (context, state) {
+                      final extra = state.extra;
+                      final builderName = extra is Map
+                          ? extra['builderName'] as String?
+                          : null;
+                      final builderAvatarUrl = extra is Map
+                          ? extra['builderAvatarUrl'] as String?
+                          : null;
+                      return DirectMessagePage(
+                        builderId: state.pathParameters['builderId']!,
+                        builderName: builderName,
+                        builderAvatarUrl: builderAvatarUrl,
+                      );
+                    },
                   ),
                   GoRoute(
                     path: 'discover-groups',

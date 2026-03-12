@@ -5,6 +5,7 @@ import 'package:magna_coders/core/auth/token_storage.dart';
 class ApiConfig {
   static String apiBase = '';
   static String? aiBase;
+  static String? realtimeBase;
 }
 
 class AppBootstrap {
@@ -20,6 +21,7 @@ class AppBootstrap {
       }
       ApiConfig.apiBase = base;
       ApiConfig.aiBase = dotenv.env['MAGNA_AI_BASE'];
+      ApiConfig.realtimeBase = dotenv.env['MAGNA_REALTIME_BASE'];
 
       final token = await TokenStorage.readAccessToken();
       authState.value = token != null && token.isNotEmpty;

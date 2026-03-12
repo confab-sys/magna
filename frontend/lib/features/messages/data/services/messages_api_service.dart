@@ -93,6 +93,29 @@ class MessagesApiService {
     );
   }
 
+  Future<ConversationDto> getOrCreateDirectConversation({
+    required String otherUserId,
+  }) async {
+    final response = await _dio.post(
+      Endpoints.directConversation(otherUserId),
+    );
+
+    final data = response.data;
+    final success = data['success'] as bool? ?? false;
+    if (!success) {
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        message: data['error']?['message'] as String? ??
+            'Failed to start direct conversation',
+      );
+    }
+
+    return ConversationDto.fromJson(
+      data['data'] as Map<String, dynamic>,
+    );
+  }
+
   Future<List<MessageDto>> getMessages({
     required String conversationId,
     String? cursor,

@@ -189,6 +189,44 @@ class ConversationController extends ChangeNotifier {
     }
   }
 
+  Future<void> deleteMessage(MessageEntity message) async {
+    // Optimistically mark as deleted
+    final updated = _state.messages.map((m) {
+      if (m.id == message.id) {
+        return MessageEntity(
+          id: m.id,
+          conversationId: m.conversationId,
+          sender: m.sender,
+          content: m.content,
+          messageType: m.messageType,
+          replyToMessageId: m.replyToMessageId,
+          status: 'deleted',
+          attachments: m.attachments,
+          createdAt: m.createdAt,
+          editedAt: m.editedAt,
+          deletedAt: DateTime.now().toUtc(),
+          deliveredAt: m.deliveredAt,
+          readAt: m.readAt,
+          isOwnMessage: m.isOwnMessage,
+        );
+      }
+      return m;
+    }).toList();
+
+    _setState(
+      _state.copyWith(
+        messages: updated,
+      ),
+    );
+
+    try {
+      await _repository.deleteMessage(messageId: message.id);
+    } catch (_) {
+      // If delete fails, reload messages to restore server truth
+      await loadMessages();
+    }
+  }
+
   Future<void> _markReadIfNeeded() async {
     if (_state.messages.isEmpty) return;
     final last = _state.messages.last;

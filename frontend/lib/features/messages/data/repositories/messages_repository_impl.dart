@@ -138,5 +138,15 @@ class MessagesRepositoryImpl implements MessagesRepository {
     );
     return ConversationModel.fromDto(dto);
   }
+
+  @override
+  Future<ConversationEntity> getOrCreateDirectConversation({
+    required String otherUserId,
+  }) async {
+    final dto = await _api.getOrCreateDirectConversation(
+      otherUserId: otherUserId,
+    );
+    return ConversationModel.fromDto(dto);
+  }
 }
 
