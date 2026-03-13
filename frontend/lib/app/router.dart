@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:magna_coders/app/bootstrap.dart';
+import 'package:magna_coders/features/magna_ai/ui/pages/magna_ai_page.dart';
+import 'package:magna_coders/features/magna_panel/ui/magna_panel_drawer.dart';
 import 'package:magna_coders/features/auth/ui/login_page.dart';
 import 'package:magna_coders/features/auth/ui/register_page.dart';
 import 'package:magna_coders/features/auth/ui/oauth_callback_page.dart';
+import 'package:magna_coders/features/auth/ui/forgot_password_page.dart';
+import 'package:magna_coders/features/auth/ui/reset_password_page.dart';
 import 'package:magna_coders/features/feed/ui/feed_page.dart';
+import 'package:magna_coders/features/user_guide/ui/pages/user_guide_page.dart';
 import 'package:magna_coders/features/builders/ui/screens/builders_page.dart';
 import 'package:magna_coders/features/builders/ui/screens/builder_profile_screen.dart';
 import 'package:magna_coders/features/builders/domain/user.dart';
@@ -15,12 +20,12 @@ import 'package:magna_coders/features/messages/ui/pages/create_conversation_page
 import 'package:magna_coders/features/messages/ui/pages/direct_message_page.dart';
 import 'package:magna_coders/features/messages/ui/pages/discover_groups_page.dart';
 import 'package:magna_coders/features/notifications/ui/notifications_page.dart';
-import 'package:magna_coders/features/magna_ai/ui/ai_page.dart';
 import 'package:magna_coders/features/projects/ui/projects_page.dart';
 import 'package:magna_coders/features/jobs/ui/jobs_page.dart';
 import 'package:magna_coders/features/contracts/ui/contracts_page.dart';
 import 'package:magna_coders/features/magna_school/ui/courses_page.dart';
 import 'package:magna_coders/features/magna_podcast/ui/podcasts_page.dart';
+import 'package:magna_coders/features/settings/ui/pages/settings_page.dart';
 
 import 'package:magna_coders/features/post_details/ui/pages/post_details_page.dart';
 import 'package:magna_coders/features/project_details/ui/pages/project_details_page.dart';
@@ -65,6 +70,7 @@ class AppShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const MagnaPanelDrawer(),
       body: navigationShell,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navigationShell.currentIndex,
@@ -95,7 +101,11 @@ class AppRouter {
       
       // Allow access to login/register if not logged in
       if (!loggedIn) {
-        if (location == '/login' || location == '/register' || location.startsWith('/oauth')) {
+        if (location == '/login' ||
+            location == '/register' ||
+            location == '/forgot-password' ||
+            location == '/reset-password' ||
+            location.startsWith('/oauth')) {
           return null;
         }
         return '/login';
@@ -146,6 +156,26 @@ class AppRouter {
       GoRoute(path: '/login', builder: (context, state) => const LoginPage()),
       GoRoute(
           path: '/register', builder: (context, state) => const RegisterPage()),
+      GoRoute(
+        path: '/forgot-password',
+        builder: (context, state) => const ForgotPasswordPage(),
+      ),
+      GoRoute(
+        path: '/reset-password',
+        builder: (context, state) {
+          final token = state.uri.queryParameters['token'] ?? '';
+          return ResetPasswordPage(token: token);
+        },
+      ),
+      GoRoute(
+        path: '/oauth/callback',
+        builder: (context, state) =>
+            OAuthCallbackPage(callbackUri: state.uri),
+      ),
+      GoRoute(
+        path: '/user-guide',
+        builder: (context, state) => const UserGuidePage(),
+      ),
       // Standalone chat route for direct linking if needed, but nested is better.
       // Let's keep the nested route above as the primary.
       // But we need to ensure push('/chat/:id') matches something.
@@ -163,6 +193,7 @@ class AppRouter {
       GoRoute(path: '/contracts', builder: (context, state) => const ContractsPage()),
       GoRoute(path: '/courses', builder: (context, state) => const CoursesPage()),
       GoRoute(path: '/podcasts', builder: (context, state) => const PodcastsPage()),
+      GoRoute(path: '/settings', builder: (context, state) => const SettingsPage()),
       
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -252,7 +283,7 @@ class AppRouter {
                 builder: (context, state) => const NotificationsPage()),
           ]),
           StatefulShellBranch(routes: [
-            GoRoute(path: '/ai', builder: (context, state) => const AIPage()),
+            GoRoute(path: '/ai', builder: (context, state) => const MagnaAiPage()),
           ]),
         ],
       ),

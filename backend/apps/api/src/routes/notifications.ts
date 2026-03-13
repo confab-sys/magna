@@ -4,6 +4,8 @@ import { authMiddleware } from '../middleware';
 import {
   broadcastNotificationRead,
   broadcastUnreadCount,
+  mapRowToDto,
+  type NotificationPayload,
 } from '../services/notifications_realtime';
 
 export const notificationRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>();
@@ -12,7 +14,7 @@ export const notificationRoutes = new Hono<{ Bindings: Bindings; Variables: Vari
 notificationRoutes.get('/', authMiddleware, async (c) => {
   const userId = c.get('userId');
   try {
-    const notifications = await c.env.DB.prepare(
+    const result = await c.env.DB.prepare(
       `
       SELECT *
       FROM notifications
@@ -23,8 +25,25 @@ notificationRoutes.get('/', authMiddleware, async (c) => {
     )
       .bind(userId)
       .all();
+    const rows = (result.results || []) as any[];
+    const notifications = rows.map((row) =>
+      mapRowToDto({
+        id: row.id,
+        type: row.type,
+        title: row.title,
+        message: row.message,
+        is_read: row.is_read,
+        created_at: row.created_at,
+        actor_id: row.actor_id,
+        actor_name: row.actor_name,
+        actor_avatar_url: row.actor_avatar_url,
+        target_type: row.target_type,
+        target_id: row.target_id,
+        metadata_json: row.metadata_json,
+      } as NotificationPayload),
+    );
 
-    return c.json({ notifications: notifications.results });
+    return c.json({ notifications });
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
   }

@@ -44,9 +44,22 @@ class NotificationsSocketService {
       return;
     }
 
-    final base = ApiConfig.realtimeBase ?? ApiConfig.apiBase;
+    final userId = await TokenStorage.readUserId();
+    if (userId == null || userId.isEmpty) {
+      return;
+    }
 
-    _client.connect(token, url: base);
+    // Prefer explicit realtime base; fall back to transforming the API base
+    // from "-api" to "-realtime" when using the Workers.dev naming convention.
+    String httpBase = ApiConfig.realtimeBase ?? ApiConfig.apiBase;
+    if (ApiConfig.realtimeBase == null || ApiConfig.realtimeBase!.isEmpty) {
+      httpBase = httpBase.replaceFirst('-api.', '-realtime.');
+    }
+
+    final baseUri = Uri.parse(httpBase);
+    final withPath = baseUri.replace(path: '/notifications/$userId');
+
+    _client.connect(token, url: withPath.toString());
     _isConnected = true;
 
     _subscription = _client.messages?.listen(

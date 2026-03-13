@@ -7,16 +7,33 @@ class WebSocketClient {
 
   Stream<dynamic>? get messages => _channel?.stream;
 
+  /// Connects to a WebSocket endpoint.
+  ///
+  /// If [url] is provided as an HTTP/HTTPS URL, it will be converted to
+  /// WS/WSS and the `token` will be appended as a query parameter.
+  ///
+  /// If [url] is omitted, the client will connect to [ApiConfig.apiBase]
+  /// upgraded to WS/WSS with the token appended.
   void connect(String token, {String? url}) {
-    final base = url ?? ApiConfig.apiBase;
-    final uri = Uri.parse(base);
-    final scheme = uri.scheme == 'https' ? 'wss' : 'ws';
-    final wsUri = uri.replace(scheme: scheme);
-    final withToken = wsUri.replace(queryParameters: {
-      ...wsUri.queryParameters,
-      'token': token,
-    });
-    _channel = WebSocketChannel.connect(withToken);
+    Uri uri = Uri.parse(url ?? ApiConfig.apiBase);
+
+    // If caller passed an http/https URL, upgrade to ws/wss.
+    if (uri.scheme == 'http' || uri.scheme == 'https') {
+      final scheme = uri.scheme == 'https' ? 'wss' : 'ws';
+      uri = uri.replace(scheme: scheme);
+    }
+
+    // Append token if not already present.
+    if (!uri.queryParameters.containsKey('token')) {
+      uri = uri.replace(
+        queryParameters: {
+          ...uri.queryParameters,
+          'token': token,
+        },
+      );
+    }
+
+    _channel = WebSocketChannel.connect(uri);
   }
 
   void sendMessage(Map<String, dynamic> payload) {

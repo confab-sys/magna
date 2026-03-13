@@ -5,6 +5,7 @@ part 'notification_dto.g.dart';
 @JsonSerializable()
 class NotificationDto {
   final String id;
+  @JsonKey(defaultValue: 'unknown')
   final String type;
   final String title;
   final String message;

@@ -7,5 +7,8 @@ abstract class NotificationsRepository {
 
   /// Marks a notification as read via REST.
   Future<void> markAsRead(String notificationId);
+
+  /// Marks all notifications as read via REST.
+  Future<void> markAllAsRead();
 }
 

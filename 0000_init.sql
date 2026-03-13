@@ -517,10 +517,17 @@ CREATE TABLE user_ai_preferences (
 CREATE TABLE notifications (
     id TEXT PRIMARY KEY,
     user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    type TEXT,
     title TEXT NOT NULL,
     message TEXT NOT NULL,
     is_read BOOLEAN DEFAULT 0,
-    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    actor_id TEXT,
+    actor_name TEXT,
+    actor_avatar_url TEXT,
+    target_type TEXT,
+    target_id TEXT,
+    metadata_json TEXT
 );
 
 

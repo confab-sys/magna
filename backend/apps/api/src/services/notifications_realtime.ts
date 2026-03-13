@@ -1,6 +1,6 @@
 import type { Bindings } from '../types';
 
-type NotificationPayload = {
+export type NotificationPayload = {
   id: string;
   type: string;
   title: string;
@@ -78,7 +78,7 @@ async function sendNotificationEvent(
   }
 }
 
-function mapRowToDto(row: NotificationPayload) {
+export function mapRowToDto(row: NotificationPayload) {
   return {
     id: row.id,
     type: row.type,

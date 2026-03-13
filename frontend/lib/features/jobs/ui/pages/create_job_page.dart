@@ -29,6 +29,7 @@ class _CreateJobPageState extends State<CreateJobPage> {
   final _descriptionController = TextEditingController();
   final _locationController = TextEditingController();
   final _salaryController = TextEditingController();
+  final _companyNameController = TextEditingController();
   
   XFile? _imageFile;
   String? _companyId;
@@ -42,6 +43,7 @@ class _CreateJobPageState extends State<CreateJobPage> {
     _descriptionController.dispose();
     _locationController.dispose();
     _salaryController.dispose();
+    _companyNameController.dispose();
     super.dispose();
   }
 
@@ -55,6 +57,7 @@ class _CreateJobPageState extends State<CreateJobPage> {
         title: _titleController.text,
         description: _descriptionController.text,
         companyId: _companyId,
+        companyName: _companyNameController.text.isNotEmpty ? _companyNameController.text : null,
         location: _locationController.text.isNotEmpty ? _locationController.text : null,
         salary: _salaryController.text.isNotEmpty ? _salaryController.text : null,
         jobType: _jobType,
@@ -130,17 +133,29 @@ class _CreateJobPageState extends State<CreateJobPage> {
                     ),
                     JobFormSection(
                       title: '2. Company',
-                      child: DropdownButtonFormField<String>(
-                        value: _companyId,
-                        decoration: const InputDecoration(
-                          labelText: 'Select Company',
-                          hintText: 'Select the company posting this job',
-                        ),
-                        items: const [
-                          DropdownMenuItem(value: 'magna-tech-id', child: Text('Magna Tech')),
-                          DropdownMenuItem(value: 'cloud-services-id', child: Text('Cloud Services')),
+                      child: Column(
+                        children: [
+                          DropdownButtonFormField<String>(
+                            value: _companyId,
+                            decoration: const InputDecoration(
+                              labelText: 'Select Company (optional)',
+                              hintText: 'Select an existing company (optional)',
+                            ),
+                            items: const [
+                              DropdownMenuItem(value: 'magna-tech-id', child: Text('Magna Tech')),
+                              DropdownMenuItem(value: 'cloud-services-id', child: Text('Cloud Services')),
+                            ],
+                            onChanged: (v) => setState(() => _companyId = v),
+                          ),
+                          const SizedBox(height: AppSpacing.md),
+                          TextFormField(
+                            controller: _companyNameController,
+                            decoration: const InputDecoration(
+                              labelText: 'Or enter company name',
+                              hintText: 'e.g. Alvin AI Labs',
+                            ),
+                          ),
                         ],
-                        onChanged: (v) => setState(() => _companyId = v),
                       ),
                     ),
                     JobFormSection(

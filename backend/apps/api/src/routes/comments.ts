@@ -1,6 +1,10 @@
 import { Hono } from 'hono';
 import { Bindings, Variables } from '../types';
 import { authMiddleware } from '../middleware';
+import {
+  broadcastNotificationCreated,
+  broadcastUnreadCount,
+} from '../services/notifications_realtime';
 
 export const commentRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
@@ -57,6 +61,79 @@ commentRoutes.post('/', authMiddleware, async (c) => {
         await c.env.DB.prepare(`
           UPDATE posts SET comment_count = comment_count + 1 WHERE id = ?
         `).bind(post_id).run();
+        
+        // Notify post author
+        const postRow = await c.env.DB.prepare(
+          'SELECT author_id, title FROM posts WHERE id = ?',
+        ).bind(post_id).first();
+
+        if (postRow && (postRow as any).author_id !== userId) {
+          const authorId = (postRow as any).author_id as string;
+          const title = (postRow as any).title as string;
+
+          const notifId = crypto.randomUUID();
+          await c.env.DB.prepare(
+            `
+            INSERT INTO notifications (
+              id,
+              user_id,
+              type,
+              title,
+              message,
+              is_read,
+              actor_id,
+              actor_name,
+              actor_avatar_url,
+              target_type,
+              target_id,
+              metadata_json
+            )
+            VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+          `,
+          )
+            .bind(
+              notifId,
+              authorId,
+              'post_commented',
+              'New comment',
+              'Someone commented on your post.',
+              userId,
+              null,
+              null,
+              'post',
+              post_id,
+              null,
+            )
+            .run();
+
+          await broadcastNotificationCreated(c.env, authorId, {
+            id: notifId,
+            type: 'post_commented',
+            title: 'New comment',
+            message: `Someone commented on your post "${title}".`,
+            is_read: 0,
+            created_at: new Date().toISOString(),
+            actor_id: userId,
+            actor_name: null,
+            actor_avatar_url: null,
+            target_type: 'post',
+            target_id: post_id,
+            metadata_json: null,
+          });
+
+          const unreadRow = await c.env.DB.prepare(
+            `
+            SELECT COUNT(*) AS count
+            FROM notifications
+            WHERE user_id = ? AND is_read = 0
+          `,
+          )
+            .bind(authorId)
+            .first();
+
+          const unreadCount = (unreadRow as any)?.count ?? 0;
+          await broadcastUnreadCount(c.env, authorId, unreadCount);
+        }
     } else if (job_id) {
         await c.env.DB.prepare(`
           INSERT INTO comments (id, job_id, author_id, content, parent_id, created_at)

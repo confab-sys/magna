@@ -5,7 +5,7 @@ compatibility_date = "2024-03-03"
 [vars]
 # Environment variables
 JWT_SECRET = "your-production-secret-key-change-this"
-REALTIME_INTERNAL_KEY = "change-me-in-production"
+REALTIME_INTERNAL_KEY = "ks93jhfs8sdf9sdf9sdf9sdf9sdf9sdf"
 
 [[services]]
 binding = "REALTIME"

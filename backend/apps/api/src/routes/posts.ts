@@ -1,6 +1,10 @@
 import { Hono } from 'hono';
 import { Bindings, Variables } from '../types';
-import { authMiddleware } from '../middleware';
+import { authMiddleware, adminKeyMiddleware } from '../middleware';
+import {
+  broadcastNotificationCreated,
+  broadcastUnreadCount,
+} from '../services/notifications_realtime';
 
 export const postRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
@@ -144,6 +148,151 @@ postRoutes.post('/', authMiddleware, async (c) => {
       `).bind(postMediaId, id, mediaId).run();
     }
 
+    // Load author metadata (name, avatar) for notifications.
+    const authorRow = await c.env.DB.prepare(
+      'SELECT username, avatar_url FROM users WHERE id = ?',
+    ).bind(userId).first();
+    const authorName = (authorRow as any)?.username || 'Someone';
+    const authorAvatar = (authorRow as any)?.avatar_url || null;
+
+    // Create a simple self-notification for the author so we can
+    // verify the notifications pipeline end-to-end.
+    const notificationId = crypto.randomUUID();
+    await c.env.DB.prepare(
+      `
+      INSERT INTO notifications (
+        id,
+        user_id,
+        type,
+        title,
+        message,
+        is_read,
+        actor_id,
+        actor_name,
+        actor_avatar_url,
+        target_type,
+        target_id,
+        metadata_json
+      )
+      VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+    `,
+    )
+      .bind(
+        notificationId,
+        userId,
+        'post_created',
+        'Post created',
+        `Your post "${title}" was created.`,
+        userId,
+        authorName,
+        authorAvatar,
+        'post',
+        id,
+        null,
+      )
+      .run();
+
+    // Broadcast via realtime channel
+    await broadcastNotificationCreated(c.env, userId, {
+      id: notificationId,
+      type: 'post_created',
+      title: 'Post created',
+      message: `Your post "${title}" was created.`,
+      is_read: 0,
+      created_at: new Date().toISOString(),
+      actor_id: userId,
+      actor_name: authorName,
+      actor_avatar_url: authorAvatar,
+      target_type: 'post',
+      target_id: id,
+      metadata_json: null,
+    });
+
+    const unreadRow = await c.env.DB.prepare(
+      `
+      SELECT COUNT(*) AS count
+      FROM notifications
+      WHERE user_id = ? AND is_read = 0
+    `,
+    )
+      .bind(userId)
+      .first();
+
+    const unreadCount = (unreadRow as any)?.count ?? 0;
+    await broadcastUnreadCount(c.env, userId, unreadCount);
+
+    // Fan-out: notify all other users that a new post was created
+    const audience = await c.env.DB.prepare(
+      'SELECT id FROM users WHERE id != ?',
+    ).bind(userId).all();
+
+    for (const row of audience.results as any[]) {
+      const targetId = row.id as string;
+      const publicNotifId = crypto.randomUUID();
+
+      await c.env.DB.prepare(
+        `
+        INSERT INTO notifications (
+          id,
+          user_id,
+          type,
+          title,
+          message,
+          is_read,
+          actor_id,
+          actor_name,
+          actor_avatar_url,
+          target_type,
+          target_id,
+          metadata_json
+        )
+        VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+        .bind(
+          publicNotifId,
+          targetId,
+          'post_posted',
+          'New post',
+          `${authorName} posted "${title}".`,
+          userId,
+          authorName,
+          authorAvatar,
+          'post',
+          id,
+          null,
+        )
+        .run();
+
+      await broadcastNotificationCreated(c.env, targetId, {
+        id: publicNotifId,
+        type: 'post_posted',
+        title: 'New post',
+        message: `${authorName} posted "${title}".`,
+        is_read: 0,
+        created_at: new Date().toISOString(),
+        actor_id: userId,
+        actor_name: authorName,
+        actor_avatar_url: null,
+        target_type: 'post',
+        target_id: id,
+        metadata_json: null,
+      });
+
+      const publicUnreadRow = await c.env.DB.prepare(
+        `
+        SELECT COUNT(*) AS count
+        FROM notifications
+        WHERE user_id = ? AND is_read = 0
+      `,
+      )
+        .bind(targetId)
+        .first();
+
+      const publicUnreadCount = (publicUnreadRow as any)?.count ?? 0;
+      await broadcastUnreadCount(c.env, targetId, publicUnreadCount);
+    }
+
     return c.json({ message: 'Post created', id }, 201);
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
@@ -183,7 +332,80 @@ postRoutes.post('/:id/like', authMiddleware, async (c) => {
       await c.env.DB.prepare(
         'UPDATE posts SET like_count = like_count + 1 WHERE id = ?'
       ).bind(postId).run();
-      
+
+      // Notify post author if someone else liked their post
+      const postRow = await c.env.DB.prepare(
+        'SELECT author_id, title FROM posts WHERE id = ?',
+      ).bind(postId).first();
+
+      if (postRow && (postRow as any).author_id !== userId) {
+        const authorId = (postRow as any).author_id as string;
+        const title = (postRow as any).title as string;
+
+      const notifId = crypto.randomUUID();
+      await c.env.DB.prepare(
+        `
+        INSERT INTO notifications (
+          id,
+          user_id,
+          type,
+          title,
+          message,
+          is_read,
+          actor_id,
+          actor_name,
+          actor_avatar_url,
+          target_type,
+          target_id,
+          metadata_json
+        )
+        VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+        .bind(
+          notifId,
+          authorId,
+          'post_liked',
+          'Post liked',
+          'Someone liked your post.',
+          userId,
+          null,
+          null,
+          'post',
+          postId,
+          null,
+        )
+        .run();
+
+        await broadcastNotificationCreated(c.env, authorId, {
+          id: notifId,
+          type: 'post_liked',
+          title: 'Post liked',
+          message: `Your post "${title}" was liked.`,
+          is_read: 0,
+          created_at: new Date().toISOString(),
+          actor_id: userId,
+          actor_name: null,
+          actor_avatar_url: null,
+          target_type: 'post',
+          target_id: postId,
+          metadata_json: null,
+        });
+
+        const unreadRow = await c.env.DB.prepare(
+          `
+          SELECT COUNT(*) AS count
+          FROM notifications
+          WHERE user_id = ? AND is_read = 0
+        `,
+        )
+          .bind(authorId)
+          .first();
+
+        const unreadCount = (unreadRow as any)?.count ?? 0;
+        await broadcastUnreadCount(c.env, authorId, unreadCount);
+      }
+
       return c.json({ message: 'Post liked' });
     }
   } catch (e: any) {
@@ -228,7 +450,112 @@ postRoutes.post('/:id/comments', authMiddleware, async (c) => {
       'UPDATE posts SET comment_count = comment_count + 1 WHERE id = ?'
     ).bind(postId).run();
 
+    // Notify post author if someone else commented
+    const postRow = await c.env.DB.prepare(
+      'SELECT author_id, title FROM posts WHERE id = ?',
+    ).bind(postId).first();
+
+    if (postRow && (postRow as any).author_id !== userId) {
+      const authorId = (postRow as any).author_id as string;
+      const title = (postRow as any).title as string;
+
+      const notifId = crypto.randomUUID();
+      await c.env.DB.prepare(
+        `
+        INSERT INTO notifications (
+          id,
+          user_id,
+          type,
+          title,
+          message,
+          is_read,
+          actor_id,
+          actor_name,
+          actor_avatar_url,
+          target_type,
+          target_id,
+          metadata_json
+        )
+        VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+        .bind(
+          notifId,
+          authorId,
+          'post_commented',
+          'New comment',
+          'Someone commented on your post.',
+          userId,
+          null,
+          null,
+          'post',
+          postId,
+          null,
+        )
+        .run();
+
+      await broadcastNotificationCreated(c.env, authorId, {
+        id: notifId,
+        type: 'post_commented',
+        title: 'New comment',
+        message: `Someone commented on your post "${title}".`,
+        is_read: 0,
+        created_at: new Date().toISOString(),
+        actor_id: userId,
+        actor_name: null,
+        actor_avatar_url: null,
+        target_type: 'post',
+        target_id: postId,
+        metadata_json: null,
+      });
+
+      const unreadRow = await c.env.DB.prepare(
+        `
+        SELECT COUNT(*) AS count
+        FROM notifications
+        WHERE user_id = ? AND is_read = 0
+      `,
+      )
+        .bind(authorId)
+        .first();
+
+      const unreadCount = (unreadRow as any)?.count ?? 0;
+      await broadcastUnreadCount(c.env, authorId, unreadCount);
+    }
+
     return c.json({ message: 'Comment added', id }, 201);
+  } catch (e: any) {
+    return c.json({ error: e.message }, 500);
+  }
+});
+
+// DELETE /api/posts/:id - Delete a post (owner only, or admin via x-admin-key)
+postRoutes.delete('/:id', authMiddleware, async (c) => {
+  const userId = c.get('userId');
+  const adminKey = c.req.header('x-admin-key');
+  const id = c.req.param('id');
+
+  try {
+    const existing: any = await c.env.DB.prepare(
+      'SELECT author_id FROM posts WHERE id = ?',
+    ).bind(id).first();
+
+    if (!existing) {
+      return c.json({ error: 'Post not found' }, 404);
+    }
+
+    const isOwner = existing.author_id === userId;
+    const isAdmin = !!adminKey && adminKey === c.env.REALTIME_INTERNAL_KEY;
+
+    if (!isOwner && !isAdmin) {
+      return c.json({ error: 'Forbidden' }, 403);
+    }
+
+    await c.env.DB.prepare(
+      'DELETE FROM posts WHERE id = ?',
+    ).bind(id).run();
+
+    return c.json({ message: 'Post deleted' });
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
   }

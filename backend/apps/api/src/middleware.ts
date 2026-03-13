@@ -18,3 +18,14 @@ export const authMiddleware = async (c: Context<{ Bindings: Bindings; Variables:
     return c.json({ error: 'Invalid token' }, 401);
   }
 };
+
+export const adminKeyMiddleware = async (c: Context<{ Bindings: Bindings; Variables: Variables }>, next: Next) => {
+  const headerKey = c.req.header('x-admin-key');
+  const expected = c.env.REALTIME_INTERNAL_KEY;
+
+  if (!headerKey || !expected || headerKey !== expected) {
+    return c.json({ error: 'Forbidden' }, 403);
+  }
+
+  await next();
+};

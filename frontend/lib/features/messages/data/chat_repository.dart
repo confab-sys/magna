@@ -22,7 +22,7 @@ class ChatRepository {
 
   Future<List<Message>> getMessages(String conversationId) async {
     try {
-      final response = await _dio.get(Endpoints.messagesByConversation(conversationId));
+      final response = await _dio.get(Endpoints.conversationMessages(conversationId));
       if (response.statusCode == 200) {
         final List<dynamic> list = response.data['messages'];
         return list.map((json) => Message.fromJson(json)).toList();

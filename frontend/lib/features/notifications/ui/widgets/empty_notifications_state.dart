@@ -18,14 +18,20 @@ class EmptyNotificationsState extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              'No notifications',
-              style: AppTypography.h3,
-              textAlign: TextAlign.center,
+            Icon(
+              Icons.notifications_none,
+              size: 40,
+              color: AppColors.textSecondary,
             ),
             const SizedBox(height: 8),
             Text(
-              'You\'re all caught up. When something happens, you\'ll see it here.',
+              'You\'re all caught up.',
+              style: AppTypography.h3,
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No new notifications right now.',
               style: AppTypography.bodySmall,
               textAlign: TextAlign.center,
             ),

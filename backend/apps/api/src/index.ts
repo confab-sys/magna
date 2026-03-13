@@ -15,6 +15,7 @@ import { podcastRoutes } from './routes/podcasts';
 import { contractRoutes } from './routes/contracts';
 import { aiRoutes } from './routes/ai';
 import { commentRoutes } from './routes/comments';
+import { userGuideRoutes } from './routes/user_guide';
 
 const app = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
@@ -30,6 +31,7 @@ app.route('/api/posts', postRoutes);
 app.route('/api/projects', projectRoutes);
 app.route('/api/jobs', jobRoutes);
 app.route('/api/users', userRoutes);
+app.route('/api/user-guide', userGuideRoutes);
 app.route('/api/coins', coinRoutes);
 app.route('/api/chat', chatRoutes);
 app.route('/api/notifications', notificationRoutes);

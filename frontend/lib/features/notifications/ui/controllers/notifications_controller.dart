@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:magna_coders/features/notifications/data/services/notifications_socket_service.dart';
 import 'package:magna_coders/features/notifications/data/repositories/notifications_repository_impl.dart';
+import 'package:magna_coders/features/notifications/data/dto/notification_dto.dart';
+import 'package:magna_coders/features/notifications/data/models/notification_model.dart';
 import 'package:magna_coders/features/notifications/domain/entities/notification_entity.dart';
 import 'package:magna_coders/features/notifications/domain/repositories/notifications_repository.dart';
 
@@ -65,9 +68,11 @@ class NotificationsController extends ChangeNotifier {
         _socketService = socketService ?? NotificationsSocketService();
 
   Future<void> initialize() async {
+    debugPrint('NotificationsController.initialize -> start');
     await _socketService.connect();
     _listenToSocket();
     await syncFromRest();
+    debugPrint('NotificationsController.initialize -> done');
   }
 
   void _listenToSocket() {
@@ -78,6 +83,8 @@ class NotificationsController extends ChangeNotifier {
   Future<void> syncFromRest() async {
     if (_state.status == NotificationsStatus.loading) return;
 
+    debugPrint('NotificationsController.syncFromRest -> fetching from REST...');
+
     _setState(
       _state.copyWith(
         status: _state.notifications.isEmpty
@@ -87,20 +94,27 @@ class NotificationsController extends ChangeNotifier {
     );
 
     try {
-      final items = await _repository.fetchNotifications();
-      final unread = items.where((n) => !n.isRead).length;
+      final fetched = await _repository.fetchNotifications();
+      debugPrint(
+        'NotificationsController.syncFromRest -> fetched ${fetched.length} notifications',
+      );
+
+      // Only keep unread notifications in the local list so that
+      // refresh does not re-show already read/opened items.
+      final items = fetched.where((n) => !n.isRead).toList();
+      final unread = items.length;
 
       _setState(
         _state.copyWith(
-          status: items.isEmpty
-              ? NotificationsStatus.empty
-              : NotificationsStatus.loaded,
+          status:
+              items.isEmpty ? NotificationsStatus.empty : NotificationsStatus.loaded,
           notifications: items,
           unreadCount: unread,
           errorMessage: null,
         ),
       );
     } catch (e) {
+      debugPrint('NotificationsController.syncFromRest error: $e');
       _setState(
         _state.copyWith(
           status: NotificationsStatus.error,
@@ -112,7 +126,42 @@ class NotificationsController extends ChangeNotifier {
 
   Future<void> refreshNotifications() => syncFromRest();
 
+  void clearAll() {
+    if (_state.notifications.isEmpty) return;
+
+    _setState(
+      _state.copyWith(
+        notifications: const [],
+        unreadCount: 0,
+        status: NotificationsStatus.empty,
+      ),
+    );
+  }
+
+  Future<void> markAllAsRead() async {
+    if (_state.unreadCount == 0) return;
+
+    final updated = _state.notifications
+        .map((n) => n.isRead ? n : n.copyWith(isRead: true))
+        .toList();
+
+    _setState(
+      _state.copyWith(
+        notifications: updated,
+        unreadCount: 0,
+      ),
+    );
+
+    try {
+      await _repository.markAllAsRead();
+    } catch (e) {
+      debugPrint('NotificationsController.markAllAsRead REST error: $e, resyncing from REST');
+      await syncFromRest();
+    }
+  }
+
   void _handleSocketEvent(NotificationSocketEvent event) {
+    debugPrint('NotificationsController._handleSocketEvent type=${event.type} payload=${event.payload}');
     switch (event.type) {
       case NotificationSocketEventType.notificationCreated:
         _handleSocketNotificationCreated(event.payload);
@@ -138,6 +187,7 @@ class NotificationsController extends ChangeNotifier {
         NotificationDto.fromJson(dtoJson),
       );
       final entity = model.toEntity();
+      debugPrint('NotificationsController._handleSocketNotificationCreated id=${entity.id}');
 
       final existingIndex =
           _state.notifications.indexWhere((n) => n.id == entity.id);
@@ -162,7 +212,8 @@ class NotificationsController extends ChangeNotifier {
           unreadCount: _state.unreadCount + unreadDelta,
         ),
       );
-    } catch (_) {
+    } catch (e) {
+      debugPrint('NotificationsController._handleSocketNotificationCreated mapping error: $e payload=$payload');
       // If mapping fails, ignore this event and rely on REST recovery.
     }
   }
@@ -198,7 +249,8 @@ class NotificationsController extends ChangeNotifier {
       } else {
         _handleSocketNotificationCreated(payload);
       }
-    } catch (_) {
+    } catch (e) {
+      debugPrint('NotificationsController._handleSocketNotificationUpdated mapping error: $e payload=$payload');
       // Ignore malformed updates.
     }
   }
@@ -234,9 +286,9 @@ class NotificationsController extends ChangeNotifier {
     );
   }
 
-  Future<void> markAsRead(NotificationEntity entity) async {
+  Future<void> markAsRead(NotificationEntity entity, BuildContext context) async {
     if (entity.isRead) {
-      _navigateFor(entity);
+      _navigateFor(entity, context: context);
       return;
     }
 
@@ -255,17 +307,17 @@ class NotificationsController extends ChangeNotifier {
 
     try {
       await _repository.markAsRead(entity.id);
-    } catch (_) {
+    } catch (e) {
+      debugPrint('NotificationsController.markAsRead REST error: $e, resyncing from REST');
       // On failure, re-sync from REST to repair state.
       await syncFromRest();
     }
 
-    _navigateFor(entity);
+    _navigateFor(entity, context: context);
   }
 
-  void _navigateFor(NotificationEntity entity, {BuildContext? context}) {
+  void _navigateFor(NotificationEntity entity, {required BuildContext context}) {
     final ctx = context;
-    if (ctx == null) return;
 
     switch (entity.targetType) {
       case NotificationTargetType.post:

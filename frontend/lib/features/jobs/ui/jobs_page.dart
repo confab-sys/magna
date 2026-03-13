@@ -141,7 +141,7 @@ class _JobCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      'Company Name', // Ideally fetched via ID or included in model
+                      job.companyName,
                       style: AppTypography.bodySmall,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

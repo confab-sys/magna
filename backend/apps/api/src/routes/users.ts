@@ -24,6 +24,7 @@ const parseStringArray = (value: any): string[] => {
 
 // GET /api/users - List users (builders)
 userRoutes.get('/', authMiddleware, async (c) => {
+  const currentUserId = c.get('userId');
   try {
     const result = await c.env.DB.prepare(
       `SELECT 
@@ -44,8 +45,9 @@ userRoutes.get('/', authMiddleware, async (c) => {
         looking_for,
         skills
       FROM users
+      WHERE id != ?
       ORDER BY created_at DESC`
-    ).all();
+    ).bind(currentUserId).all();
 
     const users = (result.results as any[]).map((u) => {
       const { categories, looking_for, skills, ...rest } = u as any;
@@ -189,6 +191,34 @@ userRoutes.put('/profile', authMiddleware, async (c) => {
     ).bind(userId).first();
 
     return c.json({ user: updatedUser });
+  } catch (e: any) {
+    return c.json({ error: e.message }, 500);
+  }
+});
+
+// DELETE /api/users/:id - Delete user (admin only via x-admin-key)
+userRoutes.delete('/:id', authMiddleware, async (c) => {
+  const adminKey = c.req.header('x-admin-key');
+  const id = c.req.param('id');
+
+  if (!adminKey || adminKey !== c.env.REALTIME_INTERNAL_KEY) {
+    return c.json({ error: 'Forbidden' }, 403);
+  }
+
+  try {
+    const existing: any = await c.env.DB.prepare(
+      'SELECT id FROM users WHERE id = ?',
+    ).bind(id).first();
+
+    if (!existing) {
+      return c.json({ error: 'User not found' }, 404);
+    }
+
+    await c.env.DB.prepare(
+      'DELETE FROM users WHERE id = ?',
+    ).bind(id).run();
+
+    return c.json({ message: 'User deleted' });
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
   }

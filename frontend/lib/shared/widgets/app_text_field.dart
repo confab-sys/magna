@@ -8,8 +8,13 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onSubmitted;
   final Widget? prefixIcon;
+  final Widget? suffixIcon;
   final int? maxLines;
   final int? minLines;
+  final String? errorText;
+  final bool autocorrect;
+  final bool enableSuggestions;
+  final TextInputAction? textInputAction;
 
   const AppTextField({
     super.key,
@@ -20,8 +25,13 @@ class AppTextField extends StatelessWidget {
     this.onChanged,
     this.onSubmitted,
     this.prefixIcon,
+    this.suffixIcon,
     this.maxLines,
     this.minLines,
+    this.errorText,
+    this.autocorrect = true,
+    this.enableSuggestions = true,
+    this.textInputAction,
   });
 
   @override
@@ -37,10 +47,15 @@ class AppTextField extends StatelessWidget {
       onSubmitted: onSubmitted,
       maxLines: effectiveMaxLines,
       minLines: effectiveMinLines,
+      autocorrect: autocorrect,
+      enableSuggestions: enableSuggestions,
+      textInputAction: textInputAction,
       decoration: InputDecoration(
         labelText: label,
         border: const OutlineInputBorder(),
         prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+        errorText: errorText,
       ),
     );
   }

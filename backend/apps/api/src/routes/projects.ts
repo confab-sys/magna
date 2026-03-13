@@ -1,6 +1,10 @@
 import { Hono } from 'hono';
 import { Bindings, Variables } from '../types';
 import { authMiddleware } from '../middleware';
+import {
+  broadcastNotificationCreated,
+  broadcastUnreadCount,
+} from '../services/notifications_realtime';
 
 export const projectRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
@@ -10,7 +14,7 @@ projectRoutes.get('/', authMiddleware, async (c) => {
 
   try {
     const projects = await c.env.DB.prepare(`
-      SELECT p.*, u.username as owner_name, u.avatar_url as owner_avatar,
+      SELECT p.*, u.username as owner_name, u.avatar_url as owner_avatar_url,
       EXISTS (SELECT 1 FROM likes WHERE project_id = p.id AND user_id = ?) as is_liked,
       (SELECT COUNT(*) FROM comments WHERE project_id = p.id) as real_comments_count
       FROM projects p
@@ -91,7 +95,7 @@ projectRoutes.get('/:id', async (c) => {
   const id = c.req.param('id');
   try {
     const project: any = await c.env.DB.prepare(`
-      SELECT p.*, u.username as owner_name, u.avatar_url as owner_avatar,
+      SELECT p.*, u.username as owner_name, u.avatar_url as owner_avatar_url,
       (SELECT COUNT(*) FROM comments WHERE project_id = p.id) as real_comments_count
       FROM projects p
       JOIN users u ON p.owner_id = u.id
@@ -192,6 +196,79 @@ projectRoutes.post('/:id/like', authMiddleware, async (c) => {
       await c.env.DB.prepare(
         'UPDATE projects SET likes_count = likes_count + 1 WHERE id = ?'
       ).bind(projectId).run();
+
+      // Notify project owner if someone else liked their project
+      const projectRow = await c.env.DB.prepare(
+        'SELECT owner_id, title FROM projects WHERE id = ?',
+      ).bind(projectId).first();
+
+      if (projectRow && (projectRow as any).owner_id !== userId) {
+        const ownerId = (projectRow as any).owner_id as string;
+        const title = (projectRow as any).title as string;
+
+        const notifId = crypto.randomUUID();
+        await c.env.DB.prepare(
+          `
+          INSERT INTO notifications (
+            id,
+            user_id,
+            type,
+            title,
+            message,
+            is_read,
+            actor_id,
+            actor_name,
+            actor_avatar_url,
+            target_type,
+            target_id,
+            metadata_json
+          )
+          VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+        `,
+        )
+          .bind(
+            notifId,
+            ownerId,
+            'project_liked',
+            'Project liked',
+            'Someone liked your project.',
+            userId,
+            null,
+            null,
+            'project',
+            projectId,
+            null,
+          )
+          .run();
+
+        await broadcastNotificationCreated(c.env, ownerId, {
+          id: notifId,
+          type: 'project_liked',
+          title: 'Project liked',
+          message: `Someone liked your project "${title}".`,
+          is_read: 0,
+          created_at: new Date().toISOString(),
+          actor_id: userId,
+          actor_name: null,
+          actor_avatar_url: null,
+          target_type: 'project',
+          target_id: projectId,
+          metadata_json: null,
+        });
+
+        const unreadRow = await c.env.DB.prepare(
+          `
+          SELECT COUNT(*) AS count
+          FROM notifications
+          WHERE user_id = ? AND is_read = 0
+        `,
+        )
+          .bind(ownerId)
+          .first();
+
+        const unreadCount = (unreadRow as any)?.count ?? 0;
+        await broadcastUnreadCount(c.env, ownerId, unreadCount);
+      }
 
       return c.json({ message: 'Project liked', liked: true });
     }
@@ -304,10 +381,153 @@ projectRoutes.post('/', authMiddleware, async (c) => {
       end_date || null
     ).run();
 
-    return c.json({ 
-      message: 'Project created', 
-      id, 
-      imageUrl: image_url
+    // Load owner metadata (name, avatar) for notifications.
+    const ownerRow = await c.env.DB.prepare(
+      'SELECT username, avatar_url FROM users WHERE id = ?',
+    ).bind(userId).first();
+    const ownerName = (ownerRow as any)?.username || 'Someone';
+    const ownerAvatar = (ownerRow as any)?.avatar_url || null;
+
+    // Self-notification for project creation
+    const notificationId = crypto.randomUUID();
+    await c.env.DB.prepare(
+      `
+      INSERT INTO notifications (
+        id,
+        user_id,
+        type,
+        title,
+        message,
+        is_read,
+        actor_id,
+        actor_name,
+        actor_avatar_url,
+        target_type,
+        target_id,
+        metadata_json
+      )
+      VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+    `,
+    )
+      .bind(
+        notificationId,
+        userId,
+        'project_posted',
+        'Project created',
+        `Your project "${title}" was created.`,
+        userId,
+        ownerName,
+        ownerAvatar,
+        'project',
+        id,
+        null,
+      )
+      .run();
+
+    await broadcastNotificationCreated(c.env, userId, {
+      id: notificationId,
+      type: 'project_posted',
+      title: 'Project created',
+      message: `Your project "${title}" was created.`,
+      is_read: 0,
+      created_at: new Date().toISOString(),
+      actor_id: userId,
+      actor_name: ownerName,
+      actor_avatar_url: ownerAvatar,
+      target_type: 'project',
+      target_id: id,
+      metadata_json: null,
+    });
+
+    const unreadRow = await c.env.DB.prepare(
+      `
+      SELECT COUNT(*) AS count
+      FROM notifications
+      WHERE user_id = ? AND is_read = 0
+    `,
+    )
+      .bind(userId)
+      .first();
+
+    const unreadCount = (unreadRow as any)?.count ?? 0;
+    await broadcastUnreadCount(c.env, userId, unreadCount);
+
+    // Fan-out: notify all other users about the new project
+    const audience = await c.env.DB.prepare(
+      'SELECT id FROM users WHERE id != ?',
+    ).bind(userId).all();
+
+    for (const row of audience.results as any[]) {
+      const targetId = row.id as string;
+      const publicNotifId = crypto.randomUUID();
+
+      await c.env.DB.prepare(
+        `
+        INSERT INTO notifications (
+          id,
+          user_id,
+          type,
+          title,
+          message,
+          is_read,
+          actor_id,
+          actor_name,
+          actor_avatar_url,
+          target_type,
+          target_id,
+          metadata_json
+        )
+        VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+        .bind(
+          publicNotifId,
+          targetId,
+          'project_posted',
+          'New project',
+          `${ownerName} posted project "${title}".`,
+          userId,
+          ownerName,
+          ownerAvatar,
+          'project',
+          id,
+          null,
+        )
+        .run();
+
+      await broadcastNotificationCreated(c.env, targetId, {
+        id: publicNotifId,
+        type: 'project_posted',
+        title: 'New project',
+        message: `${ownerName} posted project "${title}".`,
+        is_read: 0,
+        created_at: new Date().toISOString(),
+        actor_id: userId,
+        actor_name: ownerName,
+        actor_avatar_url: null,
+        target_type: 'project',
+        target_id: id,
+        metadata_json: null,
+      });
+
+      const publicUnreadRow = await c.env.DB.prepare(
+        `
+        SELECT COUNT(*) AS count
+        FROM notifications
+        WHERE user_id = ? AND is_read = 0
+      `,
+      )
+        .bind(targetId)
+        .first();
+
+      const publicUnreadCount = (publicUnreadRow as any)?.count ?? 0;
+      await broadcastUnreadCount(c.env, targetId, publicUnreadCount);
+    }
+
+    return c.json({
+      message: 'Project created',
+      id,
+      imageUrl: image_url,
     }, 201);
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
@@ -339,6 +559,38 @@ projectRoutes.put('/:id', authMiddleware, async (c) => {
     `).bind(title, description, status, tech_stack ? JSON.stringify(tech_stack) : null, looking_for_contributors ? 1 : 0, image_url, id).run();
 
     return c.json({ message: 'Project updated' });
+  } catch (e: any) {
+    return c.json({ error: e.message }, 500);
+  }
+});
+
+// DELETE /api/projects/:id - Delete project (owner only, or admin via x-admin-key)
+projectRoutes.delete('/:id', authMiddleware, async (c) => {
+  const userId = c.get('userId');
+  const adminKey = c.req.header('x-admin-key');
+  const id = c.req.param('id');
+
+  try {
+    const existing: any = await c.env.DB.prepare(
+      'SELECT owner_id FROM projects WHERE id = ?',
+    ).bind(id).first();
+
+    if (!existing) {
+      return c.json({ error: 'Project not found' }, 404);
+    }
+
+    const isOwner = existing.owner_id === userId;
+    const isAdmin = !!adminKey && adminKey === c.env.REALTIME_INTERNAL_KEY;
+
+    if (!isOwner && !isAdmin) {
+      return c.json({ error: 'Forbidden' }, 403);
+    }
+
+    await c.env.DB.prepare(
+      'DELETE FROM projects WHERE id = ?',
+    ).bind(id).run();
+
+    return c.json({ message: 'Project deleted' });
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
   }

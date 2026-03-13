@@ -255,6 +255,12 @@ class _FeedPageState extends State<FeedPage> with SingleTickerProviderStateMixin
             icon: PhosphorIcon(PhosphorIcons.magnifyingGlass()),
             onPressed: () {},
           ),
+          IconButton(
+            icon: PhosphorIcon(PhosphorIcons.list()),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
         ],
       ),
       floatingActionButton: Column(

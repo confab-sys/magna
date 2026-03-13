@@ -1,6 +1,10 @@
 import { Hono } from 'hono';
 import { Bindings, Variables } from '../types';
 import { authMiddleware } from '../middleware';
+import {
+  broadcastNotificationCreated,
+  broadcastUnreadCount,
+} from '../services/notifications_realtime';
 
 export const jobRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>();
 
@@ -10,11 +14,17 @@ jobRoutes.get('/', authMiddleware, async (c) => {
 
   try {
     const jobs = await c.env.DB.prepare(`
-      SELECT o.*, c.name as company_name, c.logo_url as company_logo_url, c.verified as company_verified,
-      EXISTS (SELECT 1 FROM likes WHERE job_id = o.id AND user_id = ?) as is_liked,
-      (SELECT COUNT(*) FROM comments WHERE job_id = o.id) as real_comments_count
+      SELECT 
+        o.*, 
+        c.name as company_name, 
+        -- Use creator's avatar as the primary avatar for the job card
+        u.avatar_url as company_logo_url,
+        c.verified as company_verified,
+        EXISTS (SELECT 1 FROM likes WHERE job_id = o.id AND user_id = ?) as is_liked,
+        (SELECT COUNT(*) FROM comments WHERE job_id = o.id) as real_comments_count
       FROM jobs o
       LEFT JOIN companies c ON o.company_id = c.id
+      JOIN users u ON o.author_id = u.id
       ORDER BY o.created_at DESC
     `).bind(userId).all();
     
@@ -92,6 +102,7 @@ jobRoutes.post('/', authMiddleware, async (c) => {
   const title = body['title'];
   const description = body['description'];
   const company_id = body['company_id'];
+  const company_name = body['company_name'];
   const location = body['location'];
   const salary = body['salary'];
   const job_type = body['job_type'];
@@ -129,9 +140,25 @@ jobRoutes.post('/', authMiddleware, async (c) => {
 
   try {
     const id = crypto.randomUUID();
+    let effectiveCompanyId = company_id as string | null;
+
+    // If no existing company_id but a free-text company_name is provided, create a simple company record.
+    if (!effectiveCompanyId && company_name) {
+      const newCompanyId = crypto.randomUUID();
+      await c.env.DB.prepare(
+        `
+        INSERT INTO companies (id, name, logo_url, website_url, description, location, verified)
+        VALUES (?, ?, NULL, NULL, NULL, NULL, 0)
+      `,
+      )
+        .bind(newCompanyId, company_name)
+        .run();
+
+      effectiveCompanyId = newCompanyId;
+    }
     // Ensure all values are either string or null, NOT undefined for D1
     const safeCategoryId = category_id || null;
-    const safeCompanyId = company_id || null;
+    const safeCompanyId = effectiveCompanyId || null;
     const safeLocation = location || null;
     const safeSalary = salary || null;
     const safeJobType = job_type || null;
@@ -144,9 +171,153 @@ jobRoutes.post('/', authMiddleware, async (c) => {
         deadline, author_id, category_id, job_image_url, created_at, updated_at
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
     `).bind(
-      id, title, description, safeCompanyId, safeLocation, safeSalary, safeJobType, 
-      safeDeadline, userId, safeCategoryId, safeJobImageUrl
+      id, title, description, safeCompanyId, safeLocation, safeSalary, safeJobType,
+      safeDeadline, userId, safeCategoryId, safeJobImageUrl,
     ).run();
+
+    // Load author metadata (name, avatar) for notifications.
+    const authorRow = await c.env.DB.prepare(
+      'SELECT username, avatar_url FROM users WHERE id = ?',
+    ).bind(userId).first();
+    const authorName = (authorRow as any)?.username || 'Someone';
+    const authorAvatar = (authorRow as any)?.avatar_url || null;
+
+    // Self-notification for job creation
+    const notificationId = crypto.randomUUID();
+    await c.env.DB.prepare(
+      `
+      INSERT INTO notifications (
+        id,
+        user_id,
+        type,
+        title,
+        message,
+        is_read,
+        actor_id,
+        actor_name,
+        actor_avatar_url,
+        target_type,
+        target_id,
+        metadata_json
+      )
+      VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+    `,
+    )
+      .bind(
+        notificationId,
+        userId,
+        'job_posted',
+        'Job created',
+        `Your job "${title}" was created.`,
+        userId,
+        authorName,
+        authorAvatar,
+        'job',
+        id,
+        null,
+      )
+      .run();
+
+    await broadcastNotificationCreated(c.env, userId, {
+      id: notificationId,
+      type: 'job_posted',
+      title: 'Job created',
+      message: `Your job "${title}" was created.`,
+      is_read: 0,
+      created_at: new Date().toISOString(),
+      actor_id: userId,
+      actor_name: authorName,
+      actor_avatar_url: authorAvatar,
+      target_type: 'job',
+      target_id: id,
+      metadata_json: null,
+    });
+
+    const unreadRow = await c.env.DB.prepare(
+      `
+      SELECT COUNT(*) AS count
+      FROM notifications
+      WHERE user_id = ? AND is_read = 0
+    `,
+    )
+      .bind(userId)
+      .first();
+
+    const unreadCount = (unreadRow as any)?.count ?? 0;
+    await broadcastUnreadCount(c.env, userId, unreadCount);
+
+    // Fan-out: notify all other users about the new job
+
+    const audience = await c.env.DB.prepare(
+      'SELECT id FROM users WHERE id != ?',
+    ).bind(userId).all();
+
+    for (const row of audience.results as any[]) {
+      const targetId = row.id as string;
+      const publicNotifId = crypto.randomUUID();
+
+      await c.env.DB.prepare(
+        `
+        INSERT INTO notifications (
+          id,
+          user_id,
+          type,
+          title,
+          message,
+          is_read,
+          actor_id,
+          actor_name,
+          actor_avatar_url,
+          target_type,
+          target_id,
+          metadata_json
+        )
+        VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+      `,
+      )
+        .bind(
+          publicNotifId,
+          targetId,
+          'job_posted',
+          'New job',
+          `${authorName} posted job "${title}".`,
+          userId,
+          authorName,
+          authorAvatar,
+          'job',
+          id,
+          null,
+        )
+        .run();
+
+      await broadcastNotificationCreated(c.env, targetId, {
+        id: publicNotifId,
+        type: 'job_posted',
+        title: 'New job',
+        message: `${authorName} posted job "${title}".`,
+        is_read: 0,
+        created_at: new Date().toISOString(),
+        actor_id: userId,
+        actor_name: authorName,
+        actor_avatar_url: null,
+        target_type: 'job',
+        target_id: id,
+        metadata_json: null,
+      });
+
+      const publicUnreadRow = await c.env.DB.prepare(
+        `
+        SELECT COUNT(*) AS count
+        FROM notifications
+        WHERE user_id = ? AND is_read = 0
+      `,
+      )
+        .bind(targetId)
+        .first();
+
+      const publicUnreadCount = (publicUnreadRow as any)?.count ?? 0;
+      await broadcastUnreadCount(c.env, targetId, publicUnreadCount);
+    }
 
     return c.json({ message: 'Job created', id }, 201);
   } catch (e: any) {
@@ -188,6 +359,79 @@ jobRoutes.post('/:id/like', authMiddleware, async (c) => {
         'UPDATE jobs SET likes_count = likes_count + 1 WHERE id = ?'
       ).bind(jobId).run();
 
+      // Notify job author if someone else liked their job
+      const jobRow = await c.env.DB.prepare(
+        'SELECT author_id, title FROM jobs WHERE id = ?',
+      ).bind(jobId).first();
+
+      if (jobRow && (jobRow as any).author_id !== userId) {
+        const authorId = (jobRow as any).author_id as string;
+        const title = (jobRow as any).title as string;
+
+        const notifId = crypto.randomUUID();
+        await c.env.DB.prepare(
+          `
+          INSERT INTO notifications (
+            id,
+            user_id,
+            type,
+            title,
+            message,
+            is_read,
+            actor_id,
+            actor_name,
+            actor_avatar_url,
+            target_type,
+            target_id,
+            metadata_json
+          )
+          VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?)
+        `,
+        )
+          .bind(
+            notifId,
+            authorId,
+            'job_liked',
+            'Job liked',
+            'Someone liked your job.',
+            userId,
+            null,
+            null,
+            'job',
+            jobId,
+            null,
+          )
+          .run();
+
+        await broadcastNotificationCreated(c.env, authorId, {
+          id: notifId,
+          type: 'job_liked',
+          title: 'Job liked',
+          message: `Someone liked your job "${title}".`,
+          is_read: 0,
+          created_at: new Date().toISOString(),
+          actor_id: userId,
+          actor_name: null,
+          actor_avatar_url: null,
+          target_type: 'job',
+          target_id: jobId,
+          metadata_json: null,
+        });
+
+        const unreadRow = await c.env.DB.prepare(
+          `
+          SELECT COUNT(*) AS count
+          FROM notifications
+          WHERE user_id = ? AND is_read = 0
+        `,
+        )
+          .bind(authorId)
+          .first();
+
+        const unreadCount = (unreadRow as any)?.count ?? 0;
+        await broadcastUnreadCount(c.env, authorId, unreadCount);
+      }
+
       return c.json({ message: 'Job liked', liked: true });
     }
   } catch (e: any) {
@@ -220,6 +464,38 @@ jobRoutes.post('/apply/:id', authMiddleware, async (c) => {
     `).bind(id, jobId, userId, resume_url, cover_letter).run();
 
     return c.json({ message: 'Application submitted', id }, 201);
+  } catch (e: any) {
+    return c.json({ error: e.message }, 500);
+  }
+});
+
+// DELETE /api/jobs/:id - Delete job (author only, or admin via x-admin-key)
+jobRoutes.delete('/:id', authMiddleware, async (c) => {
+  const userId = c.get('userId');
+  const adminKey = c.req.header('x-admin-key');
+  const id = c.req.param('id');
+
+  try {
+    const existing: any = await c.env.DB.prepare(
+      'SELECT author_id FROM jobs WHERE id = ?',
+    ).bind(id).first();
+
+    if (!existing) {
+      return c.json({ error: 'Job not found' }, 404);
+    }
+
+    const isOwner = existing.author_id === userId;
+    const isAdmin = !!adminKey && adminKey === c.env.REALTIME_INTERNAL_KEY;
+
+    if (!isOwner && !isAdmin) {
+      return c.json({ error: 'Forbidden' }, 403);
+    }
+
+    await c.env.DB.prepare(
+      'DELETE FROM jobs WHERE id = ?',
+    ).bind(id).run();
+
+    return c.json({ message: 'Job deleted' });
   } catch (e: any) {
     return c.json({ error: e.message }, 500);
   }

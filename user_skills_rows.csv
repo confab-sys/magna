@@ -1,0 +1,485 @@
+id,user_id,skill_name,proficiency_level,created_at,availability
+00c09eca-66f8-4dac-aaf6-672cb7c23888,535992c8-6e90-4f9e-a6be-c06728fdd01f,Android development Kotlin,beginner,2025-12-28 15:17:04.550509+00,available
+028c513b-352d-4b8b-aaa7-d1210436f2b8,592c00e3-0f53-4296-86de-65fc6df17a45,Fullstack development (MERN),beginner,2025-12-01 22:09:16.109919+00,available
+0318a528-5d14-4cb3-bc89-379dc5d65a35,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,BIG DATA,beginner,2025-09-22 21:51:40.482269+00,available
+038b8f1f-fcb7-4656-a66c-bd5eca292da9,85615858-5cd2-4854-a618-fa3799b9eedd,postgres,beginner,2025-11-13 08:59:06.909073+00,available
+043417ab-2932-4520-99f2-8c6c03166481,857f1c2d-6c95-497c-b6c8-c384fd634385,"Customer service ",beginner,2025-09-25 15:16:17.41314+00,available
+05f041d4-6100-47ca-b2c4-93490879f42d,1bf2f042-8e0c-421f-b57a-b11eaa8143b9,Web development,beginner,2025-09-30 08:43:04.933088+00,available
+07125a67-3464-452f-8c0f-dd201a69add6,dbed8ca7-b08b-4465-9e42-0683e61b8d46,"Spring boot ",beginner,2025-09-23 16:21:29.452403+00,available
+0712a1a2-b80a-470f-840b-0606fad1fffe,b427c10c-a373-4b63-81e1-e4df8ddd2bec,"UX research ",beginner,2025-09-23 20:24:10.762212+00,available
+0837c2be-4c66-4785-a8fd-a9299674eea0,aad69b0f-b76e-456f-88a1-1610a7cc8c75,"Web development and design, Mobile application development ",beginner,2025-11-03 16:59:43.110318+00,available
+0903f495-52d0-4d22-8202-db794aac29b2,977539b4-ba6c-413a-abf4-c9f2b2b7e0c4,"Front end developer, website developer ",beginner,2025-09-24 09:47:16.393285+00,available
+09360c4c-d784-460f-85c1-b8ad1ef05d8f,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,firebase,beginner,2025-10-02 13:49:17.300983+00,available
+09cccae5-367b-4e45-982b-1dfa626726d7,b427c10c-a373-4b63-81e1-e4df8ddd2bec,"Graphic design ",beginner,2025-09-23 20:24:10.762212+00,available
+09f6d9e0-e6e3-47f9-a602-acae4491e9af,88fc1f40-5628-4286-a4ea-437f447a5a0e,Networking,beginner,2025-09-23 23:44:18.028808+00,available
+0a27fdd4-3806-4dba-9a24-224a03ede0e9,88fc1f40-5628-4286-a4ea-437f447a5a0e,MySql,beginner,2025-09-23 23:44:18.028808+00,available
+0a72c712-3c54-4e82-be77-d081bdd82a25,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Business Intelligence (BI),beginner,2025-09-18 19:03:49.966943+00,available
+0bdc29dc-815c-4a2b-8daa-5172afb7343f,86494a94-e1bd-439b-b3a9-5139346fd9b4,PostgeSQL,beginner,2025-09-22 09:15:16.441062+00,available
+0c4effe4-5f9b-4b65-b92e-d777349cabaa,bf7812e1-52a5-4bd5-b1f6-741ab6b366e7,"C, C++, Arduino, Raspberry Pi",beginner,2025-09-26 20:17:55.73091+00,available
+0d27742b-d71b-45c5-a60f-9f154d96a25f,da12d2d8-47bf-4c18-a8fd-4a5adca61a77,Front end Dev,beginner,2025-12-07 07:53:19.646116+00,available
+0e3be1cf-e0e4-469b-b175-2843c9738bde,592c00e3-0f53-4296-86de-65fc6df17a45,System design,beginner,2025-12-01 22:09:16.109919+00,available
+0edadb16-56f4-407d-a3a2-347ca3fbf5f8,23dbd2e1-c188-4def-ad54-8728c86c49cd,"Nextjs ",beginner,2025-09-22 12:39:08.223236+00,available
+0ef5598a-3cac-4b0a-bdc1-01ebc358cd97,8cb8fc19-da49-4284-a33f-47d3f5824a11,"Product Strategy ",beginner,2025-09-20 19:30:26.910626+00,available
+0f7acd51-fdaf-40ba-82b8-53a192ac4c87,7987355f-c622-4030-9924-ed2eea892d4c,Git,beginner,2025-12-01 11:10:46.907897+00,available
+0fad5457-b9b7-482a-b045-099df9eae597,bbc99929-246e-47be-8515-829f34bb9dcc,MERN stack,beginner,2025-09-27 15:31:09.323441+00,available
+0fc30312-23d7-41e1-972e-8c05cd4523e2,aa7b0516-13dd-43e2-81ab-87ac5f87316b,Front-end dev,beginner,2025-09-20 13:55:04.817007+00,available
+0fc3c108-22d6-451f-9ea7-4eee18971bf5,aa7b0516-13dd-43e2-81ab-87ac5f87316b,Backend dev,beginner,2025-09-20 13:55:04.817007+00,available
+0fec0f69-fb7f-40c0-a68d-1a3c917eeab4,1bc3a51e-9d01-4b3c-9e4d-01b3ac2f641a,Web Apps Development,beginner,2025-09-24 11:57:37.601131+00,available
+10092c01-0481-4076-a277-1c98aa7739b5,88fc1f40-5628-4286-a4ea-437f447a5a0e,Python,beginner,2025-09-23 23:44:18.028808+00,available
+109705dc-96d8-4446-a2df-498fa89ee374,88fc1f40-5628-4286-a4ea-437f447a5a0e,Vue,beginner,2025-09-23 23:44:18.028808+00,available
+10c7c87c-ca71-472d-9eb4-a09d5d3aeef5,3c91b95b-2782-444d-8069-b38d7ee59739,HTML,beginner,2025-09-30 23:02:54.310324+00,available
+10d7e119-c380-4644-b6db-5f827a19ef98,2ffa4110-01fc-49f3-9932-36ab267ff8e5,"Project management ",beginner,2025-11-06 21:22:53.113309+00,available
+1194fb62-3a6d-4c42-8047-17bb98742c06,8b12b915-1fd4-4516-a65f-167726d8d5a6,"Fullstack web development ",beginner,2025-09-23 10:55:40.20632+00,available
+11c5135d-5eae-4ed5-8c84-51def1b5d9c0,d232cfbe-b5a7-446a-b762-6fce5ee9dc59,"Debugging ",beginner,2025-09-22 05:27:58.429606+00,available
+1272214c-47ae-4765-a2cc-2b04e255a261,3fa4521f-3000-4017-88ef-a4bc06f23b96,Graphic design,beginner,2025-09-23 19:23:14.710212+00,available
+127abed4-6374-44b0-809b-b0d48b09995d,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,DATA SCIENCE AND AI,beginner,2025-09-22 21:51:40.482269+00,available
+13053e4a-ea21-4c16-a91b-c0e7845f9817,bbc99929-246e-47be-8515-829f34bb9dcc,FireBase,beginner,2025-09-27 15:31:09.323441+00,available
+136557b7-eff1-4ac7-9d46-fb5d9830f6c5,1112518e-ff82-4524-96b5-181e548f4c46,"Backend developer ",beginner,2025-12-08 11:47:28.658984+00,available
+13a8514f-60db-4e58-bbfc-aad618b76462,80630d3c-fcc2-494f-9c6b-052df534f55c,"Javascript, Python, SQL, HTML5",beginner,2025-09-30 12:12:32.601406+00,available
+13ae8337-5af4-461f-b9f2-faf49cac1791,8cb8fc19-da49-4284-a33f-47d3f5824a11,"  Cloud Solutions (Cloudinary, Firebase, ",beginner,2025-09-20 19:30:26.910626+00,available
+14141acc-5c47-4802-a4b8-2d7d4f9c0c9f,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,Full stack developer,beginner,2025-09-30 13:48:07.270438+00,available
+1481e97c-d1b3-4f26-8f5e-d25f287c6ea1,31199957-d7a6-4a55-bf85-620b58cdf341,"Blockchain Developer ",beginner,2025-09-22 14:58:44.19841+00,available
+149940c7-97ec-46eb-bafe-1fc3aa07057f,09700d6d-d50f-4abe-b69e-015993f6cc74,react,beginner,2025-10-09 06:59:37.442163+00,available
+14d1c185-5795-4189-8e18-a9ffa30512a5,23dbd2e1-c188-4def-ad54-8728c86c49cd,Prisma,beginner,2025-09-22 12:39:08.223236+00,available
+14d6d65d-694b-4cf1-92a6-a6666f45475d,d916f784-fd5c-4acb-a703-064bb20b998f,CCNA,beginner,2025-11-05 01:10:16.30062+00,available
+1586d8c8-7569-474e-9b01-8c0feaca896e,1e33d3fb-4973-40c7-a8db-45fd941bc55b,Laravel PHP,beginner,2025-09-23 19:56:02.136817+00,available
+16dfddee-0225-4a01-8449-37946e249912,23dbd2e1-c188-4def-ad54-8728c86c49cd,React Query,beginner,2025-09-22 12:39:08.223236+00,available
+17f9f6c6-e358-487e-aba5-e21a9694589a,b427c10c-a373-4b63-81e1-e4df8ddd2bec,UI design,beginner,2025-09-23 20:24:10.762212+00,available
+17fa8639-165a-47f5-ab67-b8e9303da429,c9d589a9-c0e1-4160-93b7-e17e6b58169a,"Cyber security engineering ",beginner,2025-09-21 15:21:39.755961+00,available
+1880f4ea-d89c-4592-b54f-b39e73b4daae,435a4559-af2c-4fde-a066-c7cf4f19d78c,html,beginner,2025-09-26 21:08:14.651509+00,available
+189f3162-787e-4668-82ab-72ce689831b9,9edcfa37-eceb-484d-8317-30486cbad119,API Integration,beginner,2025-09-30 16:12:28.633774+00,available
+19386623-a2f0-4ec3-81f4-10e6933581df,63451d01-cb3a-4b63-82b4-7190d9dda396,"React, Tailwind Css, Node, Django",beginner,2025-09-22 19:54:23.075531+00,available
+1a0bc175-2053-408f-9fac-3514f2028720,9edcfa37-eceb-484d-8317-30486cbad119,web development,beginner,2025-09-30 16:12:28.633774+00,available
+1a0d13e0-e53a-45de-8acb-e58bcf7680aa,c8c36d9a-577a-4b66-8eb5-2e430c2d600a,BACKEND,beginner,2025-09-21 16:56:51.635781+00,available
+1a166cc8-41a4-4e49-ad00-26906c2e7aad,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Data Analysis,beginner,2025-09-18 19:03:49.966943+00,available
+1a25b535-ed5b-4f6e-9c13-146952f7d1e7,dbed8ca7-b08b-4465-9e42-0683e61b8d46,"Kubernetes ",beginner,2025-09-23 16:21:29.452403+00,available
+1c5bfdc0-23e1-4186-9d2a-6a8cd97fa727,48abe242-6963-445c-8743-0a899289898a,CSS,beginner,2025-10-01 12:52:35.651664+00,available
+1cde4ade-847b-4a23-8cec-f5abe086f14b,c9d589a9-c0e1-4160-93b7-e17e6b58169a,"System design Engineering ",beginner,2025-09-21 15:21:39.755961+00,available
+1d5ebd80-761f-475e-b515-3b7661ef2e9b,9bc7110a-2874-4ef3-92a9-47b118687e6e,Django,beginner,2025-09-24 13:18:51.051922+00,available
+1db9972e-bba5-481d-bee7-c4d8c8909bf2,9edcfa37-eceb-484d-8317-30486cbad119,Problem solving,beginner,2025-09-30 16:12:28.633774+00,available
+1dd3b3b2-dbcc-4d99-bf33-2704cfa177a9,92e70738-d09f-48bf-af83-2a9d6dfdb137,"HTML,CSS,JAVASCRIPT,REACT,PYTHON",beginner,2025-09-23 05:34:47.003397+00,available
+1e908a61-504d-47b5-b41f-155cbeeee75f,848515ce-1a1f-4340-8108-2699dd77f6ee,python,beginner,2025-09-29 08:28:14.042379+00,available
+1ec87d49-d7c7-4556-b8a4-eef876a9680c,70536df8-da08-433b-9bf8-aeb76c9ec394,Java,beginner,2025-09-23 21:32:42.835218+00,available
+1f516ee4-b685-4d46-93b9-8db0b3078cd3,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,ML,beginner,2025-09-22 21:51:40.482269+00,available
+1fb38893-32cb-4f99-bb0b-aa2f5568ea89,2ffa4110-01fc-49f3-9932-36ab267ff8e5,Smart contracts,beginner,2025-11-06 21:22:53.113309+00,available
+20b56ea4-0c4f-41e5-9c29-49355389e144,645e38ec-a001-4578-b7c5-22cc443221ff,Graphics designer,beginner,2025-09-23 09:24:36.188618+00,available
+212a8ea8-2aee-4019-8c15-85e6e42d2f6f,c7ddba3c-0265-4f70-9bc3-41c25390c344,"Web Development ",beginner,2025-10-02 07:22:40.699517+00,available
+223e82a1-6eaf-4029-9c0f-c62c359233f2,c7ddba3c-0265-4f70-9bc3-41c25390c344,Art/ drawing,beginner,2025-10-02 07:22:40.699517+00,available
+22aab248-e6cf-4b29-a63c-7208be197e92,48abe242-6963-445c-8743-0a899289898a,HTML,beginner,2025-10-01 12:52:35.651664+00,available
+2440d938-c5a8-4876-92d2-88ac88b42809,66a034fc-fc5c-4fed-a3ad-3117c92399bf,Django  | Laravel & Spring boot,beginner,2025-09-21 20:50:49.303893+00,available
+247adfab-aec3-40e6-8e8b-20169866e5b7,edb22325-3a4b-4466-93b1-c99d226d8830,Consistency,beginner,2025-11-06 17:08:10.882792+00,available
+25a38032-e1f0-4156-baf0-7f87a11a0b8b,1bf2f042-8e0c-421f-b57a-b11eaa8143b9,Python(Django),beginner,2025-09-30 08:43:04.933088+00,available
+25b73459-4cff-43f8-90e3-a1b5aadc63e8,abac2832-2a1c-498c-8d94-190073c27b1a,"🎨 Design: Figma, Logo & UI/UX Design",beginner,2025-09-23 12:48:13.031262+00,available
+261e6dc1-722e-4b93-b34b-79555b7dfba9,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,DATABASE AND CLOUD,beginner,2025-09-22 21:51:40.482269+00,available
+263cb3ac-0e75-470d-859a-78b451df178c,b9b85b2e-ab03-4a2c-93a2-97640980f6ab,"React js typescript  ,AI ,SQL , Cloud solutions architecture -IBM ,AWS.",beginner,2025-09-23 17:43:02.860794+00,available
+26c0d0b8-4d04-4d22-a403-2cf2604b2776,3b6e88a5-dbfb-40af-9b83-7ea67d871011,"Databases ",beginner,2025-09-22 19:53:43.493171+00,available
+2760169e-b587-4ff7-bff1-e78843a83eb8,e2ec149b-9de3-40b6-914a-eabb63cd9553,"Front end developer skills ",beginner,2025-09-30 11:44:07.394417+00,available
+287a4edd-a1e9-44ae-81ed-0c89f5e40d8b,563ae38b-c83f-4272-ac48-5bcc432d6ebe,pipeline,beginner,2025-09-18 19:03:49.966943+00,available
+29370e20-3b4d-4488-8963-693134d8823f,dbed8ca7-b08b-4465-9e42-0683e61b8d46,Docker,beginner,2025-09-23 16:21:29.452403+00,available
+297e8cde-ac44-494f-a687-4f485d62e421,9f39c3c4-0b9f-44dc-9657-9f21f3cf9ad2,"Javascript ",beginner,2025-09-22 17:33:27.14536+00,available
+298a6f0b-989b-4484-8c22-ea1c8d9ea4a8,88fc1f40-5628-4286-a4ea-437f447a5a0e,C++,beginner,2025-09-23 23:44:18.028808+00,available
+29a5333f-45ae-497a-8374-524d2e6883a2,9bc7110a-2874-4ef3-92a9-47b118687e6e,Front End,beginner,2025-09-24 13:18:51.051922+00,available
+2a64bf65-d3e5-4766-aa1e-d57e3c1febe7,7987355f-c622-4030-9924-ed2eea892d4c,React,beginner,2025-12-01 11:10:46.907897+00,available
+2a86b5a2-8d1f-4891-9868-b4debfee8c58,25ec1972-f916-4783-8e47-08487a00c6be,"Good in sql, java, c++",beginner,2025-10-06 08:45:43.730438+00,available
+2ab7dd92-5f92-4cdf-ba88-8d956c23c7b3,4a8706a2-0fa4-4eb9-b60e-b9eff70a4944,Back End Development,beginner,2025-09-23 20:17:40.702267+00,available
+2b829ed4-433f-4c0f-99cb-42aa2dd0c67d,575e1602-d48b-4c41-8494-b88fbf74a2d1,"HTML and CSS ",beginner,2025-10-30 05:33:41.758396+00,available
+2c0a5656-a621-459f-8ded-4d01f69b5dd9,ec41630f-aa20-4ed8-b4b2-8f506bbf218e,React js,beginner,2025-09-21 20:00:51.309638+00,available
+2e1ab886-da63-4def-aa8a-dba70162bb24,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Dimensionality Reduction (PCA),beginner,2025-09-18 19:03:49.966943+00,available
+2e4f3dda-c777-4be5-9f73-96a00ba4f23b,de057c25-2f17-4e07-b849-9b82a742f366,designer | developer | orator | cyber sec.analyst,beginner,2025-10-01 06:58:19.661118+00,available
+2e7ec2b4-b43c-4a23-b5d3-a2b9d3087077,dc0d059c-2c9f-45a5-92d6-5bfc8cfc3989,UI/UX Design,beginner,2025-09-22 11:31:44.945713+00,available
+30136930-026c-4254-9dea-9bbf3f9d61ab,a93f551d-7791-4872-8f55-e9d124fa0fc3,"React,Tailwind,Nodejs,Firebase",beginner,2025-09-26 11:09:52.769492+00,available
+308480b9-3b99-4769-ba52-c5de97f16e63,b427c10c-a373-4b63-81e1-e4df8ddd2bec,"Wireframing ",beginner,2025-09-23 20:24:10.762212+00,available
+314b394d-b33c-4654-b9e9-d656617f0ad3,1de0c2e6-0a33-4d7c-ad63-669838492380,Flask,beginner,2025-11-26 17:49:13.576275+00,available
+323c951c-9662-49ca-bfa1-de53bac6e662,bbc99929-246e-47be-8515-829f34bb9dcc,Supabase,beginner,2025-09-27 15:31:09.323441+00,available
+327e7058-3a4e-476b-88c8-297366113ff4,d916f784-fd5c-4acb-a703-064bb20b998f,Javascript,beginner,2025-11-05 01:10:16.30062+00,available
+33c5b1a6-81f0-4fcd-beae-7b71a9365f94,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Streamlit,beginner,2025-09-18 19:03:49.966943+00,available
+33c60bd4-1e03-43fb-a6f3-1687db62ed1d,b427c10c-a373-4b63-81e1-e4df8ddd2bec,"Web design ",beginner,2025-09-23 20:24:10.762212+00,available
+34527ce5-de90-4d3f-adfd-636a7d8037ea,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,react native,beginner,2025-10-02 13:49:17.300983+00,available
+345d3970-5a02-49d8-8a5c-28dd90132bf9,f15c349a-6bd4-49e0-9951-9453a21c7044,"frontend developer ",beginner,2025-09-30 11:30:57.045706+00,available
+348c9fa6-35e8-4ea2-bbb2-50f20a7ebf2f,cfe687de-1852-448f-a1e4-2c8f487b6a39,"Web developer ",beginner,2025-09-20 17:13:50.32373+00,available
+34bd4f76-1639-41a6-a6a1-1de05ee0825b,d232cfbe-b5a7-446a-b762-6fce5ee9dc59,"Thinking through problems ",beginner,2025-09-22 05:27:58.429606+00,available
+34e2aaa1-85e4-4216-9280-66a64368fea9,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,"Python ",beginner,2025-09-23 04:04:15.424316+00,available
+35b6c4aa-65eb-44cc-bbba-3bc543beea50,1715224d-fae1-4027-9df4-4648135bb871,Graphic Designer,beginner,2025-10-28 09:33:12.793018+00,available
+36242998-dedf-40e9-a523-363c87e65f3e,daf2108e-b301-407c-ab60-cbe5dd9b57d9,"Flutter ",beginner,2025-09-23 02:30:08.648743+00,available
+37584e8d-9dcf-48c0-b069-be2f45afdb6a,48abe242-6963-445c-8743-0a899289898a,SQL,beginner,2025-10-01 12:52:35.651664+00,available
+37852c04-883f-45a8-a626-2c70431f9fcb,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,appwrite,beginner,2025-10-02 13:49:17.300983+00,available
+37a4086e-1e5b-4458-abe4-73794a1a67c4,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,expo,beginner,2025-10-02 13:49:17.300983+00,available
+37a9d163-86fe-44c8-a7ac-b92a9c5a196f,ebab0f25-58a6-48ec-af6e-2976ee2dd3f1,"developer ",beginner,2025-09-22 14:58:39.954167+00,available
+37efd920-65f1-464c-8ff4-aae0a275875c,9edcfa37-eceb-484d-8317-30486cbad119,Design and Implementation,beginner,2025-09-30 16:12:28.633774+00,available
+39a1b105-61fe-43b1-b09d-b0bda571c9ec,b4cb03f8-3652-4c22-960c-3af042a3608b,ML engineer,beginner,2025-10-13 15:59:06.7008+00,available
+39b878fe-6976-4db3-8e90-cb344abd9cca,abac2832-2a1c-498c-8d94-190073c27b1a,"🛠️ Other Tools: Git & GitHub, SEO, Version Control",beginner,2025-09-23 12:48:13.031262+00,available
+39ca1736-edd1-4ed6-857e-2c90bff3d953,cfe687de-1852-448f-a1e4-2c8f487b6a39,AI enthusiast,beginner,2025-09-20 17:13:50.32373+00,available
+3a0948d0-9875-435d-bec8-2db710e61399,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,"Flutter ",beginner,2025-09-23 04:04:15.424316+00,available
+3a6336e8-52a7-41b1-aaeb-11ad0b1ef278,1de0c2e6-0a33-4d7c-ad63-669838492380,GeoAI,beginner,2025-11-26 17:49:13.576275+00,available
+3a843e19-6438-41fd-97ad-33f798b2b7d4,85615858-5cd2-4854-a618-fa3799b9eedd,MsSQL Server,beginner,2025-11-13 08:59:06.909073+00,available
+3abc599e-0355-4518-bfca-e24c2f588ed1,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,JAVASCRIPT,beginner,2025-09-22 21:51:40.482269+00,available
+3b890023-abb6-49f8-9a85-ac420831c50b,aeb8f102-1c1a-46cd-959e-79c945ddfa83,Flask,beginner,2025-10-13 11:57:07.724999+00,available
+3c495799-ddf3-4a85-baf0-6f6f386e60fd,0a2a8a59-243b-46df-bb55-6d8167193b87,Next js,beginner,2025-09-22 05:18:18.810641+00,available
+3d24a533-1fa2-45da-ac05-e5e0e79af4d5,1bc3a51e-9d01-4b3c-9e4d-01b3ac2f641a,Web Design,beginner,2025-09-24 11:57:37.601131+00,available
+3d5c3a4d-31f2-45ec-83d5-4c615dc90b09,70536df8-da08-433b-9bf8-aeb76c9ec394,React,beginner,2025-09-23 21:32:42.835218+00,available
+3d797232-3a84-4705-81a1-773e0aac7182,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Anomaly Detection,beginner,2025-09-18 19:03:49.966943+00,available
+3ea4f7b4-1e76-496d-bbc4-c5742ee3a17f,2c46e787-f0f6-445e-a2f6-c1ad7bfc25b9,HTML,beginner,2025-09-27 10:57:39.564935+00,available
+3ec92edd-d45b-456a-96a4-2add7ea68760,1bf2f042-8e0c-421f-b57a-b11eaa8143b9,css,beginner,2025-09-30 08:43:04.933088+00,available
+3f298c82-d996-44cf-bb91-8114ef9dd192,23dbd2e1-c188-4def-ad54-8728c86c49cd,Postgresql,beginner,2025-09-22 12:39:08.223236+00,available
+3fca8663-c154-4a58-ba38-02ba9543b6d9,5c484350-aa93-4fe0-85b2-c80a67836d92,"Python ",beginner,2025-10-18 16:24:25.740257+00,available
+3fef2f7c-7c76-44b4-a7ed-9eabb6ba07ee,37715bd5-290e-4a21-9e8b-bbd8be429ffd,"Python ",beginner,2025-10-16 08:33:49.297889+00,available
+409286f8-b2a3-4dee-80e2-a86eacd7d2ec,9f39c3c4-0b9f-44dc-9657-9f21f3cf9ad2,Node js,beginner,2025-09-22 17:33:27.14536+00,available
+40dc3326-5a9a-4a50-af8d-aaf32b468008,b78c6581-a4af-44c4-9c91-a82ec2605a10,3D Animation,beginner,2025-12-19 08:15:36.894879+00,available
+40e35f7e-0362-4c00-9f40-aaad1a7a0b66,37715bd5-290e-4a21-9e8b-bbd8be429ffd,"Nextjs ",beginner,2025-10-16 08:33:49.297889+00,available
+410c93ac-bf7e-4e82-b5c1-ec2229af0439,8ecf8763-ac68-465e-a2fd-3c30fb030c96,Asana,beginner,2025-09-22 11:48:48.833987+00,available
+427441ec-c1f2-4a12-bb18-5a139a52782f,2ffa4110-01fc-49f3-9932-36ab267ff8e5,Blockchain Developer,beginner,2025-11-06 21:22:53.113309+00,available
+427c5859-d5a0-4d18-8aaa-b6c0e0486e29,abac2832-2a1c-498c-8d94-190073c27b1a,"Web Development: HTML, CSS, JavaScript, PHP, React, Bootstrap",beginner,2025-09-23 12:48:13.031262+00,available
+43202ff5-0c45-47e3-9485-08cf88d7eb03,7e9d9e77-69c7-4a6c-b037-426435b1ad15,php html css tilwind mysql,beginner,2025-09-24 04:45:48.78717+00,available
+4352f40b-afd8-433f-8017-2bcc2f70cd41,aeb8f102-1c1a-46cd-959e-79c945ddfa83,Html,beginner,2025-10-13 11:57:07.724999+00,available
+43aa2877-2500-450e-9687-24d13f37c8ba,f802a2c2-6b85-493b-9b78-0423f2511679,Web Designer,beginner,2025-09-24 08:52:45.619744+00,available
+4424e973-aad2-4ca8-8707-44773d7c572b,48abe242-6963-445c-8743-0a899289898a,Python,beginner,2025-10-01 12:52:35.651664+00,available
+443b1c23-8ea5-4471-9dac-2a3f58545ab8,3dc71c31-1a8b-4803-bfca-3ef268ad1967,HTML CSS JS C,beginner,2025-09-26 12:19:39.8691+00,available
+45237b13-dd73-4ddd-8131-27948a30d44a,1e33d3fb-4973-40c7-a8db-45fd941bc55b,Dynamics Business Central 365,beginner,2025-09-23 19:56:02.136817+00,available
+45876e21-f9e6-4961-99a6-a37b1f29172d,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,Html,beginner,2025-09-23 04:04:15.424316+00,available
+460f1584-7630-49ea-88c8-87740498758e,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,expressjs,beginner,2025-10-02 13:49:17.300983+00,available
+463dabfa-2aac-4aff-9f03-fa2b78d6f773,85615858-5cd2-4854-a618-fa3799b9eedd,Linux,beginner,2025-11-13 08:59:06.909073+00,available
+46e61a6b-ff6a-4c66-9f16-581d4e3eb613,cfe687de-1852-448f-a1e4-2c8f487b6a39,"Networking specialist ",beginner,2025-09-20 17:13:50.32373+00,available
+49474e08-c3e6-40a4-8ca4-2b47cb2d056f,789c5845-ac8b-40f3-b376-349dfc3f84e3,Graphics Designer,beginner,2025-09-28 18:53:12.821282+00,available
+49625818-688b-4c89-a253-532bba2eb22d,32498aae-83bc-4cd3-94af-d9d3b1ea1d2c,designing,beginner,2025-10-02 19:20:10.761768+00,available
+496eaa59-a64e-40bf-aa64-f3da36e98245,848515ce-1a1f-4340-8108-2699dd77f6ee,"Javascript ",beginner,2025-09-29 08:28:14.042379+00,available
+496febdd-7fcb-4999-a42e-10ee6a58b785,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Machine Learning,beginner,2025-09-18 19:03:49.966943+00,available
+4972e1e7-1888-464b-96d2-8eedac8059c6,3fa4521f-3000-4017-88ef-a4bc06f23b96,Wordpress,beginner,2025-09-23 19:23:14.710212+00,available
+49857152-ce40-4def-9a63-432d903c99fe,23dbd2e1-c188-4def-ad54-8728c86c49cd,Redis,beginner,2025-09-22 12:39:08.223236+00,available
+499f99e0-4c59-4a1b-ae77-c817b54189ee,3fa4521f-3000-4017-88ef-a4bc06f23b96,Laravel,beginner,2025-09-23 19:23:14.710212+00,available
+49a82f80-5a7e-4fc9-bee2-d14ed241650b,1d7e373f-4317-43b3-8368-64abda23ae21,"AI/ Data Scientist ",beginner,2025-10-13 21:19:03.303442+00,available
+4a15d651-3773-4a0e-804e-40ac31cf14cc,435a4559-af2c-4fde-a066-c7cf4f19d78c,css,beginner,2025-09-26 21:08:14.651509+00,available
+4a8e0041-7a86-4a01-8844-c03b528d09b1,7987355f-c622-4030-9924-ed2eea892d4c,PostgreSQL,beginner,2025-12-01 11:10:46.907897+00,available
+4af50cc8-edc4-401c-a9e9-1c677ed003b2,789c5845-ac8b-40f3-b376-349dfc3f84e3,WordPress & CMS Platforms,beginner,2025-09-28 18:53:12.821282+00,available
+4aff3c4e-31b5-4d00-bd7e-5ee3ec7e4fd3,1c8d69a4-7aaa-4274-aad1-9b0a29058722,"Power Bi ",beginner,2025-09-22 22:52:42.745056+00,available
+4b293fc9-fed2-450f-800b-014153a62b84,e81bc5d6-e521-4a9b-aef3-f796350f7465,Financial Analyst,beginner,2025-09-30 06:50:06.37376+00,available
+4b8588e1-abb2-456e-9456-9f0e946a1af7,de057c25-2f17-4e07-b849-9b82a742f366,frontend developer | backend developer | full stack dev,beginner,2025-10-01 06:58:19.661118+00,available
+4c081dec-d731-4e71-9371-2ae1cde2a5dc,f802a2c2-6b85-493b-9b78-0423f2511679,"Social Media Manager ",beginner,2025-09-24 08:52:45.619744+00,available
+4c99421f-a149-4616-9d0f-c5080b9087f8,23dbd2e1-c188-4def-ad54-8728c86c49cd,GraphQl,beginner,2025-09-22 12:39:08.223236+00,available
+4ca25356-812c-4f12-8500-99abd218be66,2ffa4110-01fc-49f3-9932-36ab267ff8e5,"Graphic Design ",beginner,2025-11-06 21:22:53.113309+00,available
+4d25bbb8-c624-4bd1-b696-acc984621bfe,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,tailwind,beginner,2025-10-02 13:49:17.300983+00,available
+4e03894e-209f-40a4-a03f-6b4b07cdbaa2,ce8da2bc-6a6a-448c-8084-deb399c17f41,Dev,beginner,2025-12-07 18:43:01.355713+00,available
+4e7d917f-e617-4121-9578-05e1c2ed6b1e,3b6e88a5-dbfb-40af-9b83-7ea67d871011,Android app,beginner,2025-09-22 19:53:43.493171+00,available
+4f0cd960-b838-4b1a-9421-ffc0c1dea1cc,6a276b9e-0373-487f-a70c-e2fb5655971c,Web Developer,beginner,2025-09-22 06:37:12.017215+00,available
+500d47f6-655f-45ed-b4d0-43106e8a7b2c,524fa44f-240a-442f-9bc9-868b10a62dde,VFX,beginner,2025-10-30 19:57:41.046226+00,available
+5015c6cc-cd71-4242-b0dc-b7b07347baef,bf7812e1-52a5-4bd5-b1f6-741ab6b366e7,"Solidity, Rust, Go, Web3.js",beginner,2025-09-26 20:17:55.73091+00,available
+5080e47a-2871-491c-b11a-5747c985698c,ae8dad43-8c18-48d0-8801-142e5eef28e8,"Developing mobile application ",beginner,2025-09-23 16:23:05.725593+00,available
+5156d54f-f51e-4678-b2e0-a77404d6bd36,bbc99929-246e-47be-8515-829f34bb9dcc,Node JS,beginner,2025-09-27 15:31:09.323441+00,available
+5173f2db-9106-4c08-9939-55983cf7be38,3db6d9e0-ee95-406f-bb0c-4aa694e02d10,"data eng ",beginner,2025-09-24 06:07:57.240012+00,available
+51cdd3ff-2d3f-433f-99b5-67fc7dffc3f9,9edcfa37-eceb-484d-8317-30486cbad119,Networking,beginner,2025-09-30 16:12:28.633774+00,available
+521ff61c-52fb-459f-8049-399d511d39cd,ae8dad43-8c18-48d0-8801-142e5eef28e8,"System analysis and design ",beginner,2025-09-23 16:23:05.725593+00,available
+5301a3c5-95e1-4270-b407-c08221816412,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,"Mobile apps development ",beginner,2025-09-30 13:48:07.270438+00,available
+531299df-e31f-4a61-af89-08171ae9d1f6,3c91b95b-2782-444d-8069-b38d7ee59739,C++,beginner,2025-09-30 23:02:54.310324+00,available
+53a089f4-9934-49f1-a297-1dd981bfdacb,3db6d9e0-ee95-406f-bb0c-4aa694e02d10,Networking / cyber security,beginner,2025-09-24 06:07:57.240012+00,available
+53b568ff-eb46-43d0-8997-b9b5afe9559e,4a8706a2-0fa4-4eb9-b60e-b9eff70a4944,"Database Design ",beginner,2025-09-23 20:17:40.702267+00,available
+53d14e63-8d1e-4985-a3a2-4770a5d0999c,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Data Visualization,beginner,2025-09-18 19:03:49.966943+00,available
+54273576-3afb-4b2b-8c50-99d378600a1f,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,"UI/UX ",beginner,2025-09-30 13:48:07.270438+00,available
+544207f7-d76a-4132-8d91-965c7f6a0301,aeb8f102-1c1a-46cd-959e-79c945ddfa83,Rest API,beginner,2025-10-13 11:57:07.724999+00,available
+54ed72cb-5b45-4e87-881e-077d19628ab9,ec41630f-aa20-4ed8-b4b2-8f506bbf218e,☕,beginner,2025-09-21 20:00:51.309638+00,available
+559fb376-2a4c-4a49-8266-590a6bd47168,ae8dad43-8c18-48d0-8801-142e5eef28e8,"Design full-stack website ",beginner,2025-09-23 16:23:05.725593+00,available
+5635040d-22a3-49f5-af23-addec1da99a6,b78c6581-a4af-44c4-9c91-a82ec2605a10,Web Design,beginner,2025-12-19 08:15:36.894879+00,available
+56e4104b-3858-48a3-ac6f-081c0daa23a7,09700d6d-d50f-4abe-b69e-015993f6cc74,python,beginner,2025-10-09 06:59:37.442163+00,available
+57099402-95a5-4025-8469-8b5791bb7c99,3b6e88a5-dbfb-40af-9b83-7ea67d871011,"Payment gateaway integration ",beginner,2025-09-22 19:53:43.493171+00,available
+576ba9d7-c4ea-4fa3-9dcf-f1b5189c9c92,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,nextjs,beginner,2025-10-02 13:49:17.300983+00,available
+57ec656b-67b9-450c-b67e-a3dbdf77ad72,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,"Website designing ",beginner,2025-09-30 13:48:07.270438+00,available
+581b126b-7518-438e-99d6-7155da846988,85615858-5cd2-4854-a618-fa3799b9eedd,MySQL,beginner,2025-11-13 08:59:06.909073+00,available
+583fb398-eeb3-473f-8e66-8807ecba5d58,1e33d3fb-4973-40c7-a8db-45fd941bc55b,Typescript,beginner,2025-09-23 19:56:02.136817+00,available
+586023e2-620e-41a9-aef8-c65428aafbd3,3fa4521f-3000-4017-88ef-a4bc06f23b96,PHP,beginner,2025-09-23 19:23:14.710212+00,available
+58f52cca-d6e7-4c65-861a-cf6b5a49b290,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,"Type script ",beginner,2025-09-23 04:04:15.424316+00,available
+592e0bb4-b6a2-4472-80eb-f529708857a3,b9b85b2e-ab03-4a2c-93a2-97640980f6ab,"Google Cloud,Saas, Web developer,Cotlin ",beginner,2025-09-23 17:43:02.860794+00,available
+5a07e2e6-12a3-444d-9aeb-8f25077d9843,bbc99929-246e-47be-8515-829f34bb9dcc,AI,beginner,2025-09-27 15:31:09.323441+00,available
+5b454e51-20ee-4e9a-9287-1c260079d369,789c5845-ac8b-40f3-b376-349dfc3f84e3,UI/UX Designer,beginner,2025-09-28 18:53:12.821282+00,available
+5bd9e10e-f758-4080-b43f-14b0d8759721,5829599a-0614-456d-a210-e171474311a2,HTML CSS JS PHP MSQL,beginner,2025-09-22 12:46:13.891555+00,available
+5be1105a-aa32-4106-8c13-34b8d4706065,dbed8ca7-b08b-4465-9e42-0683e61b8d46,"Python ",beginner,2025-09-23 16:21:29.452403+00,available
+5bf7e09d-d3f0-4658-a83c-f9696bc33ce1,2ff8cce9-c080-44d8-8d39-f80545900e47,Mobile App development,beginner,2025-10-11 12:07:05.537258+00,available
+5c10d466-6690-476c-a3fd-26298a08ac4b,bbc99929-246e-47be-8515-829f34bb9dcc,Git & GitHub,beginner,2025-09-27 15:31:09.323441+00,available
+5c17e7d0-c47c-4235-a585-f8fc3ea61048,88fc1f40-5628-4286-a4ea-437f447a5a0e,Next.js,beginner,2025-09-23 23:44:18.028808+00,available
+5dee3dff-4f0a-44d6-9db8-5980c50627d4,9bc7110a-2874-4ef3-92a9-47b118687e6e,Linux,beginner,2025-09-24 13:18:51.051922+00,available
+5e925787-5e53-4fff-8452-05efe8d88d94,7987355f-c622-4030-9924-ed2eea892d4c,SQLite,beginner,2025-12-01 11:10:46.907897+00,available
+5f1c48f5-1d4c-4dc8-8094-ffd15167309a,74b57006-b960-4212-9aac-b3966eda2fed,Developing systems,beginner,2025-09-30 16:02:54.677205+00,available
+5f40adf6-367f-4df2-ab08-300f3bcbbdef,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Clustering (KMeans),beginner,2025-09-18 19:03:49.966943+00,available
+5fe75214-973d-4bca-a4fb-53667764044b,bf7812e1-52a5-4bd5-b1f6-741ab6b366e7,"TensorFlow, PyTorch, Scikit-learn, Pandas, NumPy",beginner,2025-09-26 20:17:55.73091+00,available
+6061042a-4805-41c7-8825-c4754872b802,86494a94-e1bd-439b-b3a9-5139346fd9b4,css,beginner,2025-09-22 09:15:16.441062+00,available
+606f7bf7-5fdd-46f4-b750-611cedda0b88,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Scikit-learn,beginner,2025-09-18 19:03:49.966943+00,available
+60a3ae91-2b21-430e-bc2d-52c8d405d229,789c5845-ac8b-40f3-b376-349dfc3f84e3,Videographer,beginner,2025-09-28 18:53:12.821282+00,available
+60f02dd1-6a74-44ae-b08d-38a565d94b9f,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,"Website development ",beginner,2025-09-30 13:48:07.270438+00,available
+611ac1dd-e7fd-425e-a7a8-2f05747e6acd,7987355f-c622-4030-9924-ed2eea892d4c,MySQL,beginner,2025-12-01 11:10:46.907897+00,available
+633034cf-1c6f-4d8e-a5d8-3db4b17fa022,b4cd8bab-96fe-4782-a612-f86dbe60cbe8,React,beginner,2025-09-23 04:13:12.16776+00,available
+6356855e-47e8-490b-898c-08c16672dbf9,ae8dad43-8c18-48d0-8801-142e5eef28e8,"Prototyping  using figma ",beginner,2025-09-23 16:23:05.725593+00,available
+63b60ad3-f372-455f-bd43-1d1e2bdedf0e,6a276b9e-0373-487f-a70c-e2fb5655971c,Graphics Designer,beginner,2025-09-22 06:37:12.017215+00,available
+64514927-59c3-4045-9e87-90cd55e117e0,53ac556a-0c87-4ca3-8f21-948c645ab796,"Fullstack developer, Graphic Designer",beginner,2025-09-23 08:20:51.055599+00,available
+645d5e6e-07ec-413d-ba08-a61321b41cbd,f304048e-a729-4196-97ec-5fbd4ab99adc,"React Js ",beginner,2025-10-06 08:47:18.465314+00,available
+66c99886-640e-4919-9fb9-1d48367a4084,b4cb03f8-3652-4c22-960c-3af042a3608b,Flask,beginner,2025-10-13 15:59:06.7008+00,available
+67b9ceb5-4752-43a9-96e6-13dbcc969a44,8a37d053-2a41-415c-8d50-f6b4110f9d9d,"Web development (beginner): Html,CSS,basic Javascript",beginner,2025-10-14 10:11:13.316613+00,available
+67c9e496-4a41-4438-9fa4-d98e7f42c4cf,5f129b31-8eb0-4c69-a1ff-583e57fc2847,"Web Developer, Strategic Planner, mentor ",beginner,2025-09-25 14:51:00.660111+00,available
+67e6bcb4-cd54-4ac6-ac72-34732b85e4d5,435a4559-af2c-4fde-a066-c7cf4f19d78c,php developer,beginner,2025-09-26 21:08:14.651509+00,available
+67f07139-d822-48bb-a9bd-3f716cf44c4b,c89f24be-4003-4df9-a1bd-06c1dd640da4,Node js (express),beginner,2025-09-24 10:07:37.404861+00,available
+680f84ff-43cf-4467-9755-47574c8ceb16,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,AI,beginner,2025-09-22 21:51:40.482269+00,available
+68710cbd-72b0-4de0-baff-18599495efa3,aa7b0516-13dd-43e2-81ab-87ac5f87316b,Graphics Design,beginner,2025-09-20 13:55:04.817007+00,available
+6940a362-465f-44b4-b141-f6e85a16b504,88fc1f40-5628-4286-a4ea-437f447a5a0e,Javascript,beginner,2025-09-23 23:44:18.028808+00,available
+69674279-4b99-4668-b381-2852d936ee24,37715bd5-290e-4a21-9e8b-bbd8be429ffd,"Typescript ",beginner,2025-10-16 08:33:49.297889+00,available
+69bc2071-cb12-4c59-a513-3fb5374a45df,2ffa4110-01fc-49f3-9932-36ab267ff8e5,IT Project Management,beginner,2025-11-06 21:22:53.113309+00,available
+6a0c74fb-a85a-4a83-a9e8-b1910bb0c0ba,85615858-5cd2-4854-a618-fa3799b9eedd,Crystal Reports,beginner,2025-11-13 08:59:06.909073+00,available
+6c2bd1c7-7c83-4cba-9618-03e5f8f7d866,789c5845-ac8b-40f3-b376-349dfc3f84e3,Digital Marketer,beginner,2025-09-28 18:53:12.821282+00,available
+6ca9f96a-3ace-41f8-9ce6-6ce802c7285e,48abe242-6963-445c-8743-0a899289898a,Javascript,beginner,2025-10-01 12:52:35.651664+00,available
+6cdb8b62-df33-4086-8b56-4bc4fdb70e8c,c9d589a9-c0e1-4160-93b7-e17e6b58169a,"Full stack web development ",beginner,2025-09-21 15:21:39.755961+00,available
+6d695792-c8ce-4a68-bb87-ef38bcfd4e87,9f39c3c4-0b9f-44dc-9657-9f21f3cf9ad2,React,beginner,2025-09-22 17:33:27.14536+00,available
+6dbc5604-47df-498e-a3de-a606939c5943,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,"JavaScript ",beginner,2025-09-23 04:04:15.424316+00,available
+709da03a-b69c-4730-8dca-1a35241b28c9,ee1cb2cf-0b4f-4837-b665-37d5e2433261,"React Typescript ",beginner,2025-09-24 17:19:59.216815+00,available
+7249b130-4ec6-4fa4-84cb-8b99d8178638,789c5845-ac8b-40f3-b376-349dfc3f84e3,Brand Identity Designer,beginner,2025-09-28 18:53:12.821282+00,available
+731e7c42-3999-4e80-96eb-20c4f6efaff0,3c91b95b-2782-444d-8069-b38d7ee59739,C,beginner,2025-09-30 23:02:54.310324+00,available
+7427229b-85cb-4704-92ee-5dfa76792018,1de4ea2a-e3ad-4151-9ee3-3881a4968efa,Product Design,beginner,2025-10-09 10:10:40.696605+00,available
+74728db3-6f2f-4dbc-a262-8a5541882fa1,df5a9d98-1c76-48bc-9dba-20c09f4e4f61,"Digital Marketing ",beginner,2025-10-03 19:15:19.783113+00,available
+764209a8-2449-4256-81ed-add8bde2e4e3,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,Expo,beginner,2025-09-23 04:04:15.424316+00,available
+7706e86d-ea10-4156-84d0-482a37f59e2d,2ffa4110-01fc-49f3-9932-36ab267ff8e5,UI/UX,beginner,2025-11-06 21:22:53.113309+00,available
+775870f9-2c75-465b-bc56-b1572c614eb3,85615858-5cd2-4854-a618-fa3799b9eedd,Jasper Reports,beginner,2025-11-13 08:59:06.909073+00,available
+775ad2a0-1c01-492a-97e8-77c5fe0c935a,3fa4521f-3000-4017-88ef-a4bc06f23b96,Reactjs,beginner,2025-09-23 19:23:14.710212+00,available
+7895e522-7eae-4635-9959-cab59c3657fe,e81bc5d6-e521-4a9b-aef3-f796350f7465,Front-End Developer,beginner,2025-09-30 06:50:06.37376+00,available
+7a272abe-e923-45ec-9c75-71b83d1e4b54,dbed8ca7-b08b-4465-9e42-0683e61b8d46,"Django ",beginner,2025-09-23 16:21:29.452403+00,available
+7aa4d341-5600-4613-b650-84664361ae82,abac2832-2a1c-498c-8d94-190073c27b1a,"⚙️ Backend: .NET Core (currently studying), Flask, MySQL, PHP",beginner,2025-09-23 12:48:13.031262+00,available
+7b458863-597b-455b-a4df-38132f3f6412,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,SQL,beginner,2025-09-22 21:51:40.482269+00,available
+7bef5bb4-548d-46c9-b598-3048d6d0a0b0,edaa998b-b43c-46dd-ac2c-c9bdf7993da9,Web developer,beginner,2025-09-22 11:09:15.158662+00,available
+7d9c1b9b-5ea8-44a1-a7f3-313bdaf199f1,506bd38a-8ce1-4a6d-9630-92321721d529,Figma,beginner,2025-09-24 00:03:59.167215+00,available
+7d9e9727-cbdc-4692-8536-f3476c4179c5,b4cb03f8-3652-4c22-960c-3af042a3608b,Backend Developer,beginner,2025-10-13 15:59:06.7008+00,available
+7e196d42-094d-42b4-ac8d-6faee1dbad69,f1bcb028-761f-4ff5-9099-c3c3650b53fc,Tech General Practitioner,beginner,2025-10-17 18:49:20.209465+00,available
+7e1c051f-c438-4a8f-8568-5bab5b4d9e03,37715bd5-290e-4a21-9e8b-bbd8be429ffd,"React ",beginner,2025-10-16 08:33:49.297889+00,available
+7eb2363c-61cb-4741-95fd-0c098fb76e3d,1715224d-fae1-4027-9df4-4648135bb871,Flutter Dev,beginner,2025-10-28 09:33:12.793018+00,available
+7ecebb71-54db-4d20-ab71-564cbdb22c71,88fc1f40-5628-4286-a4ea-437f447a5a0e,PostgreSQL,beginner,2025-09-23 23:44:18.028808+00,available
+7f5a5eea-8b1d-4b25-9d48-195b73719bb5,8393147b-38d2-4cf7-ab57-bb8439195b30,"Web development and green energy innovation ",beginner,2025-10-01 12:14:38.3666+00,available
+8032f14e-2dd5-4220-994e-fbb61d9338b7,748cf773-e370-4f5f-930e-da00f07789fe,"Python, SQLite ",beginner,2025-09-30 18:18:28.49466+00,available
+80e0d326-d76f-4d72-93cf-f2803148df26,4a8706a2-0fa4-4eb9-b60e-b9eff70a4944,"System Design ",beginner,2025-09-23 20:17:40.702267+00,available
+81b4b364-d120-44e6-9380-4075b05ecd79,85615858-5cd2-4854-a618-fa3799b9eedd,springboot,beginner,2025-11-13 08:59:06.909073+00,available
+8212665b-142f-4152-925b-8bdda33932fa,b4cb03f8-3652-4c22-960c-3af042a3608b,Data science,beginner,2025-10-13 15:59:06.7008+00,available
+824e47bb-534b-4095-a1b6-908abf77479d,a7133968-928b-4e83-abf3-0fc1f705e02f,App development,beginner,2025-09-22 12:50:21.983444+00,available
+8250938f-06c1-4199-acce-2dd017c2f87a,37715bd5-290e-4a21-9e8b-bbd8be429ffd,Nodejs,beginner,2025-10-16 08:33:49.297889+00,available
+83759c44-3c56-4a52-bf3f-63447c4f0172,efbe8990-9673-4f9f-9be8-0954bab3380a,"data analyst ",beginner,2025-10-08 10:19:11.442702+00,available
+83e9bedf-a5d3-447b-a30d-afc71cd996b0,3fa4521f-3000-4017-88ef-a4bc06f23b96,Vercel,beginner,2025-09-23 19:23:14.710212+00,available
+8402455e-3994-41f2-8268-ac302b42a4e8,9565125a-20be-49fc-ad3d-d2742603c2d1,"HTML, CSS and JAVASCRIPT",beginner,2025-09-30 10:18:57.867349+00,available
+84d843d6-d4e2-4da7-9818-fbdb20f1e9b8,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,C#,beginner,2025-09-22 21:51:40.482269+00,available
+84e7241c-3858-4926-9956-265b15838bfd,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,nestjs,beginner,2025-10-02 13:49:17.300983+00,available
+84eeb70e-1582-45ac-9c48-cfab648861ab,23dbd2e1-c188-4def-ad54-8728c86c49cd,Node,beginner,2025-09-22 12:39:08.223236+00,available
+8502246c-b8e8-451e-9ed0-8c995d27ec1d,bbc99929-246e-47be-8515-829f34bb9dcc,Vibe Coding,beginner,2025-09-27 15:31:09.323441+00,available
+85530cc4-6fdc-4e9b-8ad4-2bc5db3a14d6,88fc1f40-5628-4286-a4ea-437f447a5a0e,HTML,beginner,2025-09-23 23:44:18.028808+00,available
+855e70d9-8e76-4ab7-8612-7192168069fe,7ad2605e-0c72-487b-a2ba-19026a558abc,android app developer,beginner,2025-10-15 21:24:32.179689+00,available
+86838054-d774-4b64-a103-79678a067784,d916f784-fd5c-4acb-a703-064bb20b998f,Databases Management and Programming with SQL,beginner,2025-11-05 01:10:16.30062+00,available
+873eff17-0c25-42f1-ba14-18f08069ca81,1c8d69a4-7aaa-4274-aad1-9b0a29058722,"Tableau ",beginner,2025-09-22 22:52:42.745056+00,available
+875ffa19-f707-41d2-9aea-f3fe3ca8928c,09700d6d-d50f-4abe-b69e-015993f6cc74,javascript,beginner,2025-10-09 06:59:37.442163+00,available
+87afb3d0-f9c9-4a58-8148-6a4465b7b725,b4cb03f8-3652-4c22-960c-3af042a3608b,Django,beginner,2025-10-13 15:59:06.7008+00,available
+87eba4c1-3c68-4bd6-8d43-51a946e9beee,32498aae-83bc-4cd3-94af-d9d3b1ea1d2c,Javascript,beginner,2025-10-02 19:20:10.761768+00,available
+88f3f23b-e6b5-45a6-af3a-60b5d31dae18,d529da74-463a-4568-a26c-c6ad66f7df7a,Fintech,beginner,2025-09-30 22:00:40.414741+00,available
+89163d36-c6be-4765-b00c-f2ace84b0fba,48abe242-6963-445c-8743-0a899289898a,VB.NET,beginner,2025-10-01 12:52:35.651664+00,available
+8aea17fc-e602-4fa2-8e41-ce001b93f593,5c484350-aa93-4fe0-85b2-c80a67836d92,"Fullstack developer ",beginner,2025-10-18 16:24:25.740257+00,available
+8b2292c7-2cac-4210-bd6c-296f13d77309,293ec806-e217-4b10-bc9c-0634f7b70dbe,"Software development ",beginner,2025-10-07 07:58:52.231942+00,available
+8bfabc13-6f08-441c-b723-0ccbe8605884,88fc1f40-5628-4286-a4ea-437f447a5a0e,React,beginner,2025-09-23 23:44:18.028808+00,available
+8c4c2a3d-5c26-4d71-acda-bace7b176980,88fc1f40-5628-4286-a4ea-437f447a5a0e,CSS,beginner,2025-09-23 23:44:18.028808+00,available
+8c817194-83b9-4a55-b2ab-e4021125f065,da12d2d8-47bf-4c18-a8fd-4a5adca61a77,"Web design ",beginner,2025-12-07 07:53:19.646116+00,available
+8d643536-fd11-4574-afb8-a57fa8d706f7,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,PYTHON,beginner,2025-09-22 21:51:40.482269+00,available
+8e510742-804e-418f-9afa-63b4a98d6c3a,d5bd93d9-bf12-4fa6-8a1b-63338d6f37cc,"react, java script, django.js",beginner,2025-09-23 14:27:01.065018+00,available
+8fa88e71-6a79-4f82-953d-807a8cbb65a1,c93412c4-4793-4cf5-aa95-0215baad67c7,"Game developer ",beginner,2025-10-07 12:33:42.353662+00,available
+8fa9a53e-5b63-4cda-ba2d-3ce630ddedd2,d916f784-fd5c-4acb-a703-064bb20b998f,Python,beginner,2025-11-05 01:10:16.30062+00,available
+901dc578-50fd-4861-a012-10a450c7ccd5,3b6e88a5-dbfb-40af-9b83-7ea67d871011,Website Backend development,beginner,2025-09-22 19:53:43.493171+00,available
+9023c65e-ff03-487d-b490-2dfbe9382263,3fa4521f-3000-4017-88ef-a4bc06f23b96,Cpanel,beginner,2025-09-23 19:23:14.710212+00,available
+905a3790-0bc5-4644-a2de-875692bc19d5,8a37d053-2a41-415c-8d50-f6b4110f9d9d,"graphic designer: Adobe photoshop,Adobe Illustrator",beginner,2025-10-14 10:11:13.316613+00,available
+9125f19d-76c8-4cdc-83a7-35254ee94264,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Git & GitHub,beginner,2025-09-18 19:03:49.966943+00,available
+913deb6b-9523-45e3-bcae-483a3a71d90e,1de4ea2a-e3ad-4151-9ee3-3881a4968efa,"Project Management ",beginner,2025-10-09 10:10:40.696605+00,available
+93e9d137-cdd6-4093-a17b-c4f50b29702a,aeb8f102-1c1a-46cd-959e-79c945ddfa83,Github,beginner,2025-10-13 11:57:07.724999+00,available
+941fb3c0-b5e7-4e29-b656-615dfdbc9bdc,3fa4521f-3000-4017-88ef-a4bc06f23b96,Netlify,beginner,2025-09-23 19:23:14.710212+00,available
+9575722a-6107-414b-981a-296fab8ea533,f15c349a-6bd4-49e0-9951-9453a21c7044,Web Developer,beginner,2025-09-30 11:30:57.045706+00,available
+9611ffbd-52f4-499e-9d05-99d9f837187a,293ec806-e217-4b10-bc9c-0634f7b70dbe,"Backend developer ",beginner,2025-10-07 07:58:52.231942+00,available
+962bcaf8-415e-495a-90fc-eab2b1817742,0583fd86-ab7b-4dbf-9e99-b53a11dd0d8c,ux/ui,beginner,2025-09-23 05:03:17.121222+00,available
+9658abba-673d-429c-80ea-67072d884ba3,1de0c2e6-0a33-4d7c-ad63-669838492380,"Django ",beginner,2025-11-26 17:49:13.576275+00,available
+96ee4ba3-5a0a-49cf-b707-c707617e6441,cfe687de-1852-448f-a1e4-2c8f487b6a39,"Software developer ",beginner,2025-09-20 17:13:50.32373+00,available
+973e25d9-b1b4-4ac9-93c1-d1b96466feaf,88fc1f40-5628-4286-a4ea-437f447a5a0e,React Native,beginner,2025-09-23 23:44:18.028808+00,available
+97a1bfbe-7b16-4cc5-9f6f-cb94723515b4,c9d589a9-c0e1-4160-93b7-e17e6b58169a,"cross platform mobile development ",beginner,2025-09-21 15:21:39.755961+00,available
+988c3b9a-f33f-4bac-8f7c-54bfd422b528,6a276b9e-0373-487f-a70c-e2fb5655971c,Mobile App Developer,beginner,2025-09-22 06:37:12.017215+00,available
+99a49594-ef35-44a5-b02c-0c4fb57d5995,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,Kotlin,beginner,2025-09-23 04:04:15.424316+00,available
+9a31272e-894d-4aaf-96f0-bc977e60acc7,b427c10c-a373-4b63-81e1-e4df8ddd2bec,"Prototyping ",beginner,2025-09-23 20:24:10.762212+00,available
+9a7dc5c8-7910-469e-aad9-ddeb2ee88399,f2e6806a-c8c8-47a9-a577-acfc04f3e0d9,"Full stack developer ",beginner,2025-09-30 10:26:20.946571+00,available
+9afbf7f1-f620-4993-b14e-b54223c78015,435a4559-af2c-4fde-a066-c7cf4f19d78c,javascript,beginner,2025-09-26 21:08:14.651509+00,available
+9bd4ea3b-257b-4367-b680-72e8b2474a80,9f39c3c4-0b9f-44dc-9657-9f21f3cf9ad2,Tailwind,beginner,2025-09-22 17:33:27.14536+00,available
+9c08c4fc-a204-42a6-affa-5f944e76cf2f,a7133968-928b-4e83-abf3-0fc1f705e02f,AI automation,beginner,2025-09-22 12:50:21.983444+00,available
+9dbdce25-65c4-4c6b-821a-26df257cb244,0a2a8a59-243b-46df-bb55-6d8167193b87,Go lang,beginner,2025-09-22 05:18:18.810641+00,available
+9e1773af-5bf8-4817-80b3-e726bab6f742,f304048e-a729-4196-97ec-5fbd4ab99adc,Node Js,beginner,2025-10-06 08:47:18.465314+00,available
+9edfb781-38cb-41f7-b322-51fb6203045f,dc0d059c-2c9f-45a5-92d6-5bfc8cfc3989,Graphic Design,beginner,2025-09-22 11:31:44.945713+00,available
+9f0ba9a8-9fe6-4958-9419-2b93e0f26fd8,f802a2c2-6b85-493b-9b78-0423f2511679,Brand Designer,beginner,2025-09-24 08:52:45.619744+00,available
+9f1d908f-36a9-4159-8a18-e94a566ccac1,8ecf8763-ac68-465e-a2fd-3c30fb030c96,Trello,beginner,2025-09-22 11:48:48.833987+00,available
+9f79b865-f6a8-41c8-b64b-2a9943ce368b,8ecf8763-ac68-465e-a2fd-3c30fb030c96,Jira,beginner,2025-09-22 11:48:48.833987+00,available
+9f803cc7-71a4-4da8-9c8e-aded0325e9b4,bbc99929-246e-47be-8515-829f34bb9dcc,BlockChain,beginner,2025-09-27 15:31:09.323441+00,available
+a023ecc8-401d-4840-9b3c-fe046ef1fc81,86494a94-e1bd-439b-b3a9-5139346fd9b4,React.js,beginner,2025-09-22 09:15:16.441062+00,available
+a03d91b7-0f76-462d-bca6-ce5ba222e0d9,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,"Tailwind ",beginner,2025-09-23 04:04:15.424316+00,available
+a152eebd-ec50-4679-b0ab-547c9b8e2dda,1112518e-ff82-4524-96b5-181e548f4c46,"Database ",beginner,2025-12-08 11:47:28.658984+00,available
+a2b53e93-73b2-4820-95c9-91e5d84dc900,bbc99929-246e-47be-8515-829f34bb9dcc,React,beginner,2025-09-27 15:31:09.323441+00,available
+a3355a0f-f1d5-4d75-b907-50ad86cd180b,3fa4521f-3000-4017-88ef-a4bc06f23b96,Mysql,beginner,2025-09-23 19:23:14.710212+00,available
+a3386e7e-e424-4d80-a9b5-9a0e118ef63b,b4cb03f8-3652-4c22-960c-3af042a3608b,Python developer,beginner,2025-10-13 15:59:06.7008+00,available
+a35f7af5-55a4-4923-a28f-23b5dccf8d1a,845450ae-6317-4236-91de-472c6c348285,"PHP, Laravel, vue.js, reacts, JavaScript, html ",beginner,2025-10-10 06:35:48.555964+00,available
+a3af54b1-f74f-4371-9512-85274b1658be,88fc1f40-5628-4286-a4ea-437f447a5a0e,Node.js,beginner,2025-09-23 23:44:18.028808+00,available
+a401dbeb-e0e8-4b60-97cb-05ff78456524,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,C,beginner,2025-09-22 21:51:40.482269+00,available
+a42f11ef-bbb6-46ac-b5d2-70593362b336,3db6d9e0-ee95-406f-bb0c-4aa694e02d10,Backend dev,beginner,2025-09-24 06:07:57.240012+00,available
+a4c958e4-d9d0-49b5-b4c9-ccea10add3aa,09700d6d-d50f-4abe-b69e-015993f6cc74,html,beginner,2025-10-09 06:59:37.442163+00,available
+a54ab78d-c583-498c-a980-3ee7acae326f,df5a9d98-1c76-48bc-9dba-20c09f4e4f61,Client Relationship,beginner,2025-10-03 19:15:19.783113+00,available
+a5b3775e-b5af-4f73-9569-3387427c1e72,2ff8cce9-c080-44d8-8d39-f80545900e47,"Fullstack web development ",beginner,2025-10-11 12:07:05.537258+00,available
+a5dab964-ef0d-4b98-8ad8-12088322d51b,1bf2f042-8e0c-421f-b57a-b11eaa8143b9,JAVASCRIPT,beginner,2025-09-30 08:43:04.933088+00,available
+a6f62cf7-7334-4fdb-bfe1-27426fa42601,efbe8990-9673-4f9f-9be8-0954bab3380a,"typescript ",beginner,2025-10-08 10:19:11.442702+00,available
+a7caa6e8-5f1d-47ed-86fa-0951b0e2b82b,bf7812e1-52a5-4bd5-b1f6-741ab6b366e7,"Python, Node.js, React, SQL, TypeScript",beginner,2025-09-26 20:17:55.73091+00,available
+a89767b7-3b1b-4637-b66a-3f624f9d87c2,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Pandas,beginner,2025-09-18 19:03:49.966943+00,available
+a93c4797-5659-4849-b6eb-f2994df88837,9f39c3c4-0b9f-44dc-9657-9f21f3cf9ad2,Html,beginner,2025-09-22 17:33:27.14536+00,available
+a950f383-1007-471a-97e3-f47fb2c35a24,88fc1f40-5628-4286-a4ea-437f447a5a0e,Java,beginner,2025-09-23 23:44:18.028808+00,available
+a9c2f3aa-0081-4a47-b546-f386348c47ba,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,"GitHub pushing ",beginner,2025-09-30 13:48:07.270438+00,available
+a9e00b40-1cc8-4c06-8520-84674b0e20da,3c91b95b-2782-444d-8069-b38d7ee59739,Python,beginner,2025-09-30 23:02:54.310324+00,available
+aa0bbf42-20d8-46e9-b4a8-472660d276a8,31199957-d7a6-4a55-bf85-620b58cdf341,"Full Stack Developer ",beginner,2025-09-22 14:58:44.19841+00,available
+aabab438-a95a-4eff-83a1-34e594718118,aa040096-c6e2-470e-bd11-b0efb0bee24d,fullstack developer,beginner,2025-12-19 10:08:07.688448+00,available
+ab12c351-21d8-476f-a968-c76a8a5032d4,7fe3468b-e742-45fd-a3a2-9cc16343539d,"still good at phone unlocking services ",beginner,2025-10-24 14:54:17.541235+00,available
+abb619fb-4344-4b64-887f-f7840c39d99a,d916f784-fd5c-4acb-a703-064bb20b998f,HTML,beginner,2025-11-05 01:10:16.30062+00,available
+abeb056b-1d37-42bb-b046-1fb26db1feb1,9f39c3c4-0b9f-44dc-9657-9f21f3cf9ad2,Express js,beginner,2025-09-22 17:33:27.14536+00,available
+ad923042-9523-46fe-b786-57aee9cd758f,09700d6d-d50f-4abe-b69e-015993f6cc74,css,beginner,2025-10-09 06:59:37.442163+00,available
+ae3684ff-1394-43ec-8be2-3f4f23dae10c,293ec806-e217-4b10-bc9c-0634f7b70dbe,"Full stack developer ",beginner,2025-10-07 07:58:52.231942+00,available
+ae43ec1f-f658-45c2-95fb-3b9fabcf5ad7,daf2108e-b301-407c-ab60-cbe5dd9b57d9,"Android ",beginner,2025-09-23 02:30:08.648743+00,available
+aec42cd1-737f-4f9c-818e-39d29a4fd2be,789c5845-ac8b-40f3-b376-349dfc3f84e3,Web Designer,beginner,2025-09-28 18:53:12.821282+00,available
+aefb4f81-37fa-4540-add5-55cb7e47dcff,20b69c1b-1443-40d8-a6f6-f4743f49a49a,"Web development , graphics design ",beginner,2025-09-23 17:47:09.257112+00,available
+af387be6-255e-4da8-9c2c-7bd2af2f6e51,a34aba6a-762d-436c-b594-39f1b311fdb5,"Frontend developer ",beginner,2025-09-23 18:20:41.583853+00,available
+afbe70cd-839b-4bcf-a88a-b57b9a3c5bcb,848515ce-1a1f-4340-8108-2699dd77f6ee,React,beginner,2025-09-29 08:28:14.042379+00,available
+afbf330f-8d54-4606-a057-ab3a68e6bbbe,dbed8ca7-b08b-4465-9e42-0683e61b8d46,"Postgresql ",beginner,2025-09-23 16:21:29.452403+00,available
+afec2764-3e21-4b8d-b900-63162ec906e2,bf7812e1-52a5-4bd5-b1f6-741ab6b366e7,"Firebase, SQLite, MongoDB, APIs, Docker, Flutter, React Native",beginner,2025-09-26 20:17:55.73091+00,available
+b01a90d2-eec6-43be-9f7e-f65625816bd8,efbe8990-9673-4f9f-9be8-0954bab3380a,"react native ",beginner,2025-10-08 10:19:11.442702+00,available
+b1d1c2f4-fee1-4cd0-818a-7acc2bdb200e,789c5845-ac8b-40f3-b376-349dfc3f84e3,Project Management,beginner,2025-09-28 18:53:12.821282+00,available
+b1fc45f6-148e-43bf-b01a-344c4151393a,88fc1f40-5628-4286-a4ea-437f447a5a0e,Express,beginner,2025-09-23 23:44:18.028808+00,available
+b2be4734-0215-413e-a527-9dfb0e733593,1c8d69a4-7aaa-4274-aad1-9b0a29058722,"Data analysis ",beginner,2025-09-22 22:52:42.745056+00,available
+b301fe2b-1f97-43b3-9750-6e0bc5277a8f,edaa998b-b43c-46dd-ac2c-c9bdf7993da9,Software Developer,beginner,2025-09-22 11:09:15.158662+00,available
+b3043e0b-b030-40a9-a25d-d56b1650b850,2ffa4110-01fc-49f3-9932-36ab267ff8e5,Git & Github,beginner,2025-11-06 21:22:53.113309+00,available
+b566d07f-ad03-4d4e-8815-b062e2ec2f62,37715bd5-290e-4a21-9e8b-bbd8be429ffd,SQL,beginner,2025-10-16 08:33:49.297889+00,available
+b5dce14b-c39f-4928-81b7-b0ae8bc75528,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,React,beginner,2025-09-23 04:04:15.424316+00,available
+b6bb7d12-4092-435e-aee6-c3bb586a5811,7ad2605e-0c72-487b-a2ba-19026a558abc,"professional graphics designer ",beginner,2025-10-15 21:24:32.179689+00,available
+b6ce696b-a4bd-434e-b96e-4caa7e8b5f1e,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,"React native ",beginner,2025-09-23 04:04:15.424316+00,available
+b7b49925-fb9e-450f-91b9-0e0a861898a7,dbed8ca7-b08b-4465-9e42-0683e61b8d46,Java,beginner,2025-09-23 16:21:29.452403+00,available
+b7f0f0f0-628a-42cc-ab2f-ada1a3b386b0,efbe8990-9673-4f9f-9be8-0954bab3380a,"python ",beginner,2025-10-08 10:19:11.442702+00,available
+b8b6f589-3203-4a52-9070-44f65c2d3836,b3bf3fd8-34b8-411c-a1de-a9d9ba686403,"JavaScript... html..& modern css ",beginner,2025-09-21 15:19:28.200092+00,available
+b8ffd473-6635-4ab9-9340-3506863de4ce,0a2a8a59-243b-46df-bb55-6d8167193b87,Node js,beginner,2025-09-22 05:18:18.810641+00,available
+b9d4a1ba-963d-464b-bb2d-363fa15e867a,6a276b9e-0373-487f-a70c-e2fb5655971c,Ethical Hacker,beginner,2025-09-22 06:37:12.017215+00,available
+bad7d247-bdc2-4966-aa1f-3ff9d1dfd924,aeb8f102-1c1a-46cd-959e-79c945ddfa83,SQLite,beginner,2025-10-13 11:57:07.724999+00,available
+bae1afb5-2c42-4a61-a4e4-5d0ee7e25358,592c00e3-0f53-4296-86de-65fc6df17a45,Frontend development,beginner,2025-12-01 22:09:16.109919+00,available
+bb7a052e-0412-4e05-a3c2-e6c2194caed6,ec41630f-aa20-4ed8-b4b2-8f506bbf218e,Python,beginner,2025-09-21 20:00:51.309638+00,available
+bc09bcaf-88f0-4c02-a4b0-e7fd221f1455,1d7e373f-4317-43b3-8368-64abda23ae21,Full Stack engineer,beginner,2025-10-13 21:19:03.303442+00,available
+bd1a9421-f8fa-47fb-bdd6-7ff792c1c243,aa7b0516-13dd-43e2-81ab-87ac5f87316b,"Color Theorist ",beginner,2025-09-20 13:55:04.817007+00,available
+bd3b9c9c-46fb-4569-ac14-0b51f2fe5a69,df5a9d98-1c76-48bc-9dba-20c09f4e4f61,Strategy,beginner,2025-10-03 19:15:19.783113+00,available
+bd749b73-d999-4b4a-8353-3b27ac8be9be,ae8dad43-8c18-48d0-8801-142e5eef28e8,"Management of database in a system ",beginner,2025-09-23 16:23:05.725593+00,available
+bddd406c-9dcc-4599-9547-39df920d261f,86494a94-e1bd-439b-b3a9-5139346fd9b4,Flutter,beginner,2025-09-22 09:15:16.441062+00,available
+bf5c9631-32ce-4c2f-9829-b90b08e702f3,8ecf8763-ac68-465e-a2fd-3c30fb030c96,SDLC,beginner,2025-09-22 11:48:48.833987+00,available
+bfb1dcf2-7e27-4bb2-809a-79f0dc76a3f5,bbc99929-246e-47be-8515-829f34bb9dcc,Express JS,beginner,2025-09-27 15:31:09.323441+00,available
+c1a85de3-209a-40ab-b36e-cc90c297542c,789c5845-ac8b-40f3-b376-349dfc3f84e3,Photographer,beginner,2025-09-28 18:53:12.821282+00,available
+c1dff37c-a2b4-4952-8fbb-cfcea9c0f8e4,aeb8f102-1c1a-46cd-959e-79c945ddfa83,PostrageSQL,beginner,2025-10-13 11:57:07.724999+00,available
+c2d1e3b3-f4c6-4bf8-b486-faea92992391,506bd38a-8ce1-4a6d-9630-92321721d529,React,beginner,2025-09-24 00:03:59.167215+00,available
+c318a1bb-417e-4e94-86ba-09cbff16355e,bbc99929-246e-47be-8515-829f34bb9dcc,Mpesa Integration,beginner,2025-09-27 15:31:09.323441+00,available
+c3933449-225e-467f-b2eb-85a7f86dc7b0,435a4559-af2c-4fde-a066-c7cf4f19d78c,sql,beginner,2025-09-26 21:08:14.651509+00,available
+c416da77-5e10-4061-a8ab-d86b006cdbf4,293ec806-e217-4b10-bc9c-0634f7b70dbe,"Customer support ",beginner,2025-10-07 07:58:52.231942+00,available
+c4699cf9-fd7b-4a3d-894e-6f7cf8463cbc,e81bc5d6-e521-4a9b-aef3-f796350f7465,Problem Solving,beginner,2025-09-30 06:50:06.37376+00,available
+c4739d5e-e28b-4550-bd58-005cd1583433,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Python,beginner,2025-09-18 19:03:49.966943+00,available
+c4e14d8d-9d46-480a-a612-73258229149c,2ffa4110-01fc-49f3-9932-36ab267ff8e5,Business Analysis,beginner,2025-11-06 21:22:53.113309+00,available
+c5193db2-a93c-49b9-babe-41038e7b0203,32498aae-83bc-4cd3-94af-d9d3b1ea1d2c,Firebase,beginner,2025-10-02 19:20:10.761768+00,available
+c5241f9d-d79c-45b5-a3fc-0b614e6d0086,9bc7110a-2874-4ef3-92a9-47b118687e6e,"Database analyst ",beginner,2025-09-24 13:18:51.051922+00,available
+c58db0e7-21e4-4e75-a203-1f8a14708746,7987355f-c622-4030-9924-ed2eea892d4c,Docker,beginner,2025-12-01 11:10:46.907897+00,available
+c5dcc13c-e286-434c-928b-12d2e4c1abc7,daf2108e-b301-407c-ab60-cbe5dd9b57d9,"Python ",beginner,2025-09-23 02:30:08.648743+00,available
+c5ffe0cc-d68c-493e-8c23-88d208f731b6,8cb8fc19-da49-4284-a33f-47d3f5824a11,"  System Design &  architecture ",beginner,2025-09-20 19:30:26.910626+00,available
+c640ad54-03a9-4d4c-b9cb-6f5417d14e26,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,"Desktop app development ",beginner,2025-09-30 13:48:07.270438+00,available
+c6a47eb0-5824-4fef-88c0-f9d034db1813,c93412c4-4793-4cf5-aa95-0215baad67c7,"Graphics designer ",beginner,2025-10-07 12:33:42.353662+00,available
+c6f35231-d9bd-42a9-a3fc-3d00b367cdf4,a7133968-928b-4e83-abf3-0fc1f705e02f,Website backend and frontend,beginner,2025-09-22 12:50:21.983444+00,available
+c7e67b9e-d577-458a-83ec-30cd2fa1f817,aa7b0516-13dd-43e2-81ab-87ac5f87316b,UI/UX,beginner,2025-09-20 13:55:04.817007+00,available
+c81e3b1d-9e32-4f86-9b0b-3a8b1fe90f90,abac2832-2a1c-498c-8d94-190073c27b1a,"🌍 Interests: Software engineering, app development, AI integration, and emerging tech",beginner,2025-09-23 12:48:13.031262+00,available
+c8cfb1f5-86a5-4300-a1b5-cedbb5f9b12b,1dd29f0f-cdd4-427f-a58c-c42c8c175e85,"Private investigator ",beginner,2025-09-28 09:51:09.730752+00,available
+c8d0fc64-880f-43bf-bcf0-30cd5e84df37,7987355f-c622-4030-9924-ed2eea892d4c,JavaScript,beginner,2025-12-01 11:10:46.907897+00,available
+c9622f58-c899-405a-b1e5-f0f000e8eecd,9edcfa37-eceb-484d-8317-30486cbad119,Network security,beginner,2025-09-30 16:12:28.633774+00,available
+c9a72680-2d20-4933-9698-000d12339acc,aeb8f102-1c1a-46cd-959e-79c945ddfa83,Django,beginner,2025-10-13 11:57:07.724999+00,available
+cb72f3be-38b9-4eac-8e7d-f8cea4daaf41,1de0c2e6-0a33-4d7c-ad63-669838492380,"PostgreSQL ",beginner,2025-11-26 17:49:13.576275+00,available
+cb858d4d-97d2-4656-813b-daf41aac069b,8ecf8763-ac68-465e-a2fd-3c30fb030c96,Data-Driven Decision Making,beginner,2025-09-22 11:48:48.833987+00,available
+cb9f53fc-28f3-4143-aecf-a5aab960c029,bbc99929-246e-47be-8515-829f34bb9dcc,MongoDB,beginner,2025-09-27 15:31:09.323441+00,available
+cc5d0ea1-6126-4e3e-89d4-9e066726f82c,1d7e373f-4317-43b3-8368-64abda23ae21,Blockchain Developer,beginner,2025-10-13 21:19:03.303442+00,available
+cd26d522-2478-4dba-95ba-7aca638d195f,09700d6d-d50f-4abe-b69e-015993f6cc74,django,beginner,2025-10-09 06:59:37.442163+00,available
+cd3363e7-af65-4be8-8841-0acc22bc3907,da12d2d8-47bf-4c18-a8fd-4a5adca61a77,"UI/UX designer ",beginner,2025-12-07 07:53:19.646116+00,available
+cd39f4e4-38e5-4544-bd35-4720098b3fd7,8cb8fc19-da49-4284-a33f-47d3f5824a11,"Web Development (React, Firebase, Cloudflare, Node.js)",beginner,2025-09-20 19:30:26.910626+00,available
+cd57b4e1-1814-4e10-935f-198119a8a782,dbed8ca7-b08b-4465-9e42-0683e61b8d46,"Django rest framework ",beginner,2025-09-23 16:21:29.452403+00,available
+cd8db6e4-b8a0-48fb-a8cc-f9ee5bd5c64b,789c5845-ac8b-40f3-b376-349dfc3f84e3,Website Developer,beginner,2025-09-28 18:53:12.821282+00,available
+ce7f08c4-ea79-4fe1-a296-4978980bf07e,645e38ec-a001-4578-b7c5-22cc443221ff,"Web development ",beginner,2025-09-23 09:24:36.188618+00,available
+cedf5e8c-efcf-4b14-8c98-996414fcb85a,f802a2c2-6b85-493b-9b78-0423f2511679,Graphics Designer,beginner,2025-09-24 08:52:45.619744+00,available
+cf7b449f-280d-4e9d-ba02-443678dd02ac,bc00cecd-ac81-48d6-9ea6-0c68f31cef81,react,beginner,2025-10-02 13:49:17.300983+00,available
+cfb97e04-d67c-4541-9a4c-3acdb14cec73,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Dashboard Design,beginner,2025-09-18 19:03:49.966943+00,available
+cff401ae-ee0a-4cf8-bbf7-f433cbc8f8d2,3fa4521f-3000-4017-88ef-a4bc06f23b96,AI&ML,beginner,2025-09-23 19:23:14.710212+00,available
+d071ff1e-5a6d-4e28-9744-0b4fb9531a6f,1b63ee52-f048-4976-ae6a-6f7f4ccfa097,"Fullstack developer ",beginner,2025-09-22 17:39:20.447125+00,available
+d07dee32-9837-4450-977c-207fc6acfdec,5c484350-aa93-4fe0-85b2-c80a67836d92,"Graphics Designs ",beginner,2025-10-18 16:24:25.740257+00,available
+d0ea797d-9155-4c3b-9288-75aa8c8c5e8b,5eb2b959-6e1f-4116-bae9-3d8a2722b52a,Java,beginner,2025-09-23 04:04:15.424316+00,available
+d1397b84-2299-477e-9c46-e4f74fcd89dc,daf2108e-b301-407c-ab60-cbe5dd9b57d9,"Backend ",beginner,2025-09-23 02:30:08.648743+00,available
+d160a305-6692-42c1-8084-003706178081,1112518e-ff82-4524-96b5-181e548f4c46,"Mobile developer ",beginner,2025-12-08 11:47:28.658984+00,available
+d27966e2-81d2-47ee-b871-022f0d55888d,7ad2605e-0c72-487b-a2ba-19026a558abc,"web developer ",beginner,2025-10-15 21:24:32.179689+00,available
+d36ac884-158d-4e24-b918-dcf2972f9532,563ae38b-c83f-4272-ac48-5bcc432d6ebe,CI/CD,beginner,2025-09-18 19:03:49.966943+00,available
+d3a91bde-6e27-4cfb-b094-fa594cd7b0ed,aa040096-c6e2-470e-bd11-b0efb0bee24d,machine learning &AI,beginner,2025-12-19 10:08:07.688448+00,available
+d3f549d6-e948-41df-83a1-4d493cca12d7,dc0d059c-2c9f-45a5-92d6-5bfc8cfc3989,Web Development,beginner,2025-09-22 11:31:44.945713+00,available
+d477e3d7-c5a2-4dd9-8d7b-a042e0e3866d,23dbd2e1-c188-4def-ad54-8728c86c49cd,Nexus,beginner,2025-09-22 12:39:08.223236+00,available
+d4b4ae5f-e061-4945-a7d9-92603aa35dc1,848515ce-1a1f-4340-8108-2699dd77f6ee,"fullstack ",beginner,2025-09-29 08:28:14.042379+00,available
+d5196680-1b82-412e-a03f-607f6c8cb587,8783a7e1-4559-4c6a-a372-703c7c307734,"Crocheting,  online writing ",beginner,2025-09-22 16:48:33.445666+00,available
+d570ecf8-3a16-49f7-8c70-1f3d30be8a7b,2ffa4110-01fc-49f3-9932-36ab267ff8e5,Video Editing,beginner,2025-11-06 21:22:53.113309+00,available
+d64edc84-0122-4384-9674-2d89908d148e,48abe242-6963-445c-8743-0a899289898a,Solidity(Learning),beginner,2025-10-01 12:52:35.651664+00,available
+d65bf8dd-cf60-456f-97f3-9b84d90bdf7a,48abe242-6963-445c-8743-0a899289898a,C,beginner,2025-10-01 12:52:35.651664+00,available
+d9da298b-6675-4f5e-ba19-393ab5a8fb7e,37715bd5-290e-4a21-9e8b-bbd8be429ffd,Mongodb,beginner,2025-10-16 08:33:49.297889+00,available
+dbad3dc0-cbe4-4697-b9ac-d5c4bcc182bd,9bc7110a-2874-4ef3-92a9-47b118687e6e,UX/Ui,beginner,2025-09-24 13:18:51.051922+00,available
+dbe25313-0b1a-422d-ad47-b4bd4e17ec9c,ce8da2bc-6a6a-448c-8084-deb399c17f41,PM,beginner,2025-12-07 18:43:01.355713+00,available
+dc62db30-d0a9-4cb7-87aa-aa9b7525a614,1bf2f042-8e0c-421f-b57a-b11eaa8143b9,HTML,beginner,2025-09-30 08:43:04.933088+00,available
+dca4903b-8476-4ca8-87a1-57c980e061bb,32498aae-83bc-4cd3-94af-d9d3b1ea1d2c,ReactJS,beginner,2025-10-02 19:20:10.761768+00,available
+dda59897-fb22-4f57-9bf9-01d28faf31a6,8e57cdf6-45dc-4379-b470-22631e31f375,machine learning,beginner,2025-09-23 18:46:07.535648+00,available
+ddce5196-a704-4551-ad78-2d851859a6b1,efbe8990-9673-4f9f-9be8-0954bab3380a,sql,beginner,2025-10-08 10:19:11.442702+00,available
+deaecd85-2bcb-4722-a447-2d451f422706,563ae38b-c83f-4272-ac48-5bcc432d6ebe,"Deployment ",beginner,2025-09-18 19:03:49.966943+00,available
+e033736a-eca2-4f69-8d84-f67fa1dee188,9edcfa37-eceb-484d-8317-30486cbad119,Python engineering,beginner,2025-09-30 16:12:28.633774+00,available
+e1c1a473-4646-442e-9638-0aab432b94e4,ae8dad43-8c18-48d0-8801-142e5eef28e8,"Computer repair ",beginner,2025-09-23 16:23:05.725593+00,available
+e1e5132a-cafe-4aad-b242-1abc38871e4f,bbc99929-246e-47be-8515-829f34bb9dcc,TypeScript,beginner,2025-09-27 15:31:09.323441+00,available
+e35f9cf6-be4c-459a-a650-f5ef97fb21ac,f15c349a-6bd4-49e0-9951-9453a21c7044,graphics Designer,beginner,2025-09-30 11:30:57.045706+00,available
+e3823f2f-575c-46d8-b277-aa15ac52b137,d916f784-fd5c-4acb-a703-064bb20b998f,DJANGO,beginner,2025-11-05 01:10:16.30062+00,available
+e56662b4-f131-4e9e-87d7-8f3a7bc6823a,8b12b915-1fd4-4516-a65f-167726d8d5a6,"Mobile app development ",beginner,2025-09-23 10:55:40.20632+00,available
+e59b53b7-93f7-4b02-8ff2-48ebc865a0a6,8ecf8763-ac68-465e-a2fd-3c30fb030c96,"JavaScript ",beginner,2025-09-22 11:48:48.833987+00,available
+e5c56819-55dd-4135-8eb9-cc5cf4a3e4f7,7987355f-c622-4030-9924-ed2eea892d4c,Django,beginner,2025-12-01 11:10:46.907897+00,available
+e5d6459f-d356-42a0-a7d8-7005aa3157e6,7987355f-c622-4030-9924-ed2eea892d4c,Python,beginner,2025-12-01 11:10:46.907897+00,available
+e5eb0d75-5c98-4ae7-939d-28218de630fa,aeb8f102-1c1a-46cd-959e-79c945ddfa83,Python,beginner,2025-10-13 11:57:07.724999+00,available
+e61b1003-7457-4f7b-bce1-d16b3e3491c8,7a1edd0e-1dfd-4e55-9e7b-4182b03cb6d0,"Tech lead ",beginner,2025-09-30 13:48:07.270438+00,available
+e6b3060f-7aed-43b9-b8f5-dd4feda45637,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,C++,beginner,2025-09-22 21:51:40.482269+00,available
+e6c142c3-f3f5-4c5b-9dc8-22d239ed6bca,ae2b0aa9-4f78-45b0-844b-f0cd384d41d6,web developer,beginner,2025-09-22 12:12:27.254021+00,available
+e8e4716d-ce60-4c09-b705-3062bc59ab45,aeb8f102-1c1a-46cd-959e-79c945ddfa83,Css,beginner,2025-10-13 11:57:07.724999+00,available
+ea06dfff-c613-41a8-9ce4-33a132c9a9c1,7987355f-c622-4030-9924-ed2eea892d4c,AWS,beginner,2025-12-01 11:10:46.907897+00,available
+ea3e582b-be3c-4aab-a189-e68336b8d966,f304048e-a729-4196-97ec-5fbd4ab99adc,Mysql,beginner,2025-10-06 08:47:18.465314+00,available
+eabcb0fa-5ad6-4824-9ba2-44552db45f55,25ec1972-f916-4783-8e47-08487a00c6be,"Frontend developer ",beginner,2025-10-06 08:45:43.730438+00,available
+eaf74849-7e4c-437a-b129-63e8f0a413b6,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,DATA ANALYTICS AND BI,beginner,2025-09-22 21:51:40.482269+00,available
+eb4f708e-1a37-49ee-a6fd-cbaf7c0b2a48,c8c36d9a-577a-4b66-8eb5-2e430c2d600a,ML,beginner,2025-09-21 16:56:51.635781+00,available
+ebbe772f-234f-46b3-86a7-9f79c9f2b40e,37715bd5-290e-4a21-9e8b-bbd8be429ffd,Fastapi,beginner,2025-10-16 08:33:49.297889+00,available
+ec0d17f3-8016-46d3-a3d5-8bd6cb8f651d,88fc1f40-5628-4286-a4ea-437f447a5a0e,MongoDB,beginner,2025-09-23 23:44:18.028808+00,available
+ed9bcc0c-cdfa-4f34-9411-e33072544d59,2ffa4110-01fc-49f3-9932-36ab267ff8e5,Full Stack Developer,beginner,2025-11-06 21:22:53.113309+00,available
+ee2c05e7-c152-43dc-a4d5-1dec9300fcaa,1c8d69a4-7aaa-4274-aad1-9b0a29058722,SQL,beginner,2025-09-22 22:52:42.745056+00,available
+ef613c0d-1c74-4a65-af5c-159ab6d562ac,9edcfa37-eceb-484d-8317-30486cbad119,Technical skills,beginner,2025-09-30 16:12:28.633774+00,available
+f00fcae3-7af5-4861-9855-1b369ade86f6,efbe8990-9673-4f9f-9be8-0954bab3380a,"react ",beginner,2025-10-08 10:19:11.442702+00,available
+f1f922b6-8e28-4fef-89c2-0709144a27be,c93412c4-4793-4cf5-aa95-0215baad67c7,"UI desighn ",beginner,2025-10-07 12:33:42.353662+00,available
+f20812a2-7879-44d4-a6c5-152a59d726a5,0a2a8a59-243b-46df-bb55-6d8167193b87,Flutter,beginner,2025-09-22 05:18:18.810641+00,available
+f304812e-d818-4306-b7ba-c5e42eccb692,32498aae-83bc-4cd3-94af-d9d3b1ea1d2c,"React native ",beginner,2025-10-02 19:20:10.761768+00,available
+f31bc357-8371-4355-a01b-40d3598be62f,86494a94-e1bd-439b-b3a9-5139346fd9b4,Django,beginner,2025-09-22 09:15:16.441062+00,available
+f426462d-2983-42c6-b5ca-431d77493146,daf2108e-b301-407c-ab60-cbe5dd9b57d9,"Front-end ",beginner,2025-09-23 02:30:08.648743+00,available
+f4396ae1-3552-4f49-998e-95bc4cb0aa42,eea22bcd-80d3-4377-b860-3de61040f5c0,Fast debugger,beginner,2025-09-24 10:02:43.706635+00,available
+f4539eaf-8e4e-4b35-ad4f-ce7f46caeaca,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,JAVA,beginner,2025-09-22 21:51:40.482269+00,available
+f48e12a9-09a3-4b77-a4ef-36d201b56998,dbed8ca7-b08b-4465-9e42-0683e61b8d46,Mysql,beginner,2025-09-23 16:21:29.452403+00,available
+f4e11af5-98e2-48b3-b6e7-a9d9301ef26a,9f39c3c4-0b9f-44dc-9657-9f21f3cf9ad2,Css,beginner,2025-09-22 17:33:27.14536+00,available
+f5a7cbb6-382b-4a0f-b22b-d9ca52aefb56,f802a2c2-6b85-493b-9b78-0423f2511679,Logo Designer,beginner,2025-09-24 08:52:45.619744+00,available
+f5dda411-9849-4526-a097-752f9921704d,a33a48b7-35b4-45f7-a91c-5df8b715833e,"Front end, back end, cybersecurity expert and analyst",beginner,2025-11-17 07:44:03.661742+00,available
+f6516666-6d8e-4961-a722-142446ddb3f0,c93412c4-4793-4cf5-aa95-0215baad67c7,"Cyber security ",beginner,2025-10-07 12:33:42.353662+00,available
+f65d1eef-106f-43fc-b1c0-2c4c618fda2d,09700d6d-d50f-4abe-b69e-015993f6cc74,r for data analysis,beginner,2025-10-09 06:59:37.442163+00,available
+f66fd2dd-35f3-4b92-a426-9d91f0d732d1,3c91b95b-2782-444d-8069-b38d7ee59739,CSS,beginner,2025-09-30 23:02:54.310324+00,available
+f690eb09-1b53-4867-9dc4-ed54a4cb7e06,1de0c2e6-0a33-4d7c-ad63-669838492380,"Python ",beginner,2025-11-26 17:49:13.576275+00,available
+f6ac77db-5ed7-463c-94a6-0f7718d44ec8,435a4559-af2c-4fde-a066-c7cf4f19d78c,graphic design,beginner,2025-09-26 21:08:14.651509+00,available
+f6ca5f17-a675-4386-915b-07d8c7c51970,506bd38a-8ce1-4a6d-9630-92321721d529,Canva,beginner,2025-09-24 00:03:59.167215+00,available
+f725e0e8-42a4-4ab6-9e0d-99534962d0b2,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Plotly,beginner,2025-09-18 19:03:49.966943+00,available
+f7d830a5-1a32-4aa0-bd4c-7adea89f5888,1de0c2e6-0a33-4d7c-ad63-669838492380,GIS,beginner,2025-11-26 17:49:13.576275+00,available
+f8556432-d06a-4917-ad40-99afdd79c792,c8c36d9a-577a-4b66-8eb5-2e430c2d600a,AI,beginner,2025-09-21 16:56:51.635781+00,available
+f8d23e24-ead8-4322-92f1-508080bf5d03,0583fd86-ab7b-4dbf-9e99-b53a11dd0d8c,"react,java scrip,python and django",beginner,2025-09-23 05:03:17.121222+00,available
+f9117812-8e4c-4361-8d8f-aaff32f74db8,dbed8ca7-b08b-4465-9e42-0683e61b8d46,"Microservices ",beginner,2025-09-23 16:21:29.452403+00,available
+fb1f3475-3d66-436f-80b6-bd850404dcf4,563ae38b-c83f-4272-ac48-5bcc432d6ebe,Data Integration,beginner,2025-09-18 19:03:49.966943+00,available
+fc59f4c6-aa9e-4d8f-93cd-d201b3cccb22,f15c349a-6bd4-49e0-9951-9453a21c7044,Backend developer,beginner,2025-09-30 11:30:57.045706+00,available
+fd266c5e-53ed-4d33-aa67-f6ebe69c900d,23dbd2e1-c188-4def-ad54-8728c86c49cd,"Typescript ",beginner,2025-09-22 12:39:08.223236+00,available
+fe3d670a-f9e0-4b02-969c-e8bda2637bdf,645e38ec-a001-4578-b7c5-22cc443221ff,"Machine learning ",beginner,2025-09-23 09:24:36.188618+00,available
+fe840835-201c-4103-837a-d75d50eb570a,efbe8990-9673-4f9f-9be8-0954bab3380a,"javascript ",beginner,2025-10-08 10:19:11.442702+00,available
+fe8571d7-b4c0-45fe-b58d-d00a55c24f49,5027b1fe-e68c-4614-a000-03d318403923,"Graphical designer ",beginner,2025-09-30 06:16:16.374887+00,available
+fed2d8f3-45c4-4154-a163-0406cf313c32,848515ce-1a1f-4340-8108-2699dd77f6ee,Flask,beginner,2025-09-29 08:28:14.042379+00,available
+ff5e7b68-bc3f-4a56-b8d8-91abc1c56d45,1163c0ea-b66c-42c5-9a3d-5efb22f7ab89,SOFTWARE DEVELOPMENT,beginner,2025-09-22 21:51:40.482269+00,available
+ff92bd46-b35b-4579-9e7e-0460a9cae09d,e81bc5d6-e521-4a9b-aef3-f796350f7465,Collaboration,beginner,2025-09-30 06:50:06.37376+00,available
+ffa5be90-3878-48ec-8534-5fd69d258a49,3b6e88a5-dbfb-40af-9b83-7ea67d871011,"API ",beginner,2025-09-22 19:53:43.493171+00,available
+ffba241c-58c8-4862-b50d-45009b0c410f,0a2a8a59-243b-46df-bb55-6d8167193b87,Laravel,beginner,2025-09-22 05:18:18.810641+00,available
+ffc2dea7-3a38-4fbc-956b-222335813ed7,e81bc5d6-e521-4a9b-aef3-f796350f7465,UI Designer,beginner,2025-09-30 06:50:06.37376+00,available

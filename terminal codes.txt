@@ -5,7 +5,7 @@ cd c:\MAGNA\backend\apps\api; npx wrangler deploy
 cd backend/apps/api
 npx wrangler d1 migrations apply magna_db --remote
 cd C:\MAGNA
-npx wrangler d1 execute magna_db --remote --file="backend\apps\api\migrations\0007_public_groups_discovery.sql"
+npx wrangler d1 execute magna_db --remote --file="MAGNA\0000_init.sql"
 $env:Path += ";C:\flutter\bin"
 where flutter
-flutter --version
+npx wrangler pages deploy build/web --project-name magna-coders

@@ -77,6 +77,18 @@ class _BuildersPageState extends State<BuildersPage> {
       appBar: AppBar(
         title: const Text('Builders'),
         centerTitle: false,
+        actions: [
+          IconButton(
+            icon: PhosphorIcon(PhosphorIcons.magnifyingGlass()),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: PhosphorIcon(PhosphorIcons.list()),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+          ),
+        ],
       ),
       body: _loading
           ? const AppLoader()
